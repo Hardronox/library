@@ -4,20 +4,16 @@ import 'react-select/dist/react-select.css';
 
 class BookCreateUpdate extends Component {
 
-    // constructor(props) {
-    //     super(props);
-    //     this.state = { articles: [], articlesApproved: [], message: '' };
-    //     this.handleClick = this.handleClick.bind(this);
-    //     this.onSubmit = this.onSubmit.bind(this);
-    // }
-    //
-    // handleClick() {
-    //     if (document.getElementById('simpletext').value.length > 0 && this.state.articles.length < 10) {
-    //         AppActions.submitArticle(document.getElementById('simpletext').value)
-    //         document.getElementById('simpletext').value = ''
-    //     }
-    // }
+    constructor(props) {
+        super(props);
+        this.state = {
+            color: props.initialColor
+        };
+    }
 
+    componentWillMount(){
+
+    }
 
 
 

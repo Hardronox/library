@@ -1,56 +1,63 @@
 import React, { Component } from 'react';
-
+import AppActions from '../../lib/AppActions';
+import AppStore from '../../lib/stores/BooksStore'
+import Book from "./Book";
 
 
 class Main extends Component {
 
-    // constructor(props) {
-    //     super(props);
-    //     this.state = { articles: [], articlesApproved: [], message: '' };
-    //     this.handleClick = this.handleClick.bind(this);
-    //     this.onSubmit = this.onSubmit.bind(this);
-    // }
-    //
-    // handleClick() {
-    //     if (document.getElementById('simpletext').value.length > 0 && this.state.articles.length < 10) {
-    //         AppActions.submitArticle(document.getElementById('simpletext').value)
-    //         document.getElementById('simpletext').value = ''
-    //     }
-    // }
+    constructor(props) {
+
+        super(props);
+    }
+
+
 
     render() {
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-md-8">
-                        <h4>Books</h4>
-                        <div className="media">
-                            <div className="media-left media-top">
-                                <a href="#">
-                                    <img className="media-object" src="..." />
-                                </a>
-                            </div>
-                            <div className="media-body">
-                                <h4 className="media-heading">Media heading</h4>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad, architecto consequatur cum, deserunt di
-                            </div>
+            <nav className="navbar navbar-default navbar-static-top">
+                <div className="container">
+                    <div className="navbar-header">
 
-                        </div>
+                        <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
+                            <span className="sr-only">Toggle Navigation</span>
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
+                        </button>
+
+                        <a className="navbar-brand" href="{{ url('/') }}">
+                            Laravel
+                        </a>
                     </div>
-                    <div className="col-md-4">
-                        <form className="form-inline">
-                            <div className="form-group">
-                                <label htmlFor="email">Search: </label>
-                                <input type="email" className="form-control" id="email" />
-                            </div>
 
-                            <button type="submit" className="btn btn-primary">Search</button>
-                        </form>
-                        <h4>Tags</h4>
-                        <a href="#">Inbox <span className="badge">42</span></a>
+                    <div className="collapse navbar-collapse" id="app-navbar-collapse">
+                        <ul className="nav navbar-nav">
+                            &nbsp;
+                        </ul>
+
+                        <ul className="nav navbar-nav navbar-right">
+                            <li><a href="{{ route('login') }}">Login</a></li>
+                            <li><a href="{{ route('register') }}">Register</a></li>
+                            <li className="dropdown">
+                                <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    Name <span className="caret"></span>
+                                </a>
+
+                                <ul className="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="{{ route('logout') }}">
+                                            Logout
+                                        </a>
+
+
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-            </div>
+            </nav>
         );
     }
 }

@@ -5,7 +5,9 @@ import React from 'react';
 // import DefaultRoute from "react-router/lib/IndexRoute";
 import {
     Route,
-    Link
+    Link,
+    IndexRoute,
+    Switch
 } from 'react-router-dom'
 
 /*auth*/
@@ -15,6 +17,7 @@ import SignUp from './components/auth/SignUp'
 
 /*site*/
 import BookCreateUpdate from './components/site/Book-create-update';
+import Books from './components/site/Books';
 import CategoryCreateUpdate from './components/site/Category-create-update';
 import Categories from './components/site/Categories';
 import Main from './components/site/Main';
@@ -25,10 +28,9 @@ import View from './components/site/View';
 
 const AppRoutes = (
     <div>
-        <Route exact={true} path='/' name="default" component={Main}/>
 
-        <Route name="SignIn" path="/signin" component={SignIn}/>
-        <Route name="SignUp" path="/signup" component={SignUp}/>
+        <Main/>
+        <Route path="/" name="books" component={Books}/>
 
         <Route name="AddBook" path="/add-book" component={BookCreateUpdate}/>
         <Route name="AddCategory" path="/add-category" component={CategoryCreateUpdate}/>
@@ -37,6 +39,8 @@ const AppRoutes = (
         <Route name="UpdateBook" path="/update-book" component={BookCreateUpdate}/>
         <Route name="UpdateCategory" path="/update-category" component={CategoryCreateUpdate}/>
         <Route name="View" path="/view" component={View}/>
+
+        {/*<Route name="SignIn" path="/signin" component={SignIn}/>*/}
 
     </div>
 );

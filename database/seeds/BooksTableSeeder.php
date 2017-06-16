@@ -1,4 +1,4 @@
-<?php
+/category/Novel<?php
 
 use Illuminate\Database\Seeder;
 

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Books;
 use App\Categories;
-use function MongoDB\BSON\toJSON;
 use Request;
 
 
@@ -18,7 +17,7 @@ class LibraryController extends Controller
         return view('home');
     }
 
-    public function getBooks()
+    public function getAllBooks()
     {
 
         if (Request::ajax()) {
@@ -32,6 +31,19 @@ class LibraryController extends Controller
         }
     }
 
+    public function getBooksByCategory()
+    {
+        if (Request::ajax()) {
+
+            $category=Categories::where('name', Request::input('name'))->first();
+            $books=$category->books;
+            //var_dump('<pre>',$category); exit;
+
+            return response()
+                        ->json($books); //, $categories
+        }
+    }
+
     public function getCategories()
     {
         $categories = Categories::all();
@@ -39,6 +51,8 @@ class LibraryController extends Controller
         return response()
             ->json($categories); //, $categories
     }
+
+
     /**
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

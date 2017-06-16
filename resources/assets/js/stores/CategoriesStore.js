@@ -1,7 +1,7 @@
 
-import AppDispatcher from '../AppDispatcher';
+import AppDispatcher from '../dispatchers/AppDispatcher';
 import { EventEmitter } from 'events';
-import AppActions from '../AppActions';
+import AppActions from '../actions/AppActions';
 
 
 let _categories = [];

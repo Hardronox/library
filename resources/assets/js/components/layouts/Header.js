@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import AppActions from '../../lib/AppActions';
-import AppStore from '../../lib/stores/BooksStore'
-import Book from "./Book";
+import AppActions from '../../actions/AppActions';
+import AppStore from '../../stores/BooksStore'
+import Book from "../main-page/Book";
+import { Link } from 'react-router-dom'
+
 
 
 class Main extends Component {
 
     constructor(props) {
-
         super(props);
     }
 
@@ -26,9 +27,9 @@ class Main extends Component {
                             <span className="icon-bar"></span>
                         </button>
 
-                        <a className="navbar-brand" href="{{ url('/') }}">
+                        <Link className="navbar-brand" to={{ pathname: '/' }}>
                             Laravel
-                        </a>
+                        </Link>
                     </div>
 
                     <div className="collapse navbar-collapse" id="app-navbar-collapse">
@@ -37,8 +38,16 @@ class Main extends Component {
                         </ul>
 
                         <ul className="nav navbar-nav navbar-right">
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
+                            <Link className="navbar-brand" to={{ pathname: '/add-book' }}>
+                                Add a book
+                            </Link>
+                            <Link className="navbar-brand" to={{ pathname: '/login' }}>
+                                Login
+                            </Link>
+                            <Link className="navbar-brand" to={{ pathname: '/logout' }}>
+                                Register
+                            </Link>
+
                             <li className="dropdown">
                                 <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     Name <span className="caret"></span>

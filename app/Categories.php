@@ -29,9 +29,8 @@ class Categories extends Model
         'password', 'remember_token',
     ];
 
-    public function products()
+    public function books()
     {
-        return $this->belongsToMany('App\Categories', 'list_product', 'list_id', 'product_id')->withPivot('product_id');
-
+        return $this->belongsToMany('App\Books', 'book_category', 'category_id', 'book_id')->withPivot('category_id');
     }
 }

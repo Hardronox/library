@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import AppActions from '../../lib/AppActions';
-import AppStore from '../../lib/stores/BooksStore'
-import CategoriesStore from '../../lib/stores/CategoriesStore'
+import AppActions from '../../actions/AppActions';
+import BookStore from '../../stores/BooksStore'
+import CategoriesStore from '../../stores/CategoriesStore'
 import Book from "./Book";
 import Category from "./Category";
+import { Link } from 'react-router-dom'
+
 
 
 class Books extends Component {
@@ -13,36 +15,42 @@ class Books extends Component {
         super(props);
         this.state = this._getState();
         this._onChange = this._onChange.bind(this)
+        this.handleChange = this.handleChange.bind(this)
     }
 
     componentWillMount() {
-        AppActions.getBooksAttempt();
+        AppActions.getAllBooksAttempt();
         AppActions.getCategoriesAttempt();
     }
 
 
     componentWillUnmount() {
-        AppStore.removeChangeListener(this._onChange);
+        BookStore.removeChangeListener(this._onChange);
     }
 
     componentDidMount() {
-        AppStore.addChangeListener(this._onChange);
+        BookStore.addChangeListener(this._onChange);
     }
 
     _onChange () {
-        //console.log('_onChange');
-        //console.log(AppStore.getAll())
         this.setState({
-            books: AppStore.getAll(),
-            categories: CategoriesStore.getAll()
+            books: BookStore.getAll(),
+            categories: CategoriesStore.getAll(),
         })
     }
 
     _getState () {
         return {
-            books: AppStore.getAll(),
-            categories: CategoriesStore.getAll()
+            books: BookStore.getAll(),
+            categories: CategoriesStore.getAll(),
+            searchValue: '',
         };
+    }
+
+    handleChange(event) {
+        this.setState(
+                {searchValue: event.target.value}
+            );
     }
 
     render() {
@@ -61,11 +69,13 @@ class Books extends Component {
                     <div className="col-md-4">
                         <form className="form-inline">
                             <div className="form-group">
-                                <label htmlFor="email">Search: </label>
-                                <input type="email" className="form-control" id="email" />
+                                <label htmlFor="search">Search: </label>
+                                <input type="text" className="form-control" value={this.state.searchValue} onChange={this.handleChange} id="search" />
                             </div>
 
-                            <button type="submit" className="btn btn-primary">Search</button>
+                            <Link to={{ pathname: '/search/'+this.state.searchValue }}>
+                                    <button type="submit" className="btn btn-primary">Search</button>
+                            </Link>
                         </form>
                         <h4>Tags</h4>
                         {_.times(this.state.categories.length, i =>

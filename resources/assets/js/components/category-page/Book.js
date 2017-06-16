@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 
 class Book extends Component {
 
@@ -14,11 +15,13 @@ class Book extends Component {
             <div className="media">
                 <div className="media-left media-top">
                     <a href="#">
-                        <img className="media-object" src="..." />
+                        <img width={"100px"} height={"100px"} className="media-object" src={this.props.book.picture} />
                     </a>
                 </div>
                 <div className="media-body">
-                    <h4 className="media-heading">{this.props.book.title}</h4>
+                    <Link to={{ pathname: '/view/'+this.props.book.id }}>
+                        <h4 className="media-heading">{this.props.book.title}</h4>
+                    </Link>
                     {this.props.book.description}
                 </div>
             </div>

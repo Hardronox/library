@@ -6,9 +6,18 @@ Auth::routes();
 
 Route::get('/', 'LibraryController@index')->name('main');
 
-Route::get('/get-books', 'LibraryController@getBooks');
+Route::get('/get-all-books', 'LibraryController@getAllBooks');
+
+Route::get('/get-books-by-category', 'LibraryController@getBooksByCategory');
 
 Route::get('/get-categories', 'LibraryController@getCategories');
+
+
+
+
+Route::post('/add-book', 'LibraryController@addBook');
+
+Route::patch('/update-book', 'LibraryController@updateBook');
 
 
 Route::get('/book/{id}', 'LibraryController@view')->name('view');

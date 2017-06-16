@@ -29,6 +29,6 @@ $factory->define(App\Books::class, function (Faker\Generator $faker) {
     return [
         'title' => $faker->sentence(3),
         'description' => $faker->text(300),
-        'picture' => 'this'
+        'picture' => '/images/1.png'
     ];
 });

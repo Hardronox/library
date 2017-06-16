@@ -18,10 +18,10 @@ class CategoriesStore extends EventEmitter {
     }
 
     getAll() {
-        return _books;
+        return _categories;
     }
 
-    getCategories() {
+    getCategoriesAttempt() {
         $.get({
             url: '/get-categories',
 
@@ -29,9 +29,8 @@ class CategoriesStore extends EventEmitter {
             cache: false,
             success: function(data) {
 
-                _books= data;
-                //console.log(_books);
-                AppActions.booksLoaded(_books);
+                _categories= data;
+                AppActions.categoriesLoaded(_categories);
 
             }.bind(this),
             error: function(xhr, status, err) {
@@ -51,11 +50,11 @@ class CategoriesStore extends EventEmitter {
     dispatcherCallback(action) {
         switch (action.actionType) {
 
-            case 'GET_BOOKS':
-                this.getCategories(action.value);
+            case 'GET_CATEGORIES':
+                this.getCategoriesAttempt(action.value);
                 break;
-            case 'BOOKS_LOADED':
-                _books = action.value;
+            case 'CATEGORIES_LOADED':
+                _categories = action.value;
                 break;
 
         }

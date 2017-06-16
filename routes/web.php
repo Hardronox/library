@@ -6,7 +6,9 @@ Auth::routes();
 
 Route::get('/', 'LibraryController@index')->name('main');
 
-Route::get('/get-books', 'LibraryController@getBooks')->name('main');
+Route::get('/get-books', 'LibraryController@getBooks');
+
+Route::get('/get-categories', 'LibraryController@getCategories');
 
 
 Route::get('/book/{id}', 'LibraryController@view')->name('view');

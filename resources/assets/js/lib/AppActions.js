@@ -7,16 +7,25 @@ class AppActions {
             actionType: 'GET_BOOKS',
             value: data
         });
-
-        // AppDispatcher.dispatch({
-        //     actionType: 'APPROVE_ARTICLE',
-        //     value: data
-        // });
     }
 
     booksLoaded(data) {
         AppDispatcher.dispatch({
             actionType: 'BOOKS_LOADED',
+            value: data
+        });
+    }
+
+    getCategoriesAttempt(data) {
+        AppDispatcher.dispatch({
+            actionType: 'GET_CATEGORIES',
+            value: data
+        });
+    }
+
+    categoriesLoaded(data) {
+        AppDispatcher.dispatch({
+            actionType: 'CATEGORIES_LOADED',
             value: data
         });
     }

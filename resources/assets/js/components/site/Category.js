@@ -11,7 +11,9 @@ class Category extends Component {
     render() {
         return (
 
-            <a href="#">Inbox <span className="badge">42</span></a>
+            <div>
+                <span className="badge">{this.props.category.name}</span>
+            </div>
 
         );
     }

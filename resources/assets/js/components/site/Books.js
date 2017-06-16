@@ -17,6 +17,7 @@ class Books extends Component {
 
     componentWillMount() {
         AppActions.getBooksAttempt();
+        AppActions.getCategoriesAttempt();
     }
 
 
@@ -33,14 +34,14 @@ class Books extends Component {
         //console.log(AppStore.getAll())
         this.setState({
             books: AppStore.getAll(),
-            //categories: CategoriesStore.getAll()
+            categories: CategoriesStore.getAll()
         })
     }
 
     _getState () {
         return {
             books: AppStore.getAll(),
-            //categories: CategoriesStore.getAll()
+            categories: CategoriesStore.getAll()
         };
     }
 
@@ -67,12 +68,12 @@ class Books extends Component {
                             <button type="submit" className="btn btn-primary">Search</button>
                         </form>
                         <h4>Tags</h4>
-                        {/*{_.times(this.state.categories.length, i =>*/}
+                        {_.times(this.state.categories.length, i =>
 
-                            {/*<Category category={this.state.books[i]}*/}
-                                  {/*key={i}*/}
-                            {/*/>*/}
-                        {/*)}*/}
+                            <Category category={this.state.categories[i]}
+                                  key={i}
+                            />
+                        )}
 
                     </div>
                 </div>

@@ -27,11 +27,17 @@ class LibraryController extends Controller
                 ->take(10)
                 ->get();
 
-            $categories = Categories::all()->toJson();
-
             return response()
                         ->json($books); //, $categories
         }
+    }
+
+    public function getCategories()
+    {
+        $categories = Categories::all();
+
+        return response()
+            ->json($categories); //, $categories
     }
     /**
      * @param $id

@@ -15,7 +15,7 @@ class AppActions {
             value: data
         });
     }
-
+    // --------------------------------------------------------
     getBooksByCategoryAttempt(data) {
         AppDispatcher.dispatch({
             actionType: 'GET_BOOKS_BY_CATEGORY',
@@ -23,26 +23,43 @@ class AppActions {
         });
     }
 
-    BooksByCategoryLoaded(data) {
+    booksByCategoryLoaded(data) {
         AppDispatcher.dispatch({
             actionType: 'BOOKS_BY_CATEGORY_LOADED',
             value: data
         });
     }
+    // --------------------------------------------------------
 
-    getBooksByCategoryAttempt(data) {
+    getBooksBySearchAttempt(data) {
         AppDispatcher.dispatch({
-            actionType: 'GET_BOOKS_BY_CATEGORY',
+            actionType: 'GET_BOOKS_BY_SEARCH',
             value: data
         });
     }
 
-    BooksByCategoryLoaded(data) {
+    booksBySearchLoaded(data) {
         AppDispatcher.dispatch({
-            actionType: 'BOOKS_BY_CATEGORY_LOADED',
+            actionType: 'BOOKS_BY_SEARCH_LOADED',
             value: data
         });
     }
+    // --------------------------------------------------------
+
+    getSingleBookAttempt(data) {
+        AppDispatcher.dispatch({
+            actionType: 'GET_SINGLE_BOOK',
+            value: data
+        });
+    }
+
+    singleBookLoaded(data) {
+        AppDispatcher.dispatch({
+            actionType: 'SINGLE_BOOK_LOADED',
+            value: data
+        });
+    }
+    // --------------------------------------------------------
 
     getCategoriesAttempt(data) {
         AppDispatcher.dispatch({

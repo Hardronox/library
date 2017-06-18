@@ -10,6 +10,8 @@ Route::get('/get-all-books', 'LibraryController@getAllBooks');
 
 Route::get('/get-books-by-category', 'LibraryController@getBooksByCategory');
 
+Route::get('/get-single-book', 'LibraryController@view');
+
 Route::get('/get-categories', 'LibraryController@getCategories');
 
 

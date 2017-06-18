@@ -57,12 +57,12 @@ class LibraryController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function view(Request $request)
+    public function view()
     {
         if (Request::ajax()) {
-
-            $books=Books::find($request->input('id'))
-                        ->get();
+            //var_dump(Request::input('id')); exit;
+            $books=Books::find((int)Request::input('id'))
+                        ->first();
 
             return response()
                         ->json($books);

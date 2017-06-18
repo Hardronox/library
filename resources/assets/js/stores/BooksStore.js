@@ -1,8 +1,7 @@
-
 import AppDispatcher from '../dispatchers/AppDispatcher';
 import { EventEmitter } from 'events';
 import AppActions from '../actions/AppActions';
-
+import axios from 'axios';
 
 let _books = [];
 
@@ -11,7 +10,6 @@ class BooksStore extends EventEmitter {
     constructor() {
         super();
         this.dispatchToken = AppDispatcher.register(this.dispatcherCallback.bind(this))
-        //this.getBooksAttempt = this.getBooksAttempt.bind(this);
     }
 
     emitChange() {
@@ -23,6 +21,25 @@ class BooksStore extends EventEmitter {
     }
 
     getAllBooksAttempt() {
+
+        //  let ins=axios.create({
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json',
+        //     }
+        // });
+        //
+        //
+        // ins.get('/get-all-books')
+        //     .then(function (response) {
+        //         console.log(response);
+        //         _books= response.data;
+        //         AppActions.allBooksLoaded(_books);
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     });
+
         $.get({
             url: '/get-all-books',
             dataType: 'json',
@@ -44,12 +61,32 @@ class BooksStore extends EventEmitter {
             url: '/get-books-by-category',
             dataType: 'json',
             data:{
-                name:name
+                name
             },
             cache: false,
             success: function(data) {
                 _books= data;
-                AppActions.BooksByCategoryLoaded(_books);
+                AppActions.booksByCategoryLoaded(_books);
+
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(this.props, status, err);
+            }.bind(this)
+        });
+    }
+
+    getSingleBookAttempt(id) {
+        $.get({
+            url: '/get-single-book',
+            dataType: 'json',
+            data:{
+                id
+            },
+            cache: false,
+            success: function(data) {
+                console.log(data);
+                _books= data;
+                AppActions.singleBookLoaded(_books);
 
             }.bind(this),
             error: function(xhr, status, err) {
@@ -63,12 +100,12 @@ class BooksStore extends EventEmitter {
             url: '/get-books-by-category',
             dataType: 'json',
             data:{
-                search:search
+                search
             },
             cache: false,
             success: function(data) {
                 _books= data;
-                AppActions.BooksByCategoryLoaded(_books);
+                AppActions.booksBySearchLoaded(_books);
 
             }.bind(this),
             error: function(xhr, status, err) {
@@ -76,7 +113,6 @@ class BooksStore extends EventEmitter {
             }.bind(this)
         });
     }
-
 
 
     addChangeListener(callback) {
@@ -97,6 +133,7 @@ class BooksStore extends EventEmitter {
                 _books = action.value;
                 break;
 
+
             case 'GET_BOOKS_BY_CATEGORY':
                 this.getBooksByCategoryAttempt(action.value);
                 break;
@@ -104,10 +141,23 @@ class BooksStore extends EventEmitter {
                 _books = action.value;
                 break;
 
-            case 'GET_BOOKS_BY_CATEGORY':
+
+
+
+            case 'GET_SINGLE_BOOK':
+                this.getSingleBookAttempt(action.value);
+                break;
+            case 'SINGLE_BOOK_LOADED':
+                _books = action.value;
+                break;
+
+
+
+
+            case 'GET_BOOKS_BY_SEARCH':
                 this.getBooksByCategoryAttempt(action.value);
                 break;
-            case 'BOOKS_BY_CATEGORY_LOADED':
+            case 'BOOKS_BY_SEARCH_LOADED':
                 _books = action.value;
                 break;
         }

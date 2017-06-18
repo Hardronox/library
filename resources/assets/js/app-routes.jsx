@@ -28,6 +28,7 @@ const AppRoutes = (
     <div>
 
         <Main/>
+
         <Route path="/" exact name="books" component={Books}/>
 
         <Route name="AddBook" path="/add-book" component={BookCreateUpdate}/>
@@ -40,10 +41,10 @@ const AppRoutes = (
 
         <Route path="/search/:q"  render={(props)=><Search {...props}/>}  />
 
+        <Route path="/book/:id"  render={(props)=><View {...props}/>}  />
 
         <Route name="UpdateBook" path="/update-book" component={BookCreateUpdate}/>
         <Route name="UpdateCategory" path="/update-category" component={CategoryCreateUpdate}/>
-        <Route name="View" path="/view" component={View}/>
 
         {/*<Route name="SignIn" path="/signin" component={SignIn}/>*/}
 

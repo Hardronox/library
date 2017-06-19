@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import AppActions from '../../actions/AppActions';
-import BookStore from '../../stores/BooksStore'
+import BooksStore from '../../stores/BooksStore'
 import CategoriesStore from '../../stores/CategoriesStore'
 import Book from "./Book";
 import Category from "./Category";
@@ -25,23 +25,23 @@ class Books extends Component {
 
 
     componentWillUnmount() {
-        BookStore.removeChangeListener(this._onChange);
+        BooksStore.removeChangeListener(this._onChange);
     }
 
     componentDidMount() {
-        BookStore.addChangeListener(this._onChange);
+        BooksStore.addChangeListener(this._onChange);
     }
 
     _onChange () {
         this.setState({
-            books: BookStore.getAll(),
+            books: BooksStore.getAll(),
             categories: CategoriesStore.getAll(),
         })
     }
 
     _getState () {
         return {
-            books: BookStore.getAll(),
+            books: BooksStore.getAll(),
             categories: CategoriesStore.getAll(),
             searchValue: '',
         };

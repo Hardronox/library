@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import AppActions from '../../actions/AppActions';
-import BookStore from '../../stores/BooksStore'
+import BooksStore from '../../stores/BooksStore'
 import CategoriesStore from '../../stores/CategoriesStore'
 import Book from "./Book";
+import { Link } from 'react-router-dom'
 
 
 class View extends Component {
@@ -15,40 +16,52 @@ class View extends Component {
     }
 
     componentWillMount() {
-        console.log(this.props.match.params.id);
         AppActions.getSingleBookAttempt(this.props.match.params.id);
     }
 
 
     componentWillUnmount() {
-        BookStore.removeChangeListener(this._onChange);
+        BooksStore.removeChangeListener(this._onChange);
     }
 
     componentDidMount() {
-        BookStore.addChangeListener(this._onChange);
+        BooksStore.addChangeListener(this._onChange);
     }
 
     _onChange () {
         this.setState({
-            books: BookStore.getAll(),
+            books: BooksStore.getAll(),
+            loading: BooksStore.getStatus()
         })
     }
 
     _getState () {
         return {
-            books: BookStore.getAll()
+            books: BooksStore.getAll(),
+            loading: BooksStore.getStatus()
         };
     }
 
     render() {
+        //console.log(this.state.loading);
+        if (this.state.loading){
+            return <div></div>;
+        } else
         return (
             <div className="container">
                 <div className="row">
                     <div className="col-md-8">
-                        {/*<h4>{this.state.books[0]}</h4>*/}
-
-                        {/*<Book book={this.state.books[0]} />*/}
+                        <Book book={this.state.books} />
                     </div>
+                    <div className="col-md-3">
+                        <Link  to={{ pathname: '/update-book/'+this.state.books.id}} >
+                            <button className="btn btn-warning">Update</button>
+                        </Link>
+                        <Link to={{ pathname: '/delete-book' }}>
+                            <button className="btn btn-danger">Delete</button>
+                        </Link>
+                    </div>
+
                 </div>
             </div>
         );

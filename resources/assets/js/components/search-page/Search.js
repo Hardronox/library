@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-
+import AppActions from '../../actions/AppActions';
+import BooksStore from '../../stores/BooksStore'
+import CategoriesStore from '../../stores/CategoriesStore'
+import Book from "./Book";
+import { Link } from 'react-router-dom'
 
 
 class Search extends Component {
@@ -9,11 +13,12 @@ class Search extends Component {
         super(props);
         this.state = this._getState();
         this._onChange = this._onChange.bind(this)
+        this.handleChange = this.handleChange.bind(this)
     }
 
     componentWillMount() {
-        //console.log(this.props);
-        AppActions.getBooksBySearchAttempt(this.props.match.params.search);
+        console.log(this.props.match.params.query);
+        AppActions.getBooksBySearchAttempt(this.props.match.params.query);
 
     }
 
@@ -38,12 +43,18 @@ class Search extends Component {
         };
     }
 
+    handleChange(event) {
+        this.setState(
+            {searchValue: event.target.value}
+        );
+    }
+
     render() {
         return (
         <div className="container">
             <div className="row">
                 <div className="col-md-8">
-                    <h3>Books in "{this.props.match.params.name}" category:</h3>
+                    <h3>Search by: "{this.props.match.params.query}" </h3>
                     {_.times(this.state.books.length, i =>
 
                         <Book book={this.state.books[i]}
@@ -56,7 +67,7 @@ class Search extends Component {
                     <form className="form-inline">
                         <div className="form-group">
                             <label htmlFor="email">Search: </label>
-                            <input type="email" className="form-control" id="email" />
+                            <input type="text" className="form-control" id="email" defaultValue={this.props.match.params.query} onChange={this.handleChange} />
                         </div>
 
                         <button type="submit" className="btn btn-primary">Search</button>

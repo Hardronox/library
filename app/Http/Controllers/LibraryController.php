@@ -21,8 +21,8 @@ class LibraryController extends Controller
     {
 
         if (Request::ajax()) {
-            //var_dump($_GET);
             $books = Books::orderBy('created_at', 'desc')
+                ->orderBy('id', 'desc')
                 ->take(10)
                 ->get();
 
@@ -33,14 +33,20 @@ class LibraryController extends Controller
 
     public function getBooksByCategory()
     {
+
+
         if (Request::ajax()) {
 
-            $category=Categories::where('name', Request::input('name'))->first();
-            $books=$category->books;
-            //var_dump('<pre>',$category); exit;
+            $limit = 5;
+            $offset = Request::input('page') * $limit;
 
+            $category=Categories::where('name', Request::input('name'))->first();
+
+            //var_dump('<pre>', $books=$category->books()->offset($offset)->limit($limit)->get(), '</pre >'); exit;
+            $books=$category->books()->offset($offset)->limit($limit)->get();
+            $count = $category->books()->count();
             return response()
-                        ->json($books); //, $categories
+                        ->json([$books, $count]); //, $categories
         }
     }
 
@@ -60,8 +66,9 @@ class LibraryController extends Controller
     public function view()
     {
         if (Request::ajax()) {
-            //var_dump(Request::input('id')); exit;
-            $books=Books::find((int)Request::input('id'))
+
+            $books=Books::where('id', Request::input('id'))
+                        ->with('categories')
                         ->first();
 
             return response()
@@ -74,12 +81,13 @@ class LibraryController extends Controller
      * @param $query
      * @return mixed
      */
-    public function search(Request $request)
+    public function getBooksBySearch()
     {
         if (Request::ajax()) {
 
-            $books = Books::where('title', 'like', '%' . $request->input('search') . '%')
-                ->orWhere('description', 'like', '%' . $request->input('search') . '%')
+            $books = Books::where('title', 'like', '%' . Request::input('search') . '%')
+                ->orWhere('description', 'like', '%' . Request::input('search') . '%')
+                ->with('categories')
                 ->get();
 
 

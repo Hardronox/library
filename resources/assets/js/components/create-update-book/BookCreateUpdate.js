@@ -1,35 +1,70 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
+import BooksStore from '../../stores/BooksStore'
+import AppActions from '../../actions/AppActions';
+import { Link } from 'react-router-dom'
 
 class BookCreateUpdate extends Component {
 
     constructor(props) {
+
         super(props);
-        this.state = {
-            color: props.initialColor
+        this.state = this._getState();
+        this._onChange = this._onChange.bind(this)
+    }
+
+    componentWillMount() {
+        AppActions.getSingleBookAttempt(this.props.match.params.id);
+    }
+
+
+    componentWillUnmount() {
+        BooksStore.removeChangeListener(this._onChange);
+    }
+
+    componentDidMount() {
+        BooksStore.addChangeListener(this._onChange);
+    }
+
+    _onChange () {
+        this.setState({
+            books: BooksStore.getAll(),
+            loading: BooksStore.getStatus()
+        })
+    }
+
+    _getState () {
+        return {
+            books: BooksStore.getAll(),
+            loading: BooksStore.getStatus()
         };
     }
 
-    componentWillMount(){
-
+    handleChange (name, e) {
+        let change = {};
+        change[name] = e.target.value;
+        this.setState(change);
     }
 
-
-
-
     render() {
-        let Select = require('react-select');
-
-        let options = [
-            { value: 'one', label: 'One' },
-            { value: 'two', label: 'Two' },
-            { value: 'three', label: 'three' }
-        ];
-
-        function logChange(val) {
-            console.log("Selected: " + val);
-        }
+        // console.log(this.props);
+        // let Select = require('react-select');
+        //
+        // let options = [
+        //     { value: 'one', label: 'One' },
+        //     { value: 'two', label: 'Two' },
+        //     { value: 'three', label: 'three' }
+        // ];
+        //
+        // function logChange(val) {
+        //     console.log("Selected: " + val);
+        // }
+        //console.log(this.state.loading);
+        if (this.state.loading){
+            return <div></div>;
+        } else
+        
         return (
             <div className="container">
                 <div className="row">
@@ -37,12 +72,31 @@ class BookCreateUpdate extends Component {
                         <form>
                             <div className="form-group">
                                 <label htmlFor="title" className="col-md-4 control-label">Title</label>
-                                <input id="title" type="text" className="form-control" name="title" required />
+
+                                <input id="title"
+                                       type="text"
+                                       className="form-control"
+                                       defaultValue={this.state.books.title}
+                                       onChange={this.handleChange}
+                                       name="title" required
+                                />
                             </div>
+
+                            <input type="text" value={this.state.input1}
+                                   onChange={this.handleChange.bind(this, 'input1')} />
+
+
 
                             <div className="form-group">
                                 <label htmlFor="description">Description:</label>
-                                <textarea className="form-control" defaultValue="" rows="5" id="description"></textarea>
+                                
+                                <textarea id="description"
+                                          className="form-control"
+                                          rows="5"
+                                          defaultValue={this.state.books.description}
+                                          onChange={this.handleChange}
+
+                                />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="image" className="control-label">Image</label>
@@ -53,14 +107,14 @@ class BookCreateUpdate extends Component {
                             </div>
 
                             <div className="form-group">
-                                <Select
-                                    name="form-field-name"
-                                    value="one"
-                                    options={options}
-                                    onChange={logChange}
-                                    multi={true}
-                                    joinValues={true}
-                                />
+                                {/*<Select*/}
+                                    {/*name="form-field-name"*/}
+                                    {/*value="one"*/}
+                                    {/*options={options}*/}
+                                    {/*onChange={logChange}*/}
+                                    {/*multi={true}*/}
+                                    {/*joinValues={true}*/}
+                                {/*/>*/}
                             </div>
 
                             <button type="submit" className="btn btn-success">Submit</button>

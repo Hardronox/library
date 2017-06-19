@@ -15,6 +15,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class BookCategory extends Model
 {
+    const CREATED_AT = NULL;
+    const UPDATED_AT = NULL;
+
     protected $table='book_category';
 
     protected $fillable = [

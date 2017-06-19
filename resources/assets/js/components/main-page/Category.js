@@ -12,7 +12,7 @@ class Category extends Component {
     render() {
         return (
             <div>
-                <Link to={{ pathname: '/category/'+this.props.category.name }}>
+                <Link to={{ pathname: '/category/'+this.props.category.name+'/page/1' }}>
                     <span className="badge">{this.props.category.name}</span>
                 </Link>
             </div>

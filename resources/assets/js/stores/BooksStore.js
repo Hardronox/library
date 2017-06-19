@@ -4,6 +4,8 @@ import AppActions from '../actions/AppActions';
 import axios from 'axios';
 
 let _books = [];
+let _booksCount=0;
+let _loading=true;
 
 class BooksStore extends EventEmitter {
 
@@ -18,6 +20,14 @@ class BooksStore extends EventEmitter {
 
     getAll() {
         return _books;
+    }
+
+    getCount() {
+        return _booksCount;
+    }
+
+    getStatus() {
+        return _loading;
     }
 
     getAllBooksAttempt() {
@@ -56,17 +66,24 @@ class BooksStore extends EventEmitter {
         });
     }
 
-    getBooksByCategoryAttempt(name) {
+    getBooksByCategoryAttempt(data) {
+
         $.get({
             url: '/get-books-by-category',
             dataType: 'json',
             data:{
-                name
+                name: data[0],
+                page: data[1]
             },
             cache: false,
             success: function(data) {
-                _books= data;
-                AppActions.booksByCategoryLoaded(_books);
+                _books= data[0].map(function(data) {
+
+                    data.description= data.description.substring(0, 60)+'...';
+                    return data;
+                });
+                AppActions.booksByCategoryLoaded([_books, data[1]]);
+
 
             }.bind(this),
             error: function(xhr, status, err) {
@@ -84,8 +101,9 @@ class BooksStore extends EventEmitter {
             },
             cache: false,
             success: function(data) {
-                console.log(data);
+
                 _books= data;
+
                 AppActions.singleBookLoaded(_books);
 
             }.bind(this),
@@ -97,7 +115,7 @@ class BooksStore extends EventEmitter {
 
     getBooksBySearchAttempt(search) {
         $.get({
-            url: '/get-books-by-category',
+            url: '/get-books-by-search',
             dataType: 'json',
             data:{
                 search
@@ -138,7 +156,8 @@ class BooksStore extends EventEmitter {
                 this.getBooksByCategoryAttempt(action.value);
                 break;
             case 'BOOKS_BY_CATEGORY_LOADED':
-                _books = action.value;
+                _books = action.value[0];
+                _booksCount = action.value[1];
                 break;
 
 
@@ -149,13 +168,14 @@ class BooksStore extends EventEmitter {
                 break;
             case 'SINGLE_BOOK_LOADED':
                 _books = action.value;
+                _loading=false;
                 break;
 
 
 
 
             case 'GET_BOOKS_BY_SEARCH':
-                this.getBooksByCategoryAttempt(action.value);
+                this.getBooksBySearchAttempt(action.value);
                 break;
             case 'BOOKS_BY_SEARCH_LOADED':
                 _books = action.value;

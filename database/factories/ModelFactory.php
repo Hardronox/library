@@ -28,7 +28,15 @@ $factory->define(App\Books::class, function (Faker\Generator $faker) {
 
     return [
         'title' => $faker->sentence(3),
-        'description' => $faker->text(300),
+        'description' => $faker->text(500),
         'picture' => '/images/1.png'
+    ];
+});
+
+$factory->define(App\BookCategory::class, function (Faker\Generator $faker) {
+
+    return [
+        'book_id' => rand(1,100),
+        'category_id' => rand(1,4),
     ];
 });

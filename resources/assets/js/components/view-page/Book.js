@@ -10,20 +10,23 @@ class Book extends Component {
     }
 
     render() {
+        let categories=_.uniqBy(this.props.book.categories, 'id');
         return (
 
             <div className="media">
                 <div className="media-left media-top">
-                    <a href="#">
-                        <img className="media-object" width={"100px"} height={"100px"} src={this.props.book.picture} />
-                    </a>
+                    <img className="media-object" width={"100px"} height={"100px"} src={this.props.book.picture} />
                 </div>
                 <div className="media-body">
-                    <Link to={{ pathname: '/view/'+this.props.book.id }}>
-                        <h4 className="media-heading">{this.props.book.title}</h4>
-                    </Link>
+                    <h3 className="media-heading">{this.props.book.title}</h3>
+
                     {this.props.book.description}
                 </div>
+                {_.times(categories.length, i =>
+
+                    <span className="badge" key={i}>{categories[i].name}</span>
+
+                )}
             </div>
 
         );
@@ -31,7 +34,3 @@ class Book extends Component {
 }
 
 export default Book;
-
-// We only want to try to render our component on pages that have a div with an ID
-// of "example"; otherwise, we will see an error in our console
-

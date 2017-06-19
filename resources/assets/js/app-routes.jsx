@@ -8,7 +8,7 @@ import SignUp from './components/auth/SignUp'
 /*end auth*/
 
 /*layouts*/
-import BookCreateUpdate from './components/create-update-book/Book-create-update';
+import BookCreateUpdate from './components/create-update-book/BookCreateUpdate';
 
 import Books from './components/main-page/Books';
 
@@ -37,13 +37,14 @@ const AppRoutes = (
 
         {/*<Route name="Categories" path="/category/:name"  component={CategoryBooks}/>*/}
 
-        <Route path="/category/:name"  render={(props)=><CategoryBooks {...props}/>}  />
+        <Route path="/category/:name/page/:page"  render={(props)=><CategoryBooks {...props}/>}  />
 
-        <Route path="/search/:q"  render={(props)=><Search {...props}/>}  />
+        <Route path="/search/:query"  render={(props)=><Search {...props}/>}  />
 
         <Route path="/book/:id"  render={(props)=><View {...props}/>}  />
 
-        <Route name="UpdateBook" path="/update-book" component={BookCreateUpdate}/>
+        <Route path="/update-book/:id"  render={(props)=><BookCreateUpdate {...props}/>}  />
+
         <Route name="UpdateCategory" path="/update-category" component={CategoryCreateUpdate}/>
 
         {/*<Route name="SignIn" path="/signin" component={SignIn}/>*/}

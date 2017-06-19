@@ -10,6 +10,7 @@ class Book extends Component {
     }
 
     render() {
+        let categories=_.uniqBy(this.props.book.categories, 'id');
         return (
 
             <div className="media">
@@ -24,6 +25,12 @@ class Book extends Component {
                     </Link>
                     {this.props.book.description}
                 </div>
+                {_.times(categories.length, i =>
+
+                    <span className="badge" key={i}>{categories[i].name}</span>
+
+                )}
+                <hr/>
             </div>
 
         );

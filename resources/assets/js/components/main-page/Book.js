@@ -24,6 +24,7 @@ class Book extends Component {
                     </Link>
                     {this.props.book.description}
                 </div>
+                <hr/>
             </div>
 
         );

@@ -15,7 +15,7 @@ class Book extends Component {
 
             <div className="media">
                 <div className="media-left media-top">
-                    <img className="media-object" width={"100px"} height={"100px"} src={this.props.book.picture} />
+                    <img className="media-object" width={"100px"} height={"100px"} src={'/images/'+ this.props.book.picture} />
                 </div>
                 <div className="media-body">
                     <h3 className="media-heading">{this.props.book.title}</h3>

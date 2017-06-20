@@ -14,9 +14,7 @@ class Book extends Component {
 
             <div className="media">
                 <div className="media-left media-top">
-                    <a href="#">
-                        <img className="media-object" width={"100px"} height={"100px"} src={this.props.book.picture} />
-                    </a>
+                    <img className="media-object" width={"100px"} height={"100px"} src={'/images/'+ this.props.book.picture} />
                 </div>
                 <div className="media-body">
                     <Link to={{ pathname: '/book/'+this.props.book.id }}>
@@ -32,7 +30,4 @@ class Book extends Component {
 }
 
 export default Book;
-
-// We only want to try to render our component on pages that have a div with an ID
-// of "example"; otherwise, we will see an error in our console
 

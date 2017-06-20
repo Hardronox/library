@@ -61,6 +61,55 @@ class AppActions {
     }
     // --------------------------------------------------------
 
+    createSingleBookAttempt(data) {
+        AppDispatcher.dispatch({
+            actionType: 'CREATE_SINGLE_BOOK',
+            value: data
+        });
+    }
+
+    singleBookCreated(data) {
+        AppDispatcher.dispatch({
+            actionType: 'SINGLE_BOOK_CREATED',
+            value: data
+        });
+    }
+
+    // --------------------------------------------------------
+
+    updateSingleBookAttempt(data) {
+        AppDispatcher.dispatch({
+            actionType: 'UPDATE_SINGLE_BOOK',
+            value: data
+        });
+    }
+
+    singleBookLoaded(data) {
+        AppDispatcher.dispatch({
+            actionType: 'SINGLE_BOOK_UPDATED',
+            value: data
+        });
+    }
+
+    // --------------------------------------------------------
+
+    deleteSingleBookAttempt(data) {
+        AppDispatcher.dispatch({
+            actionType: 'DELETE_SINGLE_BOOK',
+            value: data
+        });
+    }
+
+    singleBookDeleted(data) {
+        AppDispatcher.dispatch({
+            actionType: 'SINGLE_BOOK_DELETED',
+            value: data
+        });
+    }
+
+    // --------------------------------------------------------
+
+
     getCategoriesAttempt(data) {
         AppDispatcher.dispatch({
             actionType: 'GET_CATEGORIES',

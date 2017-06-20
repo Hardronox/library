@@ -49,9 +49,9 @@ class Main extends Component {
                             </Link>
 
                             <li className="dropdown">
-                                <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    Name <span className="caret"></span>
-                                </a>
+                                {/*<a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">*/}
+                                    {/*Name <span className="caret"></span>*/}
+                                {/*</a>*/}
 
                                 <ul className="dropdown-menu" role="menu">
                                     <li>

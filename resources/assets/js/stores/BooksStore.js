@@ -113,6 +113,90 @@ class BooksStore extends EventEmitter {
         });
     }
 
+    deleteSingleBookAttempt(id) {
+        $.post({
+            url: '/delete-single-book',
+            dataType: 'json',
+            data:{
+                id
+            },
+            cache: false,
+            success: function(data) {
+
+
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(this.props, status, err);
+            }.bind(this)
+        });
+    }
+
+    createSingleBookAttempt(data) {
+        $.post({
+            url: '/create-single-book',
+            dataType: 'json',
+            data: data,
+            cache: false,
+            contentType : false,
+            enctype: 'multipart/form-data',
+            processData:false,
+            success: function(data) {
+
+                _books= data;
+
+                AppActions.singleBookLoaded(_books);
+
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(this.props, status, err);
+            }.bind(this)
+        });
+    }
+
+    createSingleBookAttempt(data) {
+        $.post({
+            url: '/create-single-book',
+            dataType: 'json',
+            data: data,
+            cache: false,
+            contentType : false,
+            enctype: 'multipart/form-data',
+            processData:false,
+            success: function(data) {
+
+                _books= data;
+
+                AppActions.singleBookLoaded(_books);
+
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(this.props, status, err);
+            }.bind(this)
+        });
+    }
+
+    updateSingleBookAttempt(data) {
+        $.post({
+            url: '/update-single-book',
+            dataType: 'json',
+            data: data,
+            cache: false,
+            contentType : false,
+            enctype: 'multipart/form-data',
+            processData:false,
+            success: function(data) {
+
+                _books= data;
+
+                AppActions.singleBookLoaded(_books);
+
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(this.props, status, err);
+            }.bind(this)
+        });
+    }
+
     getBooksBySearchAttempt(search) {
         $.get({
             url: '/get-books-by-search',
@@ -161,8 +245,6 @@ class BooksStore extends EventEmitter {
                 break;
 
 
-
-
             case 'GET_SINGLE_BOOK':
                 this.getSingleBookAttempt(action.value);
                 break;
@@ -171,6 +253,28 @@ class BooksStore extends EventEmitter {
                 _loading=false;
                 break;
 
+
+            case 'UPDATE_SINGLE_BOOK':
+                this.updateSingleBookAttempt(action.value);
+                break;
+            case 'SINGLE_BOOK_UPDATED':
+                _books = action.value;
+                _loading=false;
+                break;
+
+
+            case 'CREATE_SINGLE_BOOK':
+                this.createSingleBookAttempt(action.value);
+                break;
+            case 'SINGLE_BOOK_CREATED':
+                _books = action.value;
+                _loading=false;
+                break;
+
+
+            case 'DELETE_SINGLE_BOOK':
+                this.deleteSingleBookAttempt(action.value);
+                break;
 
 
 

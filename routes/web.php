@@ -17,18 +17,12 @@ Route::get('/get-single-book', 'LibraryController@view');
 Route::get('/get-categories', 'LibraryController@getCategories');
 
 
+Route::post('/create-single-book', 'LibraryController@addBook');
 
+Route::post('/update-single-book', 'LibraryController@updateBook');
 
-Route::post('/add-book', 'LibraryController@addBook');
+Route::post('/delete-single-book', 'LibraryController@deleteBook');
 
-Route::patch('/update-book', 'LibraryController@updateBook');
-
-
-//Route::get('/book/{id}', 'LibraryController@view')->name('view');
-
-//Route::post('/add-book', 'LibraryController@addBook')->name('add-book');
-
-Route::get('/', 'LibraryController@index')->name('search');
 
 
 Route::get('/home', function(){

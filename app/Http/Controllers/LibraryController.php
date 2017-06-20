@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Books;
 use App\Categories;
-use Request;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+
 
 
 class LibraryController extends Controller
@@ -17,10 +19,9 @@ class LibraryController extends Controller
         return view('home');
     }
 
-    public function getAllBooks()
+    public function getAllBooks(Request $request)
     {
-
-        if (Request::ajax()) {
+        if ($request->ajax()) {
             $books = Books::orderBy('created_at', 'desc')
                 ->orderBy('id', 'desc')
                 ->take(10)
@@ -31,16 +32,16 @@ class LibraryController extends Controller
         }
     }
 
-    public function getBooksByCategory()
+
+    public function getBooksByCategory(Request $request)
     {
 
-
-        if (Request::ajax()) {
+        if ($request->ajax()) {
 
             $limit = 5;
-            $offset = Request::input('page') * $limit;
+            $offset = $request->input('page') * $limit;
 
-            $category=Categories::where('name', Request::input('name'))->first();
+            $category=Categories::where('name', $request->input('name'))->first();
 
             //var_dump('<pre>', $books=$category->books()->offset($offset)->limit($limit)->get(), '</pre >'); exit;
             $books=$category->books()->offset($offset)->limit($limit)->get();
@@ -63,11 +64,11 @@ class LibraryController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function view()
+    public function view(Request $request)
     {
-        if (Request::ajax()) {
+        if ($request->ajax()) {
 
-            $books=Books::where('id', Request::input('id'))
+            $books=Books::where('id', $request->input('id'))
                         ->with('categories')
                         ->first();
 
@@ -81,12 +82,12 @@ class LibraryController extends Controller
      * @param $query
      * @return mixed
      */
-    public function getBooksBySearch()
+    public function getBooksBySearch(Request $request)
     {
-        if (Request::ajax()) {
+        if ($request->ajax()) {
 
-            $books = Books::where('title', 'like', '%' . Request::input('search') . '%')
-                ->orWhere('description', 'like', '%' . Request::input('search') . '%')
+            $books = Books::where('title', 'like', '%' . $request->input('search') . '%')
+                ->orWhere('description', 'like', '%' . $request->input('search') . '%')
                 ->with('categories')
                 ->get();
 
@@ -101,9 +102,10 @@ class LibraryController extends Controller
      */
     public function addBook(Request $request)
     {
-        if (Request::ajax()) {
+        if ($request->ajax()) {
 
-            $post = Request::all();
+
+            $post = $request->all();
 
 //            $this->validate(request(),[
 //                'title'=>'required|max:100|unique:articles',
@@ -111,15 +113,27 @@ class LibraryController extends Controller
 //            ]);
 
             $book=Books::create($post);
-            //$book=Books::create(['title'=>'123', 'description'=>'desc', 'picture'=>'adsfg']);
-
-
-            $category= Categories::where('name','=', $post['category_name'])->get();
-            //$category= Categories::where('name','=', 'Novel')->get();
 
 
 
-            $book->categories()->attach($category); // associate($category);
+            if ($request->hasFile('picture')){
+
+                $imageName = $book->id . '.' .
+                    $request->file('picture')->getClientOriginalExtension();
+
+                $request->file('picture')
+                    ->move(base_path() . '/public/images/', $imageName
+                    );
+
+                $book->picture= $imageName;
+                $book->save();
+            }
+
+
+            //$category= Categories::where('name','=', $post['category_name'])->get();
+
+
+            //$book->categories()->attach($category); // associate($category);
 
             return response()
                 ->json($book);
@@ -131,24 +145,41 @@ class LibraryController extends Controller
      */
     public function updateBook(Request $request)
     {
-        if (Request::ajax()) {
+        if ($request->ajax()) {
 
-            $post = Request::all();
+            $post = $request->all();
 
-            $this->validate(request(),[
-                'title'=>'required|max:100|unique:articles',
-                'description'=>'min:50|max:300'
-            ]);
 
-            $book= Books::find($post['book_id'])->get();
+            $book= Books::where('id', $post['id'])->first();
+
+
+//            $this->validate(request(),[
+//                'title'=>'required|max:100|unique:articles',
+//                'description'=>'min:50|max:300'
+//            ]);
 
             $book->title=$post['title'];
             $book->description=$post['description'];
+
+
+
+            if ($request->hasFile('picture')){
+
+                $imageName = $book->id . '.' .
+                    $request->file('picture')->getClientOriginalExtension();
+
+                $request->file('picture')
+                    ->move(base_path() . '/public/images/', $imageName
+                    );
+
+                $book->picture= $imageName;
+
+            }
             $book->save();
 
-            $category= Categories::where('name','=', $post['category_name'])->get();
-
-            $book->categories()->attach($category); // associate($category);
+//            $category= Categories::where('name','=', $post['category_name'])->get();
+//
+//            $book->categories()->attach($category); // associate($category);
 
             return response()
                 ->json($book);
@@ -158,17 +189,17 @@ class LibraryController extends Controller
     /**
      * @return mixed
      */
-    public function categories(Request $request)
+    public function deleteBook(Request $request)
     {
-        if (Request::ajax()) {
+        if ($request->ajax()) {
 
-            $limit = 10;
-            $offset = $request->input('page_number') * $limit;
+            $post = $request->all();
 
-            $books = Books::orderBy('created_at', 'desc')->offset($offset)->limit($limit);
 
-            return response()
-                        ->json($books);
+            $book= Books::where('id', $post['id'])->first();
+            $book->delete();
+
+            return 'done';
         }
     }
 }

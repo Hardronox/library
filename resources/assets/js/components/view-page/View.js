@@ -57,7 +57,7 @@ class View extends Component {
                         <Link  to={{ pathname: '/update-book/'+this.state.books.id}} >
                             <button className="btn btn-warning">Update</button>
                         </Link>
-                        <Link to={{ pathname: '/delete-book' }}>
+                        <Link to={{ pathname: '/delete-book/'+this.state.books.id }}>
                             <button className="btn btn-danger">Delete</button>
                         </Link>
                     </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import {
-    Route } from 'react-router-dom'
-
+    Route } from 'react-router-dom';
+import AppActions from './actions/AppActions';
 /*auth*/
 import SignIn from './components/auth/SignIn'
 import SignUp from './components/auth/SignUp'
@@ -21,6 +21,9 @@ import Main from './components/layouts/Header';
 import Search from './components/search-page/Search';
 
 import View from './components/view-page/View';
+
+
+
 /*end layouts*/
 
 
@@ -32,10 +35,10 @@ const AppRoutes = (
         <Route path="/" exact name="books" component={Books}/>
 
         <Route name="AddBook" path="/add-book" component={BookCreateUpdate}/>
+
+
         <Route name="AddCategory" path="/add-category" component={CategoryCreateUpdate}/>
 
-
-        {/*<Route name="Categories" path="/category/:name"  component={CategoryBooks}/>*/}
 
         <Route path="/category/:name/page/:page"  render={(props)=><CategoryBooks {...props}/>}  />
 
@@ -44,6 +47,15 @@ const AppRoutes = (
         <Route path="/book/:id"  render={(props)=><View {...props}/>}  />
 
         <Route path="/update-book/:id"  render={(props)=><BookCreateUpdate {...props}/>}  />
+
+        <Route path="/delete-book/:id"  render={(props)=>{
+
+            AppActions.deleteSingleBookAttempt(props.match.params.id);
+            setTimeout(props.history.push('/'), 0);
+
+            return null;
+        }}
+            />
 
         <Route name="UpdateCategory" path="/update-category" component={CategoryCreateUpdate}/>
 

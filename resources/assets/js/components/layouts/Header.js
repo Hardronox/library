@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 
 
-class Main extends Component {
+class Header extends Component {
 
     constructor(props) {
         super(props);
@@ -71,7 +71,7 @@ class Main extends Component {
     }
 }
 
-export default Main;
+export default Header;
 
 // We only want to try to render our component on pages that have a div with an ID
 // of "example"; otherwise, we will see an error in our console 

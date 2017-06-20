@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 
 
-class AddCategory extends Component {
+class CategoryCreateUpdate extends Component {
 
     // constructor(props) {
     //     super(props);
@@ -67,7 +67,7 @@ class AddCategory extends Component {
     }
 }
 
-export default AddCategory;
+export default CategoryCreateUpdate;
 
 // We only want to try to render our component on pages that have a div with an ID
 // of "example"; otherwise, we will see an error in our console

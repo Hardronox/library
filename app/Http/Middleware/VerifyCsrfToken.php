@@ -14,8 +14,9 @@ class VerifyCsrfToken extends BaseVerifier
     protected $except = [
         '/update-single-book',
         '/create-single-book',
-        '/create-category',
-        '/update-category',
         '/delete-single-book',
+
+        '/create-single-category',
+        '/update-single-category',
     ];
 }

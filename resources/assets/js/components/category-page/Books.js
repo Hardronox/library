@@ -58,7 +58,7 @@ class CategoryBooks extends Component {
         return (
             <div className="container">
                 <div className="row">
-                    <div className="col-md-8">
+                    <div className="col-md-7">
                         <h3>Books in "{this.props.match.params.name}" category:</h3>
                         {_.times(this.state.books.length, i =>
 
@@ -66,6 +66,14 @@ class CategoryBooks extends Component {
                                   key={i}
                             />
                         )}
+                    </div>
+                    <div className="col-md-3">
+                        <Link  to={{ pathname: '/add-category/'+this.state.books.id}} >
+                            <button className="btn btn-primary">Create</button>
+                        </Link>
+                        <Link to={{ pathname: '/update-category/'+this.state.books.id }}>
+                            <button className="btn btn-warning">Update</button>
+                        </Link>
                     </div>
                 </div>
 

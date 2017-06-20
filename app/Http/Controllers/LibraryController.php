@@ -12,13 +12,9 @@ use Illuminate\Support\Facades\Input;
 class LibraryController extends Controller
 {
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
-    {
-        return view('home');
-    }
-
     public function getAllBooks(Request $request)
     {
         if ($request->ajax()) {
@@ -33,9 +29,12 @@ class LibraryController extends Controller
     }
 
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getBooksByCategory(Request $request)
     {
-
         if ($request->ajax()) {
 
             $limit = 5;
@@ -46,25 +45,33 @@ class LibraryController extends Controller
             //var_dump('<pre>', $books=$category->books()->offset($offset)->limit($limit)->get(), '</pre >'); exit;
             $books=$category->books()->offset($offset)->limit($limit)->get();
             $count = $category->books()->count();
+
             return response()
                         ->json([$books, $count]); //, $categories
         }
     }
 
-    public function getCategories()
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getCategories(Request $request)
     {
-        $categories = Categories::all();
+        if ($request->ajax()) {
 
-        return response()
-            ->json($categories); //, $categories
+            $categories = Categories::all();
+
+            return response()
+                ->json($categories); //, $categories
+        }
     }
 
 
     /**
-     * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function view(Request $request)
+    public function getSingleBook(Request $request)
     {
         if ($request->ajax()) {
 
@@ -78,9 +85,10 @@ class LibraryController extends Controller
 
     }
 
+
     /**
-     * @param $query
-     * @return mixed
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function getBooksBySearch(Request $request)
     {
@@ -97,13 +105,14 @@ class LibraryController extends Controller
         }
     }
 
+
     /**
-     * @return Books
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function addBook(Request $request)
+    public function createSingleBook(Request $request)
     {
         if ($request->ajax()) {
-
 
             $post = $request->all();
 
@@ -113,7 +122,6 @@ class LibraryController extends Controller
 //            ]);
 
             $book=Books::create($post);
-
 
 
             if ($request->hasFile('picture')){
@@ -143,12 +151,11 @@ class LibraryController extends Controller
     /**
      * @return Books
      */
-    public function updateBook(Request $request)
+    public function updateSingleBook(Request $request)
     {
         if ($request->ajax()) {
 
             $post = $request->all();
-
 
             $book= Books::where('id', $post['id'])->first();
 
@@ -160,7 +167,6 @@ class LibraryController extends Controller
 
             $book->title=$post['title'];
             $book->description=$post['description'];
-
 
 
             if ($request->hasFile('picture')){
@@ -178,18 +184,73 @@ class LibraryController extends Controller
             $book->save();
 
 //            $category= Categories::where('name','=', $post['category_name'])->get();
-//
-//            $book->categories()->attach($category); // associate($category);
+//            $book->categories()->attach($category);
 
             return response()
                 ->json($book);
         }
     }
 
+
     /**
-     * @return mixed
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function deleteBook(Request $request)
+    public function createSingleCategory(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $post = $request->all();
+
+//            $this->validate(request(),[
+//                'title'=>'required|max:100|unique:articles',
+//                'description'=>'min:50|max:300'
+//            ]);
+
+            $book=Books::create($post);
+
+            return response()
+                ->json($book);
+        }
+    }
+
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateSingleCategory(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $post = $request->all();
+
+//            $this->validate(request(),[
+//                'title'=>'required|max:100|unique:articles',
+//                'description'=>'min:50|max:300'
+//            ]);
+
+            $category= Categories::where('id', $post['id'])->first();
+
+
+            $category->name=$post['title'];
+            $category->parent_id=$post['parent_id'];
+
+
+            $category->save();
+
+
+            return response()
+                ->json($category);
+        }
+    }
+
+
+    /**
+     * @param Request $request
+     * @return string
+     */
+    public function deleteSingleBook(Request $request)
     {
         if ($request->ajax()) {
 

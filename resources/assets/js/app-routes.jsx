@@ -12,11 +12,11 @@ import BookCreateUpdate from './components/create-update-book/BookCreateUpdate';
 
 import Books from './components/main-page/Books';
 
-import CategoryCreateUpdate from './components/create-update-category/Category-create-update';
+import CategoryCreateUpdate from './components/create-update-category/CategoryCreateUpdate';
 
 import CategoryBooks from './components/category-page/Books';
 
-import Main from './components/layouts/Header';
+import Header from './components/layouts/Header';
 
 import Search from './components/search-page/Search';
 
@@ -30,21 +30,11 @@ import View from './components/view-page/View';
 const AppRoutes = (
     <div>
 
-        <Main/>
+        <Header/>
 
         <Route path="/" exact name="books" component={Books}/>
 
-        <Route name="AddBook" path="/add-book" component={BookCreateUpdate}/>
-
-
-        <Route name="AddCategory" path="/add-category" component={CategoryCreateUpdate}/>
-
-
-        <Route path="/category/:name/page/:page"  render={(props)=><CategoryBooks {...props}/>}  />
-
-        <Route path="/search/:query"  render={(props)=><Search {...props}/>}  />
-
-        <Route path="/book/:id"  render={(props)=><View {...props}/>}  />
+        <Route path="/add-book" component={BookCreateUpdate}/>
 
         <Route path="/update-book/:id"  render={(props)=><BookCreateUpdate {...props}/>}  />
 
@@ -55,11 +45,21 @@ const AppRoutes = (
 
             return null;
         }}
-            />
+        />
 
-        <Route name="UpdateCategory" path="/update-category" component={CategoryCreateUpdate}/>
 
-        {/*<Route name="SignIn" path="/signin" component={SignIn}/>*/}
+
+        <Route path="/category/:name/page/:page"  render={(props)=><CategoryBooks {...props}/>}  />
+
+        <Route path="/search/:query"  render={(props)=><Search {...props}/>}  />
+
+        <Route path="/book/:id"  render={(props)=><View {...props}/>}  />
+
+
+
+        <Route path="/create-category" component={CategoryCreateUpdate}/>
+
+        <Route path="/update-category/:id"  render={(props)=><CategoryCreateUpdate {...props}/>}  />
 
     </div>
 );

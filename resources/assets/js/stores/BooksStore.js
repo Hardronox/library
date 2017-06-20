@@ -228,7 +228,7 @@ class BooksStore extends EventEmitter {
     dispatcherCallback(action) {
         switch (action.actionType) {
 
-            case 'GET_ALL_BOOKS':
+            case 'GET_ALL_BOOKS_ATTEMPT':
                 this.getAllBooksAttempt(action.value);
                 break;
             case 'ALL_BOOKS_LOADED':
@@ -236,7 +236,7 @@ class BooksStore extends EventEmitter {
                 break;
 
 
-            case 'GET_BOOKS_BY_CATEGORY':
+            case 'GET_BOOKS_BY_CATEGORY_ATTEMPT':
                 this.getBooksByCategoryAttempt(action.value);
                 break;
             case 'BOOKS_BY_CATEGORY_LOADED':
@@ -245,7 +245,7 @@ class BooksStore extends EventEmitter {
                 break;
 
 
-            case 'GET_SINGLE_BOOK':
+            case 'GET_SINGLE_BOOK_ATTEMPT':
                 this.getSingleBookAttempt(action.value);
                 break;
             case 'SINGLE_BOOK_LOADED':
@@ -254,7 +254,7 @@ class BooksStore extends EventEmitter {
                 break;
 
 
-            case 'UPDATE_SINGLE_BOOK':
+            case 'UPDATE_SINGLE_BOOK_ATTEMPT':
                 this.updateSingleBookAttempt(action.value);
                 break;
             case 'SINGLE_BOOK_UPDATED':
@@ -263,7 +263,7 @@ class BooksStore extends EventEmitter {
                 break;
 
 
-            case 'CREATE_SINGLE_BOOK':
+            case 'CREATE_SINGLE_BOOK_ATTEMPT':
                 this.createSingleBookAttempt(action.value);
                 break;
             case 'SINGLE_BOOK_CREATED':
@@ -272,13 +272,13 @@ class BooksStore extends EventEmitter {
                 break;
 
 
-            case 'DELETE_SINGLE_BOOK':
+            case 'DELETE_SINGLE_BOOK_ATTEMPT':
                 this.deleteSingleBookAttempt(action.value);
                 break;
 
 
 
-            case 'GET_BOOKS_BY_SEARCH':
+            case 'GET_BOOKS_BY_SEARCH_ATTEMPT':
                 this.getBooksBySearchAttempt(action.value);
                 break;
             case 'BOOKS_BY_SEARCH_LOADED':

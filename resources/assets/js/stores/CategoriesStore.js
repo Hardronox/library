@@ -39,6 +39,45 @@ class CategoriesStore extends EventEmitter {
         });
     }
 
+    createSingleCategoryAttempt(data) {
+        $.post({
+            url: '/create-single-category',
+            dataType: 'json',
+            data: data,
+            cache: false,
+            success: function(data) {
+
+                _books= data;
+
+                AppActions.singleCategoryCreated(_books);
+
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(this.props, status, err);
+            }.bind(this)
+        });
+    }
+
+    updateSingleCategoryAttempt(data) {
+        $.post({
+            url: '/update-single-category',
+            dataType: 'json',
+            data: data,
+            cache: false,
+            success: function(data) {
+
+                _books= data;
+
+                AppActions.singleCategoryUpdated(_books);
+
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(this.props, status, err);
+            }.bind(this)
+        });
+    }
+
+
     addChangeListener(callback) {
         this.on('change', callback);
     }
@@ -50,10 +89,26 @@ class CategoriesStore extends EventEmitter {
     dispatcherCallback(action) {
         switch (action.actionType) {
 
-            case 'GET_CATEGORIES':
+            case 'GET_CATEGORIES_ATTEMPT':
                 this.getCategoriesAttempt(action.value);
                 break;
             case 'CATEGORIES_LOADED':
+                _categories = action.value;
+                break;
+
+
+            case 'CREATE_SINGLE_CATEGORY_ATTEMPT':
+                this.createSingleCategoryAttempt(action.value);
+                break;
+            case 'CATEGORY_CREATED':
+                _categories = action.value;
+                break;
+
+
+            case 'UPDATE_SINGLE_CATEGORY_ATTEMPT':
+                this.updateSingleCategoryAttempt(action.value);
+                break;
+            case 'CATEGORY_UPDATED':
                 _categories = action.value;
                 break;
 

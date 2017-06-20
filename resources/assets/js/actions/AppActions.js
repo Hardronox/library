@@ -4,7 +4,7 @@ class AppActions {
 
     getAllBooksAttempt(data) {
         AppDispatcher.dispatch({
-            actionType: 'GET_ALL_BOOKS',
+            actionType: 'GET_ALL_BOOKS_ATTEMPT',
             value: data
         });
     }
@@ -18,7 +18,7 @@ class AppActions {
     // --------------------------------------------------------
     getBooksByCategoryAttempt(data) {
         AppDispatcher.dispatch({
-            actionType: 'GET_BOOKS_BY_CATEGORY',
+            actionType: 'GET_BOOKS_BY_CATEGORY_ATTEMPT',
             value: data
         });
     }
@@ -33,7 +33,7 @@ class AppActions {
 
     getBooksBySearchAttempt(data) {
         AppDispatcher.dispatch({
-            actionType: 'GET_BOOKS_BY_SEARCH',
+            actionType: 'GET_BOOKS_BY_SEARCH_ATTEMPT',
             value: data
         });
     }
@@ -48,7 +48,7 @@ class AppActions {
 
     getSingleBookAttempt(data) {
         AppDispatcher.dispatch({
-            actionType: 'GET_SINGLE_BOOK',
+            actionType: 'GET_SINGLE_BOOK_ATTEMPT',
             value: data
         });
     }
@@ -63,7 +63,7 @@ class AppActions {
 
     createSingleBookAttempt(data) {
         AppDispatcher.dispatch({
-            actionType: 'CREATE_SINGLE_BOOK',
+            actionType: 'CREATE_SINGLE_BOOK_ATTEMPT',
             value: data
         });
     }
@@ -79,7 +79,7 @@ class AppActions {
 
     updateSingleBookAttempt(data) {
         AppDispatcher.dispatch({
-            actionType: 'UPDATE_SINGLE_BOOK',
+            actionType: 'UPDATE_SINGLE_BOOK_ATTEMPT',
             value: data
         });
     }
@@ -95,7 +95,7 @@ class AppActions {
 
     deleteSingleBookAttempt(data) {
         AppDispatcher.dispatch({
-            actionType: 'DELETE_SINGLE_BOOK',
+            actionType: 'DELETE_SINGLE_BOOK_ATTEMPT',
             value: data
         });
     }
@@ -112,7 +112,7 @@ class AppActions {
 
     getCategoriesAttempt(data) {
         AppDispatcher.dispatch({
-            actionType: 'GET_CATEGORIES',
+            actionType: 'GET_CATEGORIES_ATTEMPT',
             value: data
         });
     }
@@ -123,6 +123,41 @@ class AppActions {
             value: data
         });
     }
+    // --------------------------------------------------------
+
+
+    createSingleCategoryAttempt(data) {
+        AppDispatcher.dispatch({
+            actionType: 'CREATE_SINGLE_CATEGORY_ATTEMPT',
+            value: data
+        });
+    }
+
+    singleCategoryCreated(data) {
+        AppDispatcher.dispatch({
+            actionType: 'SINGLE_CATEGORY_CREATED',
+            value: data
+        });
+    }
+    // --------------------------------------------------------
+
+
+
+    updateSingleCategoryAttempt(data) {
+        AppDispatcher.dispatch({
+            actionType: 'UPDATE_SINGLE_CATEGORY_ATTEMPT',
+            value: data
+        });
+    }
+
+    singleCategoryUpdated(data) {
+        AppDispatcher.dispatch({
+            actionType: 'SINGLE_CATEGORY_UPDATED',
+            value: data
+        });
+    }
+
+
 }
 
 

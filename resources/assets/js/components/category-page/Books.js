@@ -68,11 +68,11 @@ class CategoryBooks extends Component {
                         )}
                     </div>
                     <div className="col-md-3">
-                        <Link  to={{ pathname: '/add-category/'+this.state.books.id}} >
-                            <button className="btn btn-primary">Create</button>
+                        <Link  to={{ pathname: '/create-category'}} >
+                            <button className="btn btn-primary">Create Category</button>
                         </Link>
-                        <Link to={{ pathname: '/update-category/'+this.state.books.id }}>
-                            <button className="btn btn-warning">Update</button>
+                        <Link to={{ pathname: '/update-category/'+this.state.books.category.id }}>
+                            <button className="btn btn-warning">Update Category</button>
                         </Link>
                     </div>
                 </div>

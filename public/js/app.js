@@ -15332,7 +15332,7 @@ module.exports = function spread(callback) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_auth_SignUp__ = __webpack_require__(139);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_create_update_book_BookCreateUpdate__ = __webpack_require__(142);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_main_page_Books__ = __webpack_require__(145);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_create_update_category_CategoryCreateUpdate__ = __webpack_require__(307);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_create_update_category_CategoryCreateUpdate__ = __webpack_require__(143);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_category_page_Books__ = __webpack_require__(141);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_layouts_Header__ = __webpack_require__(144);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_search_page_Search__ = __webpack_require__(148);
@@ -15936,20 +15936,20 @@ var CategoryBooks = function (_Component) {
                         { className: 'col-md-3' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             __WEBPACK_IMPORTED_MODULE_5_react_router_dom__["c" /* Link */],
-                            { to: { pathname: '/add-category/' + this.state.books.id } },
+                            { to: { pathname: '/create-category' } },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'button',
                                 { className: 'btn btn-primary' },
-                                'Create'
+                                'Create Category'
                             )
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             __WEBPACK_IMPORTED_MODULE_5_react_router_dom__["c" /* Link */],
-                            { to: { pathname: '/update-category/' + this.state.books.id } },
+                            { to: { pathname: '/update-category/' + this.state.books.category.id } },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'button',
                                 { className: 'btn btn-warning' },
-                                'Update'
+                                'Update Category'
                             )
                         )
                     )
@@ -16023,11 +16023,6 @@ var BookCreateUpdate = function (_Component) {
     _createClass(BookCreateUpdate, [{
         key: 'componentWillMount',
         value: function componentWillMount() {
-
-            //if (this.props.match.params.id)
-            // console.log('HERE YOOO')
-            // console.log(this.props);
-
             __WEBPACK_IMPORTED_MODULE_4__actions_AppActions__["a" /* default */].getSingleBookAttempt(this.props.match.params.id);
         }
     }, {
@@ -16174,7 +16169,157 @@ var BookCreateUpdate = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (BookCreateUpdate);
 
 /***/ }),
-/* 143 */,
+/* 143 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_select__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_select___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_select__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_select_dist_react_select_css__ = __webpack_require__(296);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_select_dist_react_select_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_select_dist_react_select_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_BooksStore__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actions_AppActions__ = __webpack_require__(16);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+var CategoryCreateUpdate = function (_Component) {
+    _inherits(CategoryCreateUpdate, _Component);
+
+    function CategoryCreateUpdate(props) {
+        _classCallCheck(this, CategoryCreateUpdate);
+
+        var _this = _possibleConstructorReturn(this, (CategoryCreateUpdate.__proto__ || Object.getPrototypeOf(CategoryCreateUpdate)).call(this, props));
+
+        _this.state = _this._getState();
+        _this._onChange = _this._onChange.bind(_this);
+        _this._onSubmit = _this._onSubmit.bind(_this);
+
+        return _this;
+    }
+
+    _createClass(CategoryCreateUpdate, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            __WEBPACK_IMPORTED_MODULE_4__actions_AppActions__["a" /* default */].getSingleBookAttempt(this.props.match.params.id);
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            __WEBPACK_IMPORTED_MODULE_3__stores_BooksStore__["a" /* default */].removeChangeListener(this._onChange);
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            __WEBPACK_IMPORTED_MODULE_3__stores_BooksStore__["a" /* default */].addChangeListener(this._onChange);
+        }
+    }, {
+        key: '_onChange',
+        value: function _onChange() {
+            this.setState({
+                books: __WEBPACK_IMPORTED_MODULE_3__stores_BooksStore__["a" /* default */].getAll(),
+                loading: __WEBPACK_IMPORTED_MODULE_3__stores_BooksStore__["a" /* default */].getStatus()
+            });
+        }
+    }, {
+        key: '_getState',
+        value: function _getState() {
+            return {
+                books: __WEBPACK_IMPORTED_MODULE_3__stores_BooksStore__["a" /* default */].getAll(),
+                loading: __WEBPACK_IMPORTED_MODULE_3__stores_BooksStore__["a" /* default */].getStatus()
+            };
+        }
+    }, {
+        key: 'handleChange',
+        value: function handleChange(name, event) {
+
+            var state = Object.assign({}, this.state);
+            state.books[name] = name === 'picture' ? event.target.files[0] : event.target.value;
+            this.setState(state);
+        }
+    }, {
+        key: '_onSubmit',
+        value: function _onSubmit() {
+
+            if (this.state.category.id) if (this.props.match.params.id) __WEBPACK_IMPORTED_MODULE_4__actions_AppActions__["a" /* default */].updateSingleBookAttempt(formData);else __WEBPACK_IMPORTED_MODULE_4__actions_AppActions__["a" /* default */].createSingleBookAttempt(formData);
+
+            this.props.history.push('/');
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            // let Select = require('react-select');
+            //
+            // let options = [
+            //     { value: 'one', label: 'One' },
+            //     { value: 'two', label: 'Two' },
+            //     { value: 'three', label: 'three' }
+            // ];
+            //
+            // function logChange(val) {
+            //     console.dir("Selected: " + val);
+            // }
+
+            if (this.state.loading) {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null);
+            } else return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'container' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'row' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'col-md-6 ' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'form-group' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'label',
+                                { htmlFor: 'name', className: 'control-label' },
+                                'Name'
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'name',
+                                type: 'text',
+                                className: 'form-control',
+                                value: this.state.books.title,
+                                onChange: this.handleChange.bind(this, 'title'),
+                                name: 'name'
+                            })
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'form-group' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'button',
+                                { onClick: this._onSubmit, className: 'btn btn-success' },
+                                'Submit'
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return CategoryCreateUpdate;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (CategoryCreateUpdate);
+
+/***/ }),
 /* 144 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -63990,152 +64135,6 @@ module.exports = function(module) {
 __webpack_require__(116);
 module.exports = __webpack_require__(117);
 
-
-/***/ }),
-/* 301 */,
-/* 302 */,
-/* 303 */,
-/* 304 */,
-/* 305 */,
-/* 306 */,
-/* 307 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-var CategoryCreateUpdate = function (_Component) {
-    _inherits(CategoryCreateUpdate, _Component);
-
-    function CategoryCreateUpdate() {
-        _classCallCheck(this, CategoryCreateUpdate);
-
-        return _possibleConstructorReturn(this, (CategoryCreateUpdate.__proto__ || Object.getPrototypeOf(CategoryCreateUpdate)).apply(this, arguments));
-    }
-
-    _createClass(CategoryCreateUpdate, [{
-        key: "render",
-
-
-        // constructor(props) {
-        //     super(props);
-        //     this.state = { articles: [], articlesApproved: [], message: '' };
-        //     this.handleClick = this.handleClick.bind(this);
-        //     this.onSubmit = this.onSubmit.bind(this);
-        // }
-        //
-        // handleClick() {
-        //     if (document.getElementById('simpletext').value.length > 0 && this.state.articles.length < 10) {
-        //         AppActions.submitArticle(document.getElementById('simpletext').value)
-        //         document.getElementById('simpletext').value = ''
-        //     }
-        // }
-
-        value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "div",
-                { className: "container" },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "row" },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { className: "col-md-8 col-md-offset-2" },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { className: "panel panel-default" },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "div",
-                                { className: "panel-heading" },
-                                "Add book"
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "div",
-                                { className: "panel-body" },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    "form",
-                                    { className: "form-horizontal", role: "form", method: "POST", action: "{{ route('register') }}" },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        "div",
-                                        { className: "form-group" },
-                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                            "label",
-                                            { htmlFor: "title", className: "col-md-4 control-label" },
-                                            "Title"
-                                        ),
-                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                            "div",
-                                            { className: "col-md-6" },
-                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { id: "title", type: "text", className: "form-control", name: "title", required: true })
-                                        )
-                                    ),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        "div",
-                                        { className: "form-group" },
-                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                            "label",
-                                            { htmlFor: "description" },
-                                            "Description:"
-                                        ),
-                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                            "textarea",
-                                            { className: "form-control", rows: "5", id: "description" },
-                                            " "
-                                        )
-                                    ),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        "div",
-                                        { className: "form-group" },
-                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                            "label",
-                                            { htmlFor: "image", className: "control-label" },
-                                            "Image"
-                                        ),
-                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                            "div",
-                                            { className: "col-md-6" },
-                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "file", id: "image" })
-                                        )
-                                    ),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        "div",
-                                        { className: "form-group" },
-                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                            "div",
-                                            { className: "col-md-6 col-md-offset-4" },
-                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                "button",
-                                                { type: "submit", className: "btn btn-primary" },
-                                                "Submit"
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            );
-        }
-    }]);
-
-    return CategoryCreateUpdate;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (CategoryCreateUpdate);
-
-// We only want to try to render our component on pages that have a div with an ID
-// of "example"; otherwise, we will see an error in our console
 
 /***/ })
 /******/ ]);

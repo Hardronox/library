@@ -18,13 +18,7 @@ class BookCreateUpdate extends Component {
     }
 
     componentWillMount() {
-
-        //if (this.props.match.params.id)
-        // console.log('HERE YOOO')
-        // console.log(this.props);
-
         AppActions.getSingleBookAttempt(this.props.match.params.id);
-
     }
 
 

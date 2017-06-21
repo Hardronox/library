@@ -13,13 +13,15 @@ class CreateBooksTable extends Migration
      */
     public function up()
     {
-        Schema::create('books', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('title');
-            $table->text('description');
-            $table->string('picture');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('books')) {
+            Schema::create('books', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('title');
+                $table->text('description');
+                $table->string('picture');
+                $table->timestamps();
+            });
+        }
     }
 
     /**
@@ -29,6 +31,6 @@ class CreateBooksTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('books');
     }
 }

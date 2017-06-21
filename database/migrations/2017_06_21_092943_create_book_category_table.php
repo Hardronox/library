@@ -13,10 +13,12 @@ class CreateBookCategoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('book_category', function (Blueprint $table) {
-            $table->integer('book_id');
-            $table->integer('category_id');
-        });
+        if (!Schema::hasTable('book_category')) {
+            Schema::create('book_category', function (Blueprint $table) {
+                $table->integer('book_id');
+                $table->integer('category_id');
+            });
+        }
     }
 
     /**
@@ -26,6 +28,6 @@ class CreateBookCategoryTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('book_category');
     }
 }

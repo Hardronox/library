@@ -16522,7 +16522,7 @@ var Book = function (_Component) {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'a',
                         { href: '#' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: "100px", height: "100px", className: 'media-object', src: this.props.book.picture })
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: "100px", height: "100px", className: 'media-object', src: '/images/' + this.props.book.picture })
                     )
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -16594,13 +16594,13 @@ var Search = function (_Component) {
         _this.state = _this._getState();
         _this._onChange = _this._onChange.bind(_this);
         _this.handleChange = _this.handleChange.bind(_this);
+        _this.search = _this.search.bind(_this);
         return _this;
     }
 
     _createClass(Search, [{
         key: 'componentWillMount',
         value: function componentWillMount() {
-            console.log(this.props.match.params.query);
             __WEBPACK_IMPORTED_MODULE_1__actions_AppActions__["a" /* default */].getBooksBySearchAttempt(this.props.match.params.query);
         }
     }, {
@@ -16633,6 +16633,11 @@ var Search = function (_Component) {
             this.setState({ searchValue: event.target.value });
         }
     }, {
+        key: 'search',
+        value: function search() {
+            __WEBPACK_IMPORTED_MODULE_1__actions_AppActions__["a" /* default */].getBooksBySearchAttempt(this.state.searchValue);
+        }
+    }, {
         key: 'render',
         value: function render() {
             var _this2 = this;
@@ -16663,23 +16668,19 @@ var Search = function (_Component) {
                         'div',
                         { className: 'col-md-4' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'form',
-                            { className: 'form-inline' },
+                            'div',
+                            { className: 'form-group' },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'div',
-                                { className: 'form-group' },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'label',
-                                    { htmlFor: 'email' },
-                                    'Search: '
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', className: 'form-control', id: 'email', defaultValue: this.props.match.params.query, onChange: this.handleChange })
+                                'label',
+                                { htmlFor: 'email' },
+                                'Search: '
                             ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'button',
-                                { type: 'submit', className: 'btn btn-primary' },
-                                'Search'
-                            )
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', className: 'form-control', id: 'email', defaultValue: this.props.match.params.query, onChange: this.handleChange })
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'button',
+                            { type: 'submit', className: 'btn btn-primary', onClick: this.search },
+                            'Search'
                         )
                     )
                 )

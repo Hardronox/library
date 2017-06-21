@@ -14,10 +14,10 @@ class Search extends Component {
         this.state = this._getState();
         this._onChange = this._onChange.bind(this)
         this.handleChange = this.handleChange.bind(this)
+        this.search = this.search.bind(this)
     }
 
     componentWillMount() {
-        console.log(this.props.match.params.query);
         AppActions.getBooksBySearchAttempt(this.props.match.params.query);
     }
 
@@ -48,6 +48,10 @@ class Search extends Component {
         );
     }
 
+    search() {
+        AppActions.getBooksBySearchAttempt(this.state.searchValue);
+    }
+
     render() {
         return (
         <div className="container">
@@ -63,14 +67,11 @@ class Search extends Component {
                 </div>
 
                 <div className="col-md-4">
-                    <form className="form-inline">
-                        <div className="form-group">
-                            <label htmlFor="email">Search: </label>
-                            <input type="text" className="form-control" id="email" defaultValue={this.props.match.params.query} onChange={this.handleChange} />
-                        </div>
-
-                        <button type="submit" className="btn btn-primary">Search</button>
-                    </form>
+                    <div className="form-group">
+                        <label htmlFor="email">Search: </label>
+                        <input type="text" className="form-control" id="email" defaultValue={this.props.match.params.query} onChange={this.handleChange} />
+                    </div>
+                    <button type="submit" className="btn btn-primary" onClick={this.search}>Search</button>
                 </div>
             </div>
         </div>

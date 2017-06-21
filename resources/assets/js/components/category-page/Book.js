@@ -14,7 +14,7 @@ class Book extends Component {
             <div className="media">
                 <Link to={{ pathname: '/book/'+this.props.book.id }}>
                     <div className="media-left media-top">
-                        <img width={"50px"} height={"50px"} className="media-object" src={this.props.book.picture} />
+                        <img width={"50px"} height={"50px"} className="media-object" src={'/images/'+ this.props.book.picture} />
                     </div>
                     <div className="media-body">
                         <h4 className="media-heading">{this.props.book.title}</h4>

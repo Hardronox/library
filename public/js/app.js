@@ -15581,7 +15581,7 @@ var Book = function (_Component) {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'media-left media-top' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: "50px", height: "50px", className: 'media-object', src: this.props.book.picture })
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: "50px", height: "50px", className: 'media-object', src: '/images/' + this.props.book.picture })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',

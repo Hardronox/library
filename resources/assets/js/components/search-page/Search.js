@@ -19,7 +19,6 @@ class Search extends Component {
     componentWillMount() {
         console.log(this.props.match.params.query);
         AppActions.getBooksBySearchAttempt(this.props.match.params.query);
-
     }
 
 
@@ -80,7 +79,3 @@ class Search extends Component {
 }
 
 export default Search;
-
-// We only want to try to render our component on pages that have a div with an ID
-// of "example"; otherwise, we will see an error in our console
-

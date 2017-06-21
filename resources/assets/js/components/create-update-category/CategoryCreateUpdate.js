@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
-import BooksStore from '../../stores/BooksStore'
+import CategoriesStore from '../../stores/CategoriesStore'
 import AppActions from '../../actions/AppActions';
 
 
@@ -10,56 +10,41 @@ class CategoryCreateUpdate extends Component {
     constructor(props) {
 
         super(props);
-        this.state = this._getState();
+        this.state =
+            {
+                category: {}
+            };
         this._onChange = this._onChange.bind(this);
         this._onSubmit = this._onSubmit.bind(this)
-
     }
-
-    componentWillMount() {
-        AppActions.getSingleBookAttempt(this.props.match.params.id);
-    }
-
 
     componentWillUnmount() {
-        BooksStore.removeChangeListener(this._onChange);
+        CategoriesStore.removeChangeListener(this._onChange);
     }
 
     componentDidMount() {
-        BooksStore.addChangeListener(this._onChange);
+        CategoriesStore.addChangeListener(this._onChange);
     }
 
     _onChange () {
         this.setState({
-            books: BooksStore.getAll(),
-            loading: BooksStore.getStatus()
+            loading: CategoriesStore.getStatus()
         })
     }
 
-    _getState () {
-        return {
-            books: BooksStore.getAll(),
-            loading: BooksStore.getStatus()
-        };
-    }
-
-    handleChange(name, event) {
+    handleChange(event) {
 
         let state = Object.assign({}, this.state);
-        state.books[name] = (name==='picture') ? event.target.files[0] : event.target.value;
+        state.category = event.target.value;
         this.setState(state);
     }
 
     _onSubmit () {
 
-
-        if(this.state.category.id)
-
-
-        if (this.props.match.params.id)
-            AppActions.updateSingleBookAttempt(formData);
+        if (this.props.match.params.name)
+            AppActions.updateSingleCategoryAttempt([this.props.match.params.name, this.state.category]);
         else
-            AppActions.createSingleBookAttempt(formData);
+            AppActions.createSingleCategoryAttempt(this.state.category);
 
         this.props.history.push('/');
     }
@@ -91,8 +76,8 @@ class CategoryCreateUpdate extends Component {
                                 <input id="name"
                                        type="text"
                                        className="form-control"
-                                       value={this.state.books.title}
-                                       onChange={this.handleChange.bind(this, 'title')}
+                                       defaultValue={this.props.match.params.name}
+                                       onChange={this.handleChange.bind(this)}
                                        name="name"
                                 />
                             </div>

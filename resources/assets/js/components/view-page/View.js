@@ -43,7 +43,6 @@ class View extends Component {
     }
 
     render() {
-        //console.log(this.state.loading);
         if (this.state.loading){
             return <div></div>;
         } else
@@ -57,6 +56,7 @@ class View extends Component {
                         <Link  to={{ pathname: '/update-book/'+this.state.books.id}} >
                             <button className="btn btn-warning">Update</button>
                         </Link>
+
                         <Link to={{ pathname: '/delete-book/'+this.state.books.id }}>
                             <button className="btn btn-danger">Delete</button>
                         </Link>

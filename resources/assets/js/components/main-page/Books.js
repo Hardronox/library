@@ -77,7 +77,7 @@ class Books extends Component {
                                     <button type="submit" className="btn btn-primary">Search</button>
                             </Link>
                         </form>
-                        <h4>Tags</h4>
+                        <h4>Categories</h4>
                         {_.times(this.state.categories.length, i =>
 
                             <Category category={this.state.categories[i]}
@@ -94,6 +94,5 @@ class Books extends Component {
 
 export default Books;
 
-// We only want to try to render our component on pages that have a div with an ID
-// of "example"; otherwise, we will see an error in our console
+
 

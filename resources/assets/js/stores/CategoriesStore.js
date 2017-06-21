@@ -1,10 +1,10 @@
-
 import AppDispatcher from '../dispatchers/AppDispatcher';
 import { EventEmitter } from 'events';
 import AppActions from '../actions/AppActions';
 
 
 let _categories = [];
+let _loading=true;
 
 class CategoriesStore extends EventEmitter {
 
@@ -21,10 +21,13 @@ class CategoriesStore extends EventEmitter {
         return _categories;
     }
 
+    getStatus() {
+        return _loading;
+    }
+
     getCategoriesAttempt() {
         $.get({
             url: '/get-categories',
-
             dataType: 'json',
             cache: false,
             success: function(data) {
@@ -39,17 +42,17 @@ class CategoriesStore extends EventEmitter {
         });
     }
 
-    createSingleCategoryAttempt(data) {
+    createSingleCategoryAttempt(name) {
         $.post({
             url: '/create-single-category',
             dataType: 'json',
-            data: data,
+            data:{
+                name
+            },
             cache: false,
             success: function(data) {
 
-                _books= data;
-
-                AppActions.singleCategoryCreated(_books);
+                AppActions.singleCategoryCreated();
 
             }.bind(this),
             error: function(xhr, status, err) {
@@ -62,13 +65,14 @@ class CategoriesStore extends EventEmitter {
         $.post({
             url: '/update-single-category',
             dataType: 'json',
-            data: data,
+            data:{
+                oldName: data[0],
+                newName: data[1]
+            },
             cache: false,
             success: function(data) {
 
-                _books= data;
-
-                AppActions.singleCategoryUpdated(_books);
+                AppActions.singleCategoryUpdated();
 
             }.bind(this),
             error: function(xhr, status, err) {
@@ -108,9 +112,7 @@ class CategoriesStore extends EventEmitter {
             case 'UPDATE_SINGLE_CATEGORY_ATTEMPT':
                 this.updateSingleCategoryAttempt(action.value);
                 break;
-            case 'CATEGORY_UPDATED':
-                _categories = action.value;
-                break;
+
 
         }
 

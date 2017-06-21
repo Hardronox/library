@@ -16,6 +16,7 @@ class AppActions {
         });
     }
     // --------------------------------------------------------
+
     getBooksByCategoryAttempt(data) {
         AppDispatcher.dispatch({
             actionType: 'GET_BOOKS_BY_CATEGORY_ATTEMPT',
@@ -74,7 +75,6 @@ class AppActions {
             value: data
         });
     }
-
     // --------------------------------------------------------
 
     updateSingleBookAttempt(data) {
@@ -90,7 +90,6 @@ class AppActions {
             value: data
         });
     }
-
     // --------------------------------------------------------
 
     deleteSingleBookAttempt(data) {
@@ -106,9 +105,7 @@ class AppActions {
             value: data
         });
     }
-
     // --------------------------------------------------------
-
 
     getCategoriesAttempt(data) {
         AppDispatcher.dispatch({
@@ -125,7 +122,6 @@ class AppActions {
     }
     // --------------------------------------------------------
 
-
     createSingleCategoryAttempt(data) {
         AppDispatcher.dispatch({
             actionType: 'CREATE_SINGLE_CATEGORY_ATTEMPT',
@@ -141,8 +137,6 @@ class AppActions {
     }
     // --------------------------------------------------------
 
-
-
     updateSingleCategoryAttempt(data) {
         AppDispatcher.dispatch({
             actionType: 'UPDATE_SINGLE_CATEGORY_ATTEMPT',
@@ -156,10 +150,7 @@ class AppActions {
             value: data
         });
     }
-
-
 }
-
 
 
 export default new AppActions()

@@ -123,6 +123,7 @@ class BooksStore extends EventEmitter {
             cache: false,
             success: function(data) {
 
+                AppActions.singleBookDeleted();
 
             }.bind(this),
             error: function(xhr, status, err) {

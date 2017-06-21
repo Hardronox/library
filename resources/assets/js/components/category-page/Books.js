@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import AppActions from '../../actions/AppActions';
 import BooksStore from '../../stores/BooksStore'
-import CategoriesStore from '../../stores/CategoriesStore'
 import Book from "./Book";
 import { Link } from 'react-router-dom'
 import Pagination from "react-js-pagination";
-
 
 
 class CategoryBooks extends Component {
@@ -22,7 +20,6 @@ class CategoryBooks extends Component {
         AppActions.getBooksByCategoryAttempt([this.props.match.params.name, this.props.match.params.page]);
 
     }
-
 
     componentWillUnmount() {
         BooksStore.removeChangeListener(this._onChange);
@@ -54,7 +51,6 @@ class CategoryBooks extends Component {
     }
 
     render() {
-        //console.log(this.state.booksCount);
         return (
             <div className="container">
                 <div className="row">
@@ -67,11 +63,12 @@ class CategoryBooks extends Component {
                             />
                         )}
                     </div>
-                    <div className="col-md-3">
+
+                    <div className="col-md-4">
                         <Link  to={{ pathname: '/create-category'}} >
                             <button className="btn btn-primary">Create Category</button>
                         </Link>
-                        <Link to={{ pathname: '/update-category/'+this.state.books.category.id }}>
+                        <Link to={{ pathname: '/update-category/'+this.props.match.params.name }}>
                             <button className="btn btn-warning">Update Category</button>
                         </Link>
                     </div>
@@ -91,6 +88,4 @@ class CategoryBooks extends Component {
 
 export default CategoryBooks;
 
-// We only want to try to render our component on pages that have a div with an ID
-// of "example"; otherwise, we will see an error in our console
 

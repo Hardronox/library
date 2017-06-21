@@ -12,8 +12,6 @@ class Header extends Component {
         super(props);
     }
 
-
-
     render() {
         return (
             <nav className="navbar navbar-default navbar-static-top">
@@ -49,17 +47,11 @@ class Header extends Component {
                             </Link>
 
                             <li className="dropdown">
-                                {/*<a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">*/}
-                                    {/*Name <span className="caret"></span>*/}
-                                {/*</a>*/}
-
                                 <ul className="dropdown-menu" role="menu">
                                     <li>
                                         <a href="{{ route('logout') }}">
                                             Logout
                                         </a>
-
-
                                     </li>
                                 </ul>
                             </li>
@@ -73,6 +65,4 @@ class Header extends Component {
 
 export default Header;
 
-// We only want to try to render our component on pages that have a div with an ID
-// of "example"; otherwise, we will see an error in our console 
 

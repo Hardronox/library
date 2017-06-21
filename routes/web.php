@@ -22,7 +22,7 @@ Route::post('/update-single-book', 'LibraryController@updateSingleBook');
 Route::post('/delete-single-book', 'LibraryController@deleteSingleBook');
 
 
-Route::post('/create-single-category', 'LibraryController@addSingleCategory');
+Route::post('/create-single-category', 'LibraryController@createSingleCategory');
 
 Route::post('/update-single-category', 'LibraryController@updateSingleCategory');
 

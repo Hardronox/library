@@ -11,6 +11,7 @@ class Book extends Component {
 
     render() {
         let categories=_.uniqBy(this.props.book.categories, 'id');
+
         return (
 
             <div className="media">
@@ -28,7 +29,6 @@ class Book extends Component {
                 {_.times(categories.length, i =>
 
                     <span className="badge" key={i}>{categories[i].name}</span>
-
                 )}
                 <hr/>
             </div>
@@ -39,6 +39,4 @@ class Book extends Component {
 
 export default Book;
 
-// We only want to try to render our component on pages that have a div with an ID
-// of "example"; otherwise, we will see an error in our console
 

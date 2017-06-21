@@ -3,7 +3,6 @@ import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import BooksStore from '../../stores/BooksStore'
 import AppActions from '../../actions/AppActions';
-import { Link } from 'react-router-dom'
 import FileInput from 'react-file-input'
 
 class BookCreateUpdate extends Component {
@@ -14,13 +13,11 @@ class BookCreateUpdate extends Component {
         this.state = this._getState();
         this._onChange = this._onChange.bind(this);
         this._onSubmit = this._onSubmit.bind(this)
-
     }
 
     componentWillMount() {
         AppActions.getSingleBookAttempt(this.props.match.params.id);
     }
-
 
     componentWillUnmount() {
         BooksStore.removeChangeListener(this._onChange);
@@ -88,7 +85,6 @@ class BookCreateUpdate extends Component {
             return <div></div>;
         } else
         return (
-
             <div className="container">
                 <div className="row">
                     <div className="col-md-12 ">

@@ -42,7 +42,6 @@ class LibraryController extends Controller
 
             $category=Categories::where('name', $request->input('name'))->first();
 
-            //var_dump('<pre>', $books=$category->books()->offset($offset)->limit($limit)->get(), '</pre >'); exit;
             $books=$category->books()->offset($offset)->limit($limit)->get();
             $count = $category->books()->count();
 
@@ -137,10 +136,7 @@ class LibraryController extends Controller
                 $book->save();
             }
 
-
             //$category= Categories::where('name','=', $post['category_name'])->get();
-
-
             //$book->categories()->attach($category); // associate($category);
 
             return response()
@@ -159,7 +155,6 @@ class LibraryController extends Controller
 
             $book= Books::where('id', $post['id'])->first();
 
-
 //            $this->validate(request(),[
 //                'title'=>'required|max:100|unique:articles',
 //                'description'=>'min:50|max:300'
@@ -167,7 +162,6 @@ class LibraryController extends Controller
 
             $book->title=$post['title'];
             $book->description=$post['description'];
-
 
             if ($request->hasFile('picture')){
 
@@ -207,7 +201,7 @@ class LibraryController extends Controller
 //                'description'=>'min:50|max:300'
 //            ]);
 
-            $book=Books::create($post);
+            $book=Categories::create($post);
 
             return response()
                 ->json($book);
@@ -230,11 +224,9 @@ class LibraryController extends Controller
 //                'description'=>'min:50|max:300'
 //            ]);
 
-            $category= Categories::where('id', $post['id'])->first();
-
-
-            $category->name=$post['title'];
-            $category->parent_id=$post['parent_id'];
+            $category= Categories::where('name', $post['oldName'])->first();
+            $category->name=$post['newName'];
+            //$category->parent_id=$post['parent_id'];
 
 
             $category->save();
@@ -256,11 +248,11 @@ class LibraryController extends Controller
 
             $post = $request->all();
 
-
             $book= Books::where('id', $post['id'])->first();
             $book->delete();
 
-            return 'done';
+            return response()
+                ->json('done');
         }
     }
 }

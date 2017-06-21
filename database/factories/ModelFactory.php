@@ -40,3 +40,11 @@ $factory->define(App\BookCategory::class, function (Faker\Generator $faker) {
         'category_id' => rand(1,4),
     ];
 });
+
+$factory->define(App\Categories::class, function (Faker\Generator $faker) {
+
+    return [
+        'name' => $faker->sentence(1),
+        'parent_id' => null
+    ];
+});

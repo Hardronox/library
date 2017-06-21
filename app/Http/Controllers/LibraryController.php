@@ -200,7 +200,7 @@ class LibraryController extends Controller
             $category->name=$post['newName'];
 
             $category->save();
-            
+
             return response()
                 ->json($category);
         }

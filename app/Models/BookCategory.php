@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\BookCategory
+ * App\BookCategoryTableSeeder
  *
  * @property int $book_id
  * @property int $category_id

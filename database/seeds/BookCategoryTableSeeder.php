@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class BookCategory extends Seeder
+class BookCategoryTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

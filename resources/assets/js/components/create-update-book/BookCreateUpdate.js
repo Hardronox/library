@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
-import BooksStore from '../../stores/BooksStore'
+import BooksStore from '../../stores/BooksStore';
 import AppActions from '../../actions/AppActions';
-import FileInput from 'react-file-input'
+import FileInput from 'react-file-input';
+import Noty from 'noty';
 
 class BookCreateUpdate extends Component {
 
@@ -64,6 +65,7 @@ class BookCreateUpdate extends Component {
             AppActions.updateSingleBookAttempt(formData);
         else
             AppActions.createSingleBookAttempt(formData);
+        
 
         this.props.history.push('/');
     }

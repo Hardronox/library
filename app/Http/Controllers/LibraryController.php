@@ -81,7 +81,6 @@ class LibraryController extends Controller
             return response()
                         ->json($books);
         }
-
     }
 
 
@@ -115,13 +114,7 @@ class LibraryController extends Controller
 
             $post = $request->all();
 
-//            $this->validate(request(),[
-//                'title'=>'required|max:100|unique:articles',
-//                'description'=>'min:50|max:300'
-//            ]);
-
             $book=Books::create($post);
-
 
             if ($request->hasFile('picture')){
 
@@ -135,9 +128,6 @@ class LibraryController extends Controller
                 $book->picture= $imageName;
                 $book->save();
             }
-
-            //$category= Categories::where('name','=', $post['category_name'])->get();
-            //$book->categories()->attach($category); // associate($category);
 
             return response()
                 ->json($book);
@@ -154,11 +144,6 @@ class LibraryController extends Controller
             $post = $request->all();
 
             $book= Books::where('id', $post['id'])->first();
-
-//            $this->validate(request(),[
-//                'title'=>'required|max:100|unique:articles',
-//                'description'=>'min:50|max:300'
-//            ]);
 
             $book->title=$post['title'];
             $book->description=$post['description'];
@@ -177,9 +162,6 @@ class LibraryController extends Controller
             }
             $book->save();
 
-//            $category= Categories::where('name','=', $post['category_name'])->get();
-//            $book->categories()->attach($category);
-
             return response()
                 ->json($book);
         }
@@ -195,11 +177,6 @@ class LibraryController extends Controller
         if ($request->ajax()) {
 
             $post = $request->all();
-
-//            $this->validate(request(),[
-//                'title'=>'required|max:100|unique:articles',
-//                'description'=>'min:50|max:300'
-//            ]);
 
             $book=Categories::create($post);
 
@@ -219,19 +196,11 @@ class LibraryController extends Controller
 
             $post = $request->all();
 
-//            $this->validate(request(),[
-//                'title'=>'required|max:100|unique:articles',
-//                'description'=>'min:50|max:300'
-//            ]);
-
             $category= Categories::where('name', $post['oldName'])->first();
             $category->name=$post['newName'];
-            //$category->parent_id=$post['parent_id'];
-
 
             $category->save();
-
-
+            
             return response()
                 ->json($category);
         }

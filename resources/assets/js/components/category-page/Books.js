@@ -65,9 +65,6 @@ class CategoryBooks extends Component {
                     </div>
 
                     <div className="col-md-4">
-                        <Link  to={{ pathname: '/create-category'}} >
-                            <button className="btn btn-primary">Create Category</button>
-                        </Link>
                         <Link to={{ pathname: '/update-category/'+this.props.match.params.name }}>
                             <button className="btn btn-warning">Update Category</button>
                         </Link>

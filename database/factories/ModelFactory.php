@@ -37,7 +37,7 @@ $factory->define(App\BookCategory::class, function (Faker\Generator $faker) {
 
     return [
         'book_id' => rand(1,100),
-        'category_id' => rand(1,4),
+        'category_id' => rand(1,10),
     ];
 });
 

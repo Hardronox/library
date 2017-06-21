@@ -15716,15 +15716,6 @@ var CategoryBooks = function (_Component) {
                         { className: 'col-md-4' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             __WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Link */],
-                            { to: { pathname: '/create-category' } },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'button',
-                                { className: 'btn btn-primary' },
-                                'Create Category'
-                            )
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Link */],
                             { to: { pathname: '/update-category/' + this.props.match.params.name } },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'button',
@@ -16232,19 +16223,22 @@ var Header = function (_Component) {
                             'ul',
                             { className: 'nav navbar-nav navbar-right' },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                __WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Link */],
-                                { className: 'navbar-brand', to: { pathname: '/add-book' } },
-                                'Add a book'
+                                'li',
+                                null,
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    __WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Link */],
+                                    { to: { pathname: '/create-category' } },
+                                    'Add Category'
+                                )
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                __WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Link */],
-                                { className: 'navbar-brand', to: { pathname: '/login' } },
-                                'Login'
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                __WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Link */],
-                                { className: 'navbar-brand', to: { pathname: '/logout' } },
-                                'Register'
+                                'li',
+                                null,
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    __WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Link */],
+                                    { className: 'navbar-brand', to: { pathname: '/add-book' } },
+                                    'Add Book'
+                                )
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'li',

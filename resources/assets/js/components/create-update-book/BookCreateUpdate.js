@@ -4,7 +4,6 @@ import 'react-select/dist/react-select.css';
 import BooksStore from '../../stores/BooksStore';
 import AppActions from '../../actions/AppActions';
 import FileInput from 'react-file-input';
-import Noty from 'noty';
 
 class BookCreateUpdate extends Component {
 
@@ -31,14 +30,18 @@ class BookCreateUpdate extends Component {
     _onChange () {
         this.setState({
             books: BooksStore.getAll(),
-            loading: BooksStore.getStatus()
+            loading: BooksStore.getStatus(),
+            formSubmitted: BooksStore.getSubmitStatus(),
+            formErrors: BooksStore.getFormErrors(),
         })
     }
 
     _getState () {
         return {
             books: BooksStore.getAll(),
-            loading: BooksStore.getStatus()
+            loading: BooksStore.getStatus(),
+            formSubmitted: BooksStore.getSubmitStatus(),
+            formErrors: [],
         };
     }
 
@@ -53,21 +56,25 @@ class BookCreateUpdate extends Component {
 
         let formData= new FormData();
 
-        if(this.state.books.id)
-            formData.append('id', this.state.books.id);
-
         formData.append('title', this.state.books.title);
         formData.append('description', this.state.books.description);
         formData.append('picture', this.state.books.picture);
 
 
-        if (this.props.match.params.id)
+        if (this.props.match.params.id) {
+            formData.append('id', this.state.books.id);
             AppActions.updateSingleBookAttempt(formData);
-        else
+        } else
             AppActions.createSingleBookAttempt(formData);
         
+            if (this.state.formSubmitted) {
 
-        this.props.history.push('/');
+                this.props.history.push('/');
+            }
+
+
+
+
     }
 
     render() {
@@ -82,11 +89,13 @@ class BookCreateUpdate extends Component {
         // function logChange(val) {
         //     console.dir("Selected: " + val);
         // }
-
+        console.log(this.state.formErrors);
         if (this.state.loading){
             return <div></div>;
         } else
+
         return (
+
             <div className="container">
                 <div className="row">
                     <div className="col-md-12 ">
@@ -96,11 +105,19 @@ class BookCreateUpdate extends Component {
                             <input id="title"
                                    type="text"
                                    className="form-control"
-                                   value={this.state.books.title}
+                                   defaultValue={this.state.books.title}
                                    onChange={this.handleChange.bind(this, 'title')}
                                    name="title"
                             />
+                            { this.state.formErrors.title ?
+                                <div className="alert alert-danger">
+                                    <strong>Error!</strong> {this.state.formErrors.title[0]}
+                                </div>
+                            :
+                                <div></div>
+                            }
                         </div>
+
 
                         <div className="form-group">
                             <label htmlFor="description"  className="control-label">Description:</label>
@@ -112,6 +129,13 @@ class BookCreateUpdate extends Component {
                                       onChange={this.handleChange.bind(this, 'description')}
                             />
 
+                            { this.state.formErrors.description ?
+                                <div className="alert alert-danger">
+                                    <strong>Error!</strong> {this.state.formErrors.description[0]}
+                                </div>
+                                :
+                                <div></div>
+                            }
                         </div>
 
                         <div className="form-group">

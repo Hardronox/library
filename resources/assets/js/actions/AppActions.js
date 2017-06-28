@@ -75,6 +75,13 @@ class AppActions {
             value: data
         });
     }
+
+    singleBookNotCreated(data) {
+        AppDispatcher.dispatch({
+            actionType: 'SINGLE_BOOK_NOT_CREATED',
+            value: data
+        });
+    }
     // --------------------------------------------------------
 
     updateSingleBookAttempt(data) {

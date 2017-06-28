@@ -1,11 +1,12 @@
 import AppDispatcher from '../dispatchers/AppDispatcher';
 import { EventEmitter } from 'events';
 import AppActions from '../actions/AppActions';
-import axios from 'axios';
 
 let _books = [];
 let _booksCount=0;
 let _loading=true;
+let _formSubmitted=false;
+let _formErrors=[];
 
 class BooksStore extends EventEmitter {
 
@@ -30,25 +31,15 @@ class BooksStore extends EventEmitter {
         return _loading;
     }
 
-    getAllBooksAttempt() {
+    getSubmitStatus() {
+        return _formSubmitted;
+    }
 
-        //  let ins=axios.create({
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json',
-        //     }
-        // });
-        //
-        //
-        // ins.get('/get-all-books')
-        //     .then(function (response) {
-        //         console.log(response);
-        //         _books= response.data;
-        //         AppActions.allBooksLoaded(_books);
-        //     })
-        //     .catch(function (error) {
-        //         console.log(error);
-        //     });
+    getFormErrors() {
+        return _formErrors;
+    }
+
+    getAllBooksAttempt() {
 
         $.get({
             url: '/get-all-books',
@@ -132,27 +123,7 @@ class BooksStore extends EventEmitter {
         });
     }
 
-    createSingleBookAttempt(data) {
-        $.post({
-            url: '/create-single-book',
-            dataType: 'json',
-            data: data,
-            cache: false,
-            contentType : false,
-            enctype: 'multipart/form-data',
-            processData:false,
-            success: function(data) {
 
-                _books= data;
-
-                AppActions.singleBookLoaded(_books);
-
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props, status, err);
-            }.bind(this)
-        });
-    }
 
     createSingleBookAttempt(data) {
         $.post({
@@ -163,15 +134,16 @@ class BooksStore extends EventEmitter {
             contentType : false,
             enctype: 'multipart/form-data',
             processData:false,
-            success: function(data) {
+            success: function() {
 
-                _books= data;
-
-                AppActions.singleBookLoaded(_books);
+                AppActions.singleBookCreated();
 
             }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props, status, err);
+            error: function(response) {
+
+                //_formErrors=response.responseJSON;
+                AppActions.singleBookNotCreated(response.responseJSON);
+
             }.bind(this)
         });
     }
@@ -268,7 +240,13 @@ class BooksStore extends EventEmitter {
                 this.createSingleBookAttempt(action.value);
                 break;
             case 'SINGLE_BOOK_CREATED':
-                _books = action.value;
+                _formSubmitted=true;
+                _loading=false;
+                break;
+            case 'SINGLE_BOOK_NOT_CREATED':
+
+                _formErrors=action.value;
+                //console.log(_formErrors);
                 _loading=false;
                 break;
 

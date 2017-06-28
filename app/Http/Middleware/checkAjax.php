@@ -15,6 +15,12 @@ class checkAjax
      */
     public function handle($request, Closure $next)
     {
+        if(!$request->ajax()) {
+
+            return response('', 405);
+        }
+
         return $next($request);
     }
+
 }

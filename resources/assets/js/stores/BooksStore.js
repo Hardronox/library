@@ -39,6 +39,10 @@ class BooksStore extends EventEmitter {
         return _formErrors;
     }
 
+    unsetFormErrors() {
+         _formErrors=[];
+    }
+
     getAllBooksAttempt() {
 
         $.get({
@@ -141,7 +145,6 @@ class BooksStore extends EventEmitter {
             }.bind(this),
             error: function(response) {
 
-                //_formErrors=response.responseJSON;
                 AppActions.singleBookNotCreated(response.responseJSON);
 
             }.bind(this)
@@ -244,9 +247,7 @@ class BooksStore extends EventEmitter {
                 _loading=false;
                 break;
             case 'SINGLE_BOOK_NOT_CREATED':
-
                 _formErrors=action.value;
-                //console.log(_formErrors);
                 _loading=false;
                 break;
 
@@ -256,12 +257,16 @@ class BooksStore extends EventEmitter {
                 break;
 
 
-
             case 'GET_BOOKS_BY_SEARCH_ATTEMPT':
                 this.getBooksBySearchAttempt(action.value);
                 break;
             case 'BOOKS_BY_SEARCH_LOADED':
                 _books = action.value;
+                break;
+
+
+            case 'UNSET_FORM_ERRORS':
+                this.unsetFormErrors();
                 break;
         }
 

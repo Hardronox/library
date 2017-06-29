@@ -102,7 +102,9 @@ class LibraryController extends Controller
         //var_dump($request); exit;
         $post = $request->all();
 
-        $book=Books::create($post);
+        $book=new Books();
+        $book->title=$post['title'];
+        $book->description=$post['description'];
 
         if ($request->hasFile('picture')){
 
@@ -114,8 +116,8 @@ class LibraryController extends Controller
                 );
 
             $book->picture= $imageName;
-            $book->save();
         }
+        $book->save();
 
         return response()
             ->json($book);

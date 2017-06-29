@@ -157,6 +157,13 @@ class AppActions {
             value: data
         });
     }
+
+    unsetFormErrors(data) {
+        AppDispatcher.dispatch({
+            actionType: 'UNSET_FORM_ERRORS',
+            value: data
+        });
+    }
 }
 
 

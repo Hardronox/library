@@ -17,14 +17,19 @@ class BookCreateUpdate extends Component {
 
     componentWillMount() {
         AppActions.getSingleBookAttempt(this.props.match.params.id);
+        console.log('MOUNTED');
     }
 
     componentWillUnmount() {
         BooksStore.removeChangeListener(this._onChange);
+        BooksStore.unsetFormErrors();
     }
 
     componentDidMount() {
         BooksStore.addChangeListener(this._onChange);
+        this.setState({
+            formErrors: [],
+        })
     }
 
     _onChange () {
@@ -34,6 +39,7 @@ class BookCreateUpdate extends Component {
             formSubmitted: BooksStore.getSubmitStatus(),
             formErrors: BooksStore.getFormErrors(),
         })
+
     }
 
     _getState () {
@@ -89,7 +95,6 @@ class BookCreateUpdate extends Component {
         // function logChange(val) {
         //     console.dir("Selected: " + val);
         // }
-        console.log(this.state.formErrors);
         if (this.state.loading){
             return <div></div>;
         } else

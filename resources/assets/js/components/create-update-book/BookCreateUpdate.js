@@ -18,18 +18,17 @@ class BookCreateUpdate extends Component {
     componentWillMount() {
         AppActions.getSingleBookAttempt(this.props.match.params.id);
         console.log('MOUNTED');
+        console.log(this.state);
     }
 
     componentWillUnmount() {
         BooksStore.removeChangeListener(this._onChange);
         BooksStore.unsetFormErrors();
+        BooksStore.unsetFormSubmitted();
     }
 
     componentDidMount() {
         BooksStore.addChangeListener(this._onChange);
-        this.setState({
-            formErrors: [],
-        })
     }
 
     _onChange () {
@@ -38,7 +37,12 @@ class BookCreateUpdate extends Component {
             loading: BooksStore.getStatus(),
             formSubmitted: BooksStore.getSubmitStatus(),
             formErrors: BooksStore.getFormErrors(),
-        })
+        });
+
+        // if (this.state.formSubmitted) {
+        //
+        //     this.props.history.push('/');
+        // }
 
     }
 
@@ -72,14 +76,9 @@ class BookCreateUpdate extends Component {
             AppActions.updateSingleBookAttempt(formData);
         } else
             AppActions.createSingleBookAttempt(formData);
-        
-            if (this.state.formSubmitted) {
 
-                this.props.history.push('/');
-            }
-
-
-
+        console.log('Before redirect');
+        console.log(this.state);
 
     }
 

@@ -1308,13 +1308,22 @@ var AppActions = function () {
             });
         }
     }, {
-        key: 'singleBookLoaded',
-        value: function singleBookLoaded(data) {
+        key: 'singleBookUpdated',
+        value: function singleBookUpdated(data) {
             __WEBPACK_IMPORTED_MODULE_0__dispatchers_AppDispatcher__["a" /* default */].dispatch({
                 actionType: 'SINGLE_BOOK_UPDATED',
                 value: data
             });
         }
+    }, {
+        key: 'singleBookNotUpdated',
+        value: function singleBookNotUpdated(data) {
+            __WEBPACK_IMPORTED_MODULE_0__dispatchers_AppDispatcher__["a" /* default */].dispatch({
+                actionType: 'SINGLE_BOOK_NOT_UPDATED',
+                value: data
+            });
+        }
+        // -
         // --------------------------------------------------------
 
     }, {
@@ -1392,6 +1401,14 @@ var AppActions = function () {
         value: function unsetFormErrors(data) {
             __WEBPACK_IMPORTED_MODULE_0__dispatchers_AppDispatcher__["a" /* default */].dispatch({
                 actionType: 'UNSET_FORM_ERRORS',
+                value: data
+            });
+        }
+    }, {
+        key: 'unsetFormSubmitted',
+        value: function unsetFormSubmitted(data) {
+            __WEBPACK_IMPORTED_MODULE_0__dispatchers_AppDispatcher__["a" /* default */].dispatch({
+                actionType: 'UNSET_FORM_SUBMITTED',
                 value: data
             });
         }
@@ -2252,6 +2269,11 @@ var BooksStore = function (_EventEmitter) {
             _formErrors = [];
         }
     }, {
+        key: 'unsetFormSubmitted',
+        value: function unsetFormSubmitted() {
+            _formSubmitted = false;
+        }
+    }, {
         key: 'getAllBooksAttempt',
         value: function getAllBooksAttempt() {
 
@@ -2348,6 +2370,8 @@ var BooksStore = function (_EventEmitter) {
                 success: function () {
 
                     __WEBPACK_IMPORTED_MODULE_2__actions_AppActions__["a" /* default */].singleBookCreated();
+                    console.log('CREATED');
+                    console.log(_formSubmitted);
                 }.bind(this),
                 error: function (response) {
 
@@ -2366,14 +2390,13 @@ var BooksStore = function (_EventEmitter) {
                 contentType: false,
                 enctype: 'multipart/form-data',
                 processData: false,
-                success: function (data) {
+                success: function () {
 
-                    _books = data;
-
-                    __WEBPACK_IMPORTED_MODULE_2__actions_AppActions__["a" /* default */].singleBookLoaded(_books);
+                    __WEBPACK_IMPORTED_MODULE_2__actions_AppActions__["a" /* default */].singleBookUpdated();
                 }.bind(this),
-                error: function (xhr, status, err) {
-                    console.error(this.props, status, err);
+                error: function (response) {
+
+                    __WEBPACK_IMPORTED_MODULE_2__actions_AppActions__["a" /* default */].singleBookNotUpdated(response.responseJSON);
                 }.bind(this)
             });
         }
@@ -2434,14 +2457,6 @@ var BooksStore = function (_EventEmitter) {
                     _loading = false;
                     break;
 
-                case 'UPDATE_SINGLE_BOOK_ATTEMPT':
-                    this.updateSingleBookAttempt(action.value);
-                    break;
-                case 'SINGLE_BOOK_UPDATED':
-                    _books = action.value;
-                    _loading = false;
-                    break;
-
                 case 'CREATE_SINGLE_BOOK_ATTEMPT':
                     this.createSingleBookAttempt(action.value);
                     break;
@@ -2450,6 +2465,18 @@ var BooksStore = function (_EventEmitter) {
                     _loading = false;
                     break;
                 case 'SINGLE_BOOK_NOT_CREATED':
+                    _formErrors = action.value;
+                    _loading = false;
+                    break;
+
+                case 'UPDATE_SINGLE_BOOK_ATTEMPT':
+                    this.updateSingleBookAttempt(action.value);
+                    break;
+                case 'SINGLE_BOOK_UPDATED':
+                    _formSubmitted = true;
+                    _loading = false;
+                    break;
+                case 'SINGLE_BOOK_NOT_UPDATED':
                     _formErrors = action.value;
                     _loading = false;
                     break;
@@ -2467,6 +2494,10 @@ var BooksStore = function (_EventEmitter) {
 
                 case 'UNSET_FORM_ERRORS':
                     this.unsetFormErrors();
+                    break;
+
+                case 'UNSET_FORM_SUBMITTED':
+                    this.unsetFormSubmitted();
                     break;
             }
 
@@ -14275,20 +14306,19 @@ var BookCreateUpdate = function (_Component) {
         value: function componentWillMount() {
             __WEBPACK_IMPORTED_MODULE_4__actions_AppActions__["a" /* default */].getSingleBookAttempt(this.props.match.params.id);
             console.log('MOUNTED');
+            console.log(this.state);
         }
     }, {
         key: 'componentWillUnmount',
         value: function componentWillUnmount() {
             __WEBPACK_IMPORTED_MODULE_3__stores_BooksStore__["a" /* default */].removeChangeListener(this._onChange);
             __WEBPACK_IMPORTED_MODULE_3__stores_BooksStore__["a" /* default */].unsetFormErrors();
+            __WEBPACK_IMPORTED_MODULE_3__stores_BooksStore__["a" /* default */].unsetFormSubmitted();
         }
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
             __WEBPACK_IMPORTED_MODULE_3__stores_BooksStore__["a" /* default */].addChangeListener(this._onChange);
-            this.setState({
-                formErrors: []
-            });
         }
     }, {
         key: '_onChange',
@@ -14299,6 +14329,11 @@ var BookCreateUpdate = function (_Component) {
                 formSubmitted: __WEBPACK_IMPORTED_MODULE_3__stores_BooksStore__["a" /* default */].getSubmitStatus(),
                 formErrors: __WEBPACK_IMPORTED_MODULE_3__stores_BooksStore__["a" /* default */].getFormErrors()
             });
+
+            // if (this.state.formSubmitted) {
+            //
+            //     this.props.history.push('/');
+            // }
         }
     }, {
         key: '_getState',
@@ -14333,10 +14368,8 @@ var BookCreateUpdate = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_4__actions_AppActions__["a" /* default */].updateSingleBookAttempt(formData);
             } else __WEBPACK_IMPORTED_MODULE_4__actions_AppActions__["a" /* default */].createSingleBookAttempt(formData);
 
-            if (this.state.formSubmitted) {
-
-                this.props.history.push('/');
-            }
+            console.log('Before redirect');
+            console.log(this.state);
         }
     }, {
         key: 'render',

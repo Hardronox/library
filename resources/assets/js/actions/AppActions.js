@@ -91,12 +91,20 @@ class AppActions {
         });
     }
 
-    singleBookLoaded(data) {
+    singleBookUpdated(data) {
         AppDispatcher.dispatch({
             actionType: 'SINGLE_BOOK_UPDATED',
             value: data
         });
     }
+
+    singleBookNotUpdated(data) {
+        AppDispatcher.dispatch({
+            actionType: 'SINGLE_BOOK_NOT_UPDATED',
+            value: data
+        });
+    }
+    // -
     // --------------------------------------------------------
 
     deleteSingleBookAttempt(data) {
@@ -161,6 +169,13 @@ class AppActions {
     unsetFormErrors(data) {
         AppDispatcher.dispatch({
             actionType: 'UNSET_FORM_ERRORS',
+            value: data
+        });
+    }
+
+    unsetFormSubmitted(data) {
+        AppDispatcher.dispatch({
+            actionType: 'UNSET_FORM_SUBMITTED',
             value: data
         });
     }

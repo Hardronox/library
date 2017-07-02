@@ -98,8 +98,6 @@ class LibraryController extends Controller
      */
     public function createSingleBook(CreateUpdateBookRequest $request)
     {
-
-        //var_dump($request); exit;
         $post = $request->all();
 
         $book=new Books();
@@ -120,7 +118,7 @@ class LibraryController extends Controller
         $book->save();
 
         return response()
-            ->json($book);
+                    ->json($book);
 
     }
 
@@ -128,7 +126,7 @@ class LibraryController extends Controller
      * @param Request $request
      * @return Books
      */
-    public function updateSingleBook(Request $request)
+    public function updateSingleBook(CreateUpdateBookRequest $request)
     {
         $post = $request->all();
 

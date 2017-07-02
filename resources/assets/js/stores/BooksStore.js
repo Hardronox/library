@@ -43,6 +43,10 @@ class BooksStore extends EventEmitter {
          _formErrors=[];
     }
 
+    unsetFormSubmitted() {
+        _formSubmitted=false;
+    }
+
     getAllBooksAttempt() {
 
         $.get({
@@ -141,12 +145,13 @@ class BooksStore extends EventEmitter {
             success: function() {
 
                 AppActions.singleBookCreated();
+                console.log('CREATED');
+                console.log(_formSubmitted);
 
             }.bind(this),
             error: function(response) {
 
                 AppActions.singleBookNotCreated(response.responseJSON);
-
             }.bind(this)
         });
     }
@@ -160,15 +165,15 @@ class BooksStore extends EventEmitter {
             contentType : false,
             enctype: 'multipart/form-data',
             processData:false,
-            success: function(data) {
+            success: function() {
 
-                _books= data;
-
-                AppActions.singleBookLoaded(_books);
+                AppActions.singleBookUpdated();
 
             }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props, status, err);
+            error: function(response) {
+
+                AppActions.singleBookNotUpdated(response.responseJSON);
+
             }.bind(this)
         });
     }
@@ -230,15 +235,6 @@ class BooksStore extends EventEmitter {
                 break;
 
 
-            case 'UPDATE_SINGLE_BOOK_ATTEMPT':
-                this.updateSingleBookAttempt(action.value);
-                break;
-            case 'SINGLE_BOOK_UPDATED':
-                _books = action.value;
-                _loading=false;
-                break;
-
-
             case 'CREATE_SINGLE_BOOK_ATTEMPT':
                 this.createSingleBookAttempt(action.value);
                 break;
@@ -247,6 +243,19 @@ class BooksStore extends EventEmitter {
                 _loading=false;
                 break;
             case 'SINGLE_BOOK_NOT_CREATED':
+                _formErrors=action.value;
+                _loading=false;
+                break;
+
+
+            case 'UPDATE_SINGLE_BOOK_ATTEMPT':
+                this.updateSingleBookAttempt(action.value);
+                break;
+            case 'SINGLE_BOOK_UPDATED':
+                _formSubmitted=true;
+                _loading=false;
+                break;
+            case 'SINGLE_BOOK_NOT_UPDATED':
                 _formErrors=action.value;
                 _loading=false;
                 break;
@@ -267,6 +276,11 @@ class BooksStore extends EventEmitter {
 
             case 'UNSET_FORM_ERRORS':
                 this.unsetFormErrors();
+                break;
+
+
+            case 'UNSET_FORM_SUBMITTED':
+                this.unsetFormSubmitted();
                 break;
         }
 

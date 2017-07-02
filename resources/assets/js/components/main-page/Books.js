@@ -70,11 +70,20 @@ class Books extends Component {
                         <form className="form-inline">
                             <div className="form-group">
                                 <label htmlFor="search">Search: </label>
-                                <input type="text" className="form-control" value={this.state.searchValue} onChange={this.handleChange} id="search" />
+
+                                <input type="text"
+                                       className="form-control"
+                                       value={this.state.searchValue}
+                                       onChange={this.handleChange}
+                                       id="search"
+                                       required={true}
+                                />
                             </div>
 
                             <Link to={{ pathname: '/search/'+this.state.searchValue }}>
-                                    <button type="submit" className="btn btn-primary">Search</button>
+                                <button type="submit" disabled={!this.state.searchValue} className="btn btn-primary">
+                                    Search
+                                </button>
                             </Link>
                         </form>
                         <h4>Categories</h4>

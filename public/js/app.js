@@ -14941,14 +14941,20 @@ var Books = function (_Component) {
                                     { htmlFor: 'search' },
                                     'Search: '
                                 ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', className: 'form-control', value: this.state.searchValue, onChange: this.handleChange, id: 'search' })
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text',
+                                    className: 'form-control',
+                                    value: this.state.searchValue,
+                                    onChange: this.handleChange,
+                                    id: 'search',
+                                    required: true
+                                })
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 __WEBPACK_IMPORTED_MODULE_6_react_router_dom__["c" /* Link */],
                                 { to: { pathname: '/search/' + this.state.searchValue } },
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'button',
-                                    { type: 'submit', className: 'btn btn-primary' },
+                                    { type: 'submit', disabled: !this.state.searchValue, className: 'btn btn-primary' },
                                     'Search'
                                 )
                             )
@@ -15171,7 +15177,8 @@ var Search = function (_Component) {
         key: '_getState',
         value: function _getState() {
             return {
-                books: __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__["a" /* default */].getAll()
+                books: __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__["a" /* default */].getAll(),
+                searchValue: this.props.match.params.query
             };
         }
     }, {
@@ -15215,19 +15222,35 @@ var Search = function (_Component) {
                         'div',
                         { className: 'col-md-4' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'form-group' },
+                            'form',
+                            { className: 'form-inline' },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'label',
-                                { htmlFor: 'email' },
-                                'Search: '
+                                'div',
+                                { className: 'form-group' },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'label',
+                                    { htmlFor: 'email' },
+                                    'Search: '
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text',
+                                    className: 'form-control',
+                                    id: 'email',
+                                    defaultValue: this.props.match.params.query,
+                                    onChange: this.handleChange
+                                })
                             ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', className: 'form-control', id: 'email', defaultValue: this.props.match.params.query, onChange: this.handleChange })
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'button',
-                            { type: 'submit', className: 'btn btn-primary', onClick: this.search },
-                            'Search'
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                __WEBPACK_IMPORTED_MODULE_5_react_router_dom__["c" /* Link */],
+                                { to: { pathname: '/search/' + this.state.searchValue } },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'button',
+                                    { type: 'submit',
+                                        className: 'btn btn-primary',
+                                        disabled: !this.state.searchValue,
+                                        onClick: this.search },
+                                    'Search'
+                                )
+                            )
                         )
                     )
                 )

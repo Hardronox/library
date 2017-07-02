@@ -39,6 +39,7 @@ class Search extends Component {
     _getState () {
         return {
             books: BooksStore.getAll(),
+            searchValue: this.props.match.params.query
         };
     }
 
@@ -67,11 +68,25 @@ class Search extends Component {
                 </div>
 
                 <div className="col-md-4">
-                    <div className="form-group">
-                        <label htmlFor="email">Search: </label>
-                        <input type="text" className="form-control" id="email" defaultValue={this.props.match.params.query} onChange={this.handleChange} />
-                    </div>
-                    <button type="submit" className="btn btn-primary" onClick={this.search}>Search</button>
+                    <form className="form-inline">
+                        <div className="form-group">
+                            <label htmlFor="email">Search: </label>
+                            <input type="text"
+                                   className="form-control"
+                                   id="email"
+                                   defaultValue={this.props.match.params.query}
+                                   onChange={this.handleChange}
+                            />
+                        </div>
+                        <Link to={{ pathname: '/search/'+this.state.searchValue }}>
+                            <button type="submit"
+                                    className="btn btn-primary"
+                                    disabled={!this.state.searchValue}
+                                    onClick={this.search}>
+                                Search
+                            </button>
+                        </Link>
+                    </form>
                 </div>
             </div>
         </div>

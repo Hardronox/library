@@ -1,11 +1,11 @@
 import AppDispatcher from '../dispatchers/AppDispatcher';
 import { EventEmitter } from 'events';
 import AppActions from '../actions/AppActions';
+import BooksApi from '../api/Books';
 
 let _books = [];
 let _booksCount=0;
 let _loading=true;
-let _formSubmitted=false;
 let _formErrors=[];
 
 class BooksStore extends EventEmitter {
@@ -31,10 +31,6 @@ class BooksStore extends EventEmitter {
         return _loading;
     }
 
-    getSubmitStatus() {
-        return _formSubmitted;
-    }
-
     getFormErrors() {
         return _formErrors;
     }
@@ -43,158 +39,40 @@ class BooksStore extends EventEmitter {
          _formErrors=[];
     }
 
-    unsetFormSubmitted() {
-        _formSubmitted=false;
+    unsetBooks() {
+        _books=[];
+    }
+
+    enableLoading() {
+        _loading = true;
     }
 
     getAllBooksAttempt() {
-
-        $.get({
-            url: '/get-all-books',
-            dataType: 'json',
-            cache: false,
-            success: function(data) {
-
-                _books= data;
-                AppActions.allBooksLoaded(_books);
-
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props, status, err);
-            }.bind(this)
-        });
+        BooksApi.getAllBooksAttempt();
     }
 
     getBooksByCategoryAttempt(data) {
-
-        $.get({
-            url: '/get-books-by-category',
-            dataType: 'json',
-            data:{
-                name: data[0],
-                page: data[1]
-            },
-            cache: false,
-            success: function(data) {
-                _books= data[0].map(function(data) {
-
-                    data.description= data.description.substring(0, 60)+'...';
-                    return data;
-                });
-                AppActions.booksByCategoryLoaded([_books, data[1]]);
-
-
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props, status, err);
-            }.bind(this)
-        });
+        BooksApi.getBooksByCategoryAttempt(data);
     }
 
     getSingleBookAttempt(id) {
-        $.get({
-            url: '/get-single-book',
-            dataType: 'json',
-            data:{
-                id
-            },
-            cache: false,
-            success: function(data) {
-
-                _books= data;
-
-                AppActions.singleBookLoaded(_books);
-
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props, status, err);
-            }.bind(this)
-        });
+        BooksApi.getSingleBookAttempt(id);
     }
 
     deleteSingleBookAttempt(id) {
-        $.post({
-            url: '/delete-single-book',
-            dataType: 'json',
-            data:{
-                id
-            },
-            cache: false,
-            success: function(data) {
-
-                AppActions.singleBookDeleted();
-
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props, status, err);
-            }.bind(this)
-        });
+        BooksApi.deleteSingleBookAttempt(id);
     }
 
-
-
     createSingleBookAttempt(data) {
-        $.post({
-            url: '/create-single-book',
-            dataType: 'json',
-            data: data,
-            cache: false,
-            contentType : false,
-            enctype: 'multipart/form-data',
-            processData:false,
-            success: function() {
-
-                AppActions.singleBookCreated();
-                console.log('CREATED');
-                console.log(_formSubmitted);
-
-            }.bind(this),
-            error: function(response) {
-
-                AppActions.singleBookNotCreated(response.responseJSON);
-            }.bind(this)
-        });
+        BooksApi.createSingleBookAttempt(data);
     }
 
     updateSingleBookAttempt(data) {
-        $.post({
-            url: '/update-single-book',
-            dataType: 'json',
-            data: data,
-            cache: false,
-            contentType : false,
-            enctype: 'multipart/form-data',
-            processData:false,
-            success: function() {
-
-                AppActions.singleBookUpdated();
-
-            }.bind(this),
-            error: function(response) {
-
-                AppActions.singleBookNotUpdated(response.responseJSON);
-
-            }.bind(this)
-        });
+        BooksApi.updateSingleBookAttempt(data);
     }
 
     getBooksBySearchAttempt(search) {
-        $.get({
-            url: '/get-books-by-search',
-            dataType: 'json',
-            data:{
-                search
-            },
-            cache: false,
-            success: function(data) {
-                _books= data;
-                AppActions.booksBySearchLoaded(_books);
-
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props, status, err);
-            }.bind(this)
-        });
+        BooksApi.getBooksBySearchAttempt(search);
     }
 
 
@@ -239,8 +117,8 @@ class BooksStore extends EventEmitter {
                 this.createSingleBookAttempt(action.value);
                 break;
             case 'SINGLE_BOOK_CREATED':
-                _formSubmitted=true;
                 _loading=false;
+                window.location.href = "/";
                 break;
             case 'SINGLE_BOOK_NOT_CREATED':
                 _formErrors=action.value;
@@ -252,8 +130,8 @@ class BooksStore extends EventEmitter {
                 this.updateSingleBookAttempt(action.value);
                 break;
             case 'SINGLE_BOOK_UPDATED':
-                _formSubmitted=true;
                 _loading=false;
+                window.location.href = "/";
                 break;
             case 'SINGLE_BOOK_NOT_UPDATED':
                 _formErrors=action.value;

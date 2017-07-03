@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import AppActions from '../../actions/AppActions';
 import AppStore from '../../stores/BooksStore'
-import Book from "../main-page/Book";
+import Book from "../books/MainPageBook";
 import { Link } from 'react-router-dom'
 
 

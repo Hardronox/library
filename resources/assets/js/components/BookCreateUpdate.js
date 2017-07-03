@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
-import BooksStore from '../../stores/BooksStore';
-import AppActions from '../../actions/AppActions';
+import BooksStore from '../stores/BooksStore';
+import AppActions from '../actions/AppActions';
 import FileInput from 'react-file-input';
 
 class BookCreateUpdate extends Component {
@@ -16,15 +16,17 @@ class BookCreateUpdate extends Component {
     }
 
     componentWillMount() {
-        AppActions.getSingleBookAttempt(this.props.match.params.id);
-        console.log('MOUNTED');
-        console.log(this.state);
+        if (this.props.match.params.id)
+            AppActions.getSingleBookAttempt(this.props.match.params.id);
+        else
+            this.setState({
+                loading: false
+            });
     }
 
     componentWillUnmount() {
         BooksStore.removeChangeListener(this._onChange);
         BooksStore.unsetFormErrors();
-        BooksStore.unsetFormSubmitted();
     }
 
     componentDidMount() {
@@ -35,22 +37,14 @@ class BookCreateUpdate extends Component {
         this.setState({
             books: BooksStore.getAll(),
             loading: BooksStore.getStatus(),
-            formSubmitted: BooksStore.getSubmitStatus(),
             formErrors: BooksStore.getFormErrors(),
         });
-
-        // if (this.state.formSubmitted) {
-        //
-        //     this.props.history.push('/');
-        // }
-
     }
 
     _getState () {
         return {
             books: BooksStore.getAll(),
             loading: BooksStore.getStatus(),
-            formSubmitted: BooksStore.getSubmitStatus(),
             formErrors: [],
         };
     }
@@ -70,16 +64,12 @@ class BookCreateUpdate extends Component {
         formData.append('description', this.state.books.description);
         formData.append('picture', this.state.books.picture);
 
-
+        // if for update book, else for create
         if (this.props.match.params.id) {
             formData.append('id', this.state.books.id);
             AppActions.updateSingleBookAttempt(formData);
         } else
             AppActions.createSingleBookAttempt(formData);
-
-        console.log('Before redirect');
-        console.log(this.state);
-
     }
 
     render() {

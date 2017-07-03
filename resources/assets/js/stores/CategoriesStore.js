@@ -1,6 +1,6 @@
 import AppDispatcher from '../dispatchers/AppDispatcher';
 import { EventEmitter } from 'events';
-import AppActions from '../actions/AppActions';
+import CategoriesApi from '../api/Categories';
 
 
 let _categories = [];
@@ -26,59 +26,15 @@ class CategoriesStore extends EventEmitter {
     }
 
     getCategoriesAttempt() {
-        $.get({
-            url: '/get-categories',
-            dataType: 'json',
-            cache: false,
-            success: function(data) {
-
-                _categories= data;
-                AppActions.categoriesLoaded(_categories);
-
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props, status, err);
-            }.bind(this)
-        });
+        CategoriesApi.getCategoriesAttempt();
     }
 
     createSingleCategoryAttempt(name) {
-        $.post({
-            url: '/create-single-category',
-            dataType: 'json',
-            data:{
-                name
-            },
-            cache: false,
-            success: function(data) {
-
-                AppActions.singleCategoryCreated();
-
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props, status, err);
-            }.bind(this)
-        });
+        CategoriesApi.createSingleCategoryAttempt(name);
     }
 
     updateSingleCategoryAttempt(data) {
-        $.post({
-            url: '/update-single-category',
-            dataType: 'json',
-            data:{
-                oldName: data[0],
-                newName: data[1]
-            },
-            cache: false,
-            success: function(data) {
-
-                AppActions.singleCategoryUpdated();
-
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props, status, err);
-            }.bind(this)
-        });
+        CategoriesApi.updateSingleCategoryAttempt(data);
     }
 
 
@@ -98,6 +54,7 @@ class CategoriesStore extends EventEmitter {
                 break;
             case 'CATEGORIES_LOADED':
                 _categories = action.value;
+                _loading = false;
                 break;
 
 
@@ -112,7 +69,6 @@ class CategoriesStore extends EventEmitter {
             case 'UPDATE_SINGLE_CATEGORY_ATTEMPT':
                 this.updateSingleCategoryAttempt(action.value);
                 break;
-
 
         }
 

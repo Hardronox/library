@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import AppActions from '../../actions/AppActions';
-import BooksStore from '../../stores/BooksStore'
-import CategoriesStore from '../../stores/CategoriesStore'
+import AppActions from '../actions/AppActions';
+import BooksStore from '../stores/BooksStore'
+import CategoriesStore from '../stores/CategoriesStore'
 import Book from "./Book";
 import { Link } from 'react-router-dom'
 
@@ -50,7 +50,9 @@ class View extends Component {
             <div className="container">
                 <div className="row">
                     <div className="col-md-8">
-                        <Book book={this.state.books} />
+                        <Book book={this.state.books}
+                              type="viewPage"
+                        />
                     </div>
                     <div className="col-md-3">
                         <Link  to={{ pathname: '/update-book/'+this.state.books.id}} >

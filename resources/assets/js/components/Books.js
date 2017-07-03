@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import AppActions from '../../actions/AppActions';
-import BooksStore from '../../stores/BooksStore'
+import AppActions from '../actions/AppActions';
+import BooksStore from '../stores/BooksStore'
 import Book from "./Book";
 import { Link } from 'react-router-dom'
 import Pagination from "react-js-pagination";
@@ -11,6 +11,7 @@ class CategoryBooks extends Component {
     constructor(props) {
 
         super(props);
+
         this.state = this._getState();
         this._onChange = this._onChange.bind(this);
         this.handlePageChange = this.handlePageChange.bind(this);
@@ -18,10 +19,11 @@ class CategoryBooks extends Component {
 
     componentWillMount() {
         AppActions.getBooksByCategoryAttempt([this.props.match.params.name, this.props.match.params.page]);
-
     }
 
     componentWillUnmount() {
+        BooksStore.enableLoading();
+        BooksStore.unsetBooks();
         BooksStore.removeChangeListener(this._onChange);
     }
 
@@ -59,6 +61,7 @@ class CategoryBooks extends Component {
                         {_.times(this.state.books.length, i =>
 
                             <Book book={this.state.books[i]}
+                                  type="categoryPage"
                                   key={i}
                             />
                         )}

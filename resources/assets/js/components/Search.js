@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import AppActions from '../../actions/AppActions';
-import BooksStore from '../../stores/BooksStore'
-import CategoriesStore from '../../stores/CategoriesStore'
+import AppActions from '../actions/AppActions';
+import BooksStore from '../stores/BooksStore'
+import CategoriesStore from '../stores/CategoriesStore'
 import Book from "./Book";
 import { Link } from 'react-router-dom'
 
@@ -62,6 +62,7 @@ class Search extends Component {
                     {_.times(this.state.books.length, i =>
 
                         <Book book={this.state.books[i]}
+                              type="searchPage"
                               key={i}
                         />
                     )}

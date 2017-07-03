@@ -115,6 +115,7 @@ class LibraryController extends Controller
 
             $book->picture= $imageName;
         }
+
         $book->save();
 
         return response()

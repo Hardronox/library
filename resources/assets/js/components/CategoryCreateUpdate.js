@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
-import CategoriesStore from '../../stores/CategoriesStore'
-import AppActions from '../../actions/AppActions';
+import CategoriesStore from '../stores/CategoriesStore'
+import AppActions from '../actions/AppActions';
 
 
 class CategoryCreateUpdate extends Component {

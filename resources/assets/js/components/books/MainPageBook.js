@@ -11,20 +11,18 @@ class Book extends Component {
 
     render() {
         return (
-
             <div className="media">
                 <div className="media-left media-top">
-                    <img className="media-object" width={"100px"} height={"100px"} src={'/images/'+ this.props.book.picture} />
+                    <img className="media-object" width={"100px"} height={"100px"} src={'/images/'+ this.props.props.book.picture} />
                 </div>
                 <div className="media-body">
-                    <Link to={{ pathname: '/book/'+this.props.book.id }}>
-                        <h4 className="media-heading">{this.props.book.title}</h4>
+                    <Link to={{ pathname: '/book/'+this.props.props.book.id }}>
+                        <h4 className="media-heading">{this.props.props.book.title}</h4>
                     </Link>
-                    {this.props.book.description}
+                    {this.props.props.book.description}
                 </div>
                 <hr/>
             </div>
-
         );
     }
 }

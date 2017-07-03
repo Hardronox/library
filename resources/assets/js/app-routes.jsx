@@ -4,19 +4,19 @@ import { Route } from 'react-router-dom';
 
 import Header from './components/layouts/Header';
 
-import BookCreateUpdate from './components/create-update-book/BookCreateUpdate';
+import BookCreateUpdate from './components/BookCreateUpdate';
 
-import Books from './components/main-page/Books';
+import Books from './components/BooksList';
 
-import CategoryCreateUpdate from './components/create-update-category/CategoryCreateUpdate';
+import CategoryCreateUpdate from './components/CategoryCreateUpdate';
 
-import CategoryBooks from './components/category-page/Books';
+import CategoryBooks from './components/Books';
 
-import Search from './components/search-page/Search';
+import Search from './components/Search';
 
-import View from './components/view-page/View';
+import View from './components/View';
 
-import DeleteBook from './components/create-update-book/DeleteBook';
+import DeleteBook from './components/DeleteBook';
 
 
 

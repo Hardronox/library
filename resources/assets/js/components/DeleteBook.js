@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import Select from 'react-select';
 import 'react-select/dist/react-select.css';
-import BooksStore from '../../stores/BooksStore'
-import AppActions from '../../actions/AppActions';
-import { Link } from 'react-router-dom'
-import FileInput from 'react-file-input'
+import BooksStore from '../stores/BooksStore'
+import AppActions from '../actions/AppActions';
 
 class DeleteBook extends Component {
 

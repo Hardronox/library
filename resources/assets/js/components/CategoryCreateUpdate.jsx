@@ -12,7 +12,7 @@ class CategoryCreateUpdate extends Component {
         super(props);
         this.state =
             {
-                category: {}
+                category: ''
             };
         this._onChange = this._onChange.bind(this);
         this._onSubmit = this._onSubmit.bind(this)
@@ -41,8 +41,16 @@ class CategoryCreateUpdate extends Component {
 
     _onSubmit () {
 
-        if (this.props.match.params.name)
-            AppActions.updateSingleCategoryAttempt([this.props.match.params.name, this.state.category]);
+        let formData= new FormData();
+
+        if (this.props.match.params.name){
+
+            formData.append('oldName', this.props.match.params.name);
+            formData.append('newName', this.state.category);
+            formData.append('_method', 'PUT');
+
+            AppActions.updateSingleCategoryAttempt(formData);
+        }
         else
             AppActions.createSingleCategoryAttempt(this.state.category);
 
@@ -95,7 +103,12 @@ class CategoryCreateUpdate extends Component {
 
                             {/*</div>*/}
                             <div className="form-group">
-                                <button onClick={this._onSubmit} className="btn btn-success">Submit</button>
+                                <button onClick={this._onSubmit}
+                                        className="btn btn-success"
+                                        disabled={!this.state.category}
+                                >
+                                    Submit
+                                </button>
                             </div>
                         </div>
                     </div>

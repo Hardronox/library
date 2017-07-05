@@ -4,10 +4,13 @@ import BooksStore from '../stores/BooksStore';
 
 class BooksApi {
 
+
+
     getAllBooksAttempt() {
 
-        $.get({
-            url: '/get-all-books',
+        $.ajax({
+            url: '/books',
+            type: 'GET',
             dataType: 'json',
             cache: false,
             success: function(data) {
@@ -22,39 +25,12 @@ class BooksApi {
         });
     }
 
-    getBooksByCategoryAttempt(data) {
-
-        $.get({
-            url: '/get-books-by-category',
-            dataType: 'json',
-            data:{
-                name: data[0],
-                page: data[1]
-            },
-            cache: false,
-            success: function(data) {
-                BooksStore._books= data[0].map(function(data) {
-
-                    data.description= data.description.substring(0, 60)+'...';
-                    return data;
-                });
-                AppActions.booksByCategoryLoaded([BooksStore._books, data[1]]);
-
-
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(status, err);
-            }.bind(this)
-        });
-    }
 
     getSingleBookAttempt(id) {
-        $.get({
-            url: '/get-single-book',
+        $.ajax({
+            url: `/books/${id}`,
+            type: 'GET',
             dataType: 'json',
-            data:{
-                id
-            },
             cache: false,
             success: function(data) {
 
@@ -68,30 +44,10 @@ class BooksApi {
         });
     }
 
-    deleteSingleBookAttempt(id) {
-        $.post({
-            url: '/delete-single-book',
-            dataType: 'json',
-            data:{
-                id
-            },
-            cache: false,
-            success: function() {
-
-                AppActions.singleBookDeleted();
-
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(status, err);
-            }.bind(this)
-        });
-    }
-
-
-
     createSingleBookAttempt(data) {
-        $.post({
-            url: '/create-single-book',
+        $.ajax({
+            url: `/books`,
+            type: 'POST',
             dataType: 'json',
             data: data,
             cache: false,
@@ -112,13 +68,15 @@ class BooksApi {
     }
 
     updateSingleBookAttempt(data) {
-        $.post({
-            url: '/update-single-book',
+        console.log(data);
+        $.ajax({
+            url: `/books/${data.get('oldName')}`,
+            type: 'POST',
             dataType: 'json',
             data: data,
             cache: false,
             contentType : false,
-            enctype: 'multipart/form-data',
+            enctype: 'application/x-www-form-urlencoded',
             processData:false,
             success: function() {
 
@@ -133,9 +91,55 @@ class BooksApi {
         });
     }
 
+    deleteSingleBookAttempt(id) {
+        $.ajax({
+            url: `/books/${id}`,
+            type: 'DELETE',
+            dataType: 'json',
+
+            cache: false,
+            success: function() {
+
+                AppActions.singleBookDeleted();
+
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(status, err);
+            }.bind(this)
+        });
+    }
+
+    getBooksByCategoryAttempt(data) {
+        $.ajax({
+            url: '/books',
+            type: 'GET',
+            dataType: 'json',
+            data:{
+                name: data[0],
+                page: data[1]
+            },
+            cache: false,
+            success: function(data) {
+                // console.log(data);
+                BooksStore._books= data.map(function(data) {
+
+                    data.description= data.description.substring(0, 60)+'...';
+                    return data;
+                });
+                AppActions.booksByCategoryLoaded([BooksStore._books, data[1]]);
+
+
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(status, err);
+            }.bind(this)
+        });
+    }
+
     getBooksBySearchAttempt(search) {
-        $.get({
+        $.ajax({
             url: '/get-books-by-search',
+            type: 'GET',
             dataType: 'json',
             data:{
                 search

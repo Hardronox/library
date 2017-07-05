@@ -24,9 +24,8 @@ class CreateUpdateBookRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|string|min:10|max:255',
-            'description' => 'required|min:20|string',
-            'picture' => 'required',
+            'title' => 'string|min:10|max:255',
+            'description' => 'min:20|string'
         ];
     }
 }

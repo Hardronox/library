@@ -67,6 +67,7 @@ class BookCreateUpdate extends Component {
         // if for update book, else for create
         if (this.props.match.params.id) {
             formData.append('id', this.state.books.id);
+            formData.append('_method', 'PUT');
             AppActions.updateSingleBookAttempt(formData);
         } else
             AppActions.createSingleBookAttempt(formData);

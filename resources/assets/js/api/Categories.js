@@ -3,8 +3,9 @@ import AppActions from '../actions/AppActions';
 class CategoriesApi {
 
     getCategoriesAttempt() {
-        $.get({
-            url: '/get-categories',
+        $.ajax({
+            url: '/categories',
+            type: 'GET',
             dataType: 'json',
             cache: false,
             success: function(data) {
@@ -19,8 +20,9 @@ class CategoriesApi {
     }
 
     createSingleCategoryAttempt(name) {
-        $.post({
-            url: '/create-single-category',
+        $.ajax({
+            url: '/categories',
+            type: 'POST',
             dataType: 'json',
             data:{
                 name
@@ -38,14 +40,15 @@ class CategoriesApi {
     }
 
     updateSingleCategoryAttempt(data) {
-        $.post({
-            url: '/update-single-category',
+        $.ajax({
+            url: `/categories/${data.get('oldName')}`,
+            type: 'POST',
             dataType: 'json',
-            data:{
-                oldName: data[0],
-                newName: data[1]
-            },
+            data: data,
             cache: false,
+            contentType : false,
+            enctype: 'application/x-www-form-urlencoded',
+            processData:false,
             success: function() {
 
                 AppActions.singleCategoryUpdated();

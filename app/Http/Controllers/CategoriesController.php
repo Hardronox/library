@@ -2,53 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use App\Categories;
 use App\Http\Requests\CreateUpdateCategoryRequest;
-use Illuminate\Http\Request;
+use App\Repositories\CategoryRepository;
 
 
 class CategoriesController extends Controller
 {
 
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     */
+    private $repository;
+
+    public function __construct(CategoryRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     public function index()
     {
-        $categories = Categories::all();
+        $categories = $this->repository->loadCategoriesForMainPage();
 
         return response()
-            ->json($categories); //, $categories
+            ->json($categories);
     }
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
+
     public function store(CreateUpdateCategoryRequest $request)
     {
-        $post = $request->all();
-
-        $book=Categories::create($post);
+        $category = $this->repository->createCategory($request);
 
         return response()
-                    ->json($book);
-
+                    ->json($category);
     }
 
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function update(CreateUpdateCategoryRequest $request, $name)
     {
-        $post = $request->all();
-
-        $category= Categories::where('name', $name)->first();
-        $category->name=$post['newName'];
-
-        $category->save();
+        $category = $this->repository->updateCategory($request, $name);
 
         return response()
                     ->json($category);

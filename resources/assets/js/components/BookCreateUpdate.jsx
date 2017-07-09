@@ -57,7 +57,6 @@ class BookCreateUpdate extends Component {
     }
 
     _onSubmit () {
-
         let formData= new FormData();
 
         formData.append('title', this.state.books.title);
@@ -87,83 +86,84 @@ class BookCreateUpdate extends Component {
         // }
         if (this.state.loading){
             return <div></div>;
-        } else
+        } else {
+            return (
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-12 ">
+                            <div className="form-group">
+                                <label htmlFor="title" className="control-label">Title</label>
 
-        return (
-
-            <div className="container">
-                <div className="row">
-                    <div className="col-md-12 ">
-                        <div className="form-group">
-                            <label htmlFor="title" className="control-label">Title</label>
-
-                            <input id="title"
-                                   type="text"
-                                   className="form-control"
-                                   defaultValue={this.state.books.title}
-                                   onChange={this.handleChange.bind(this, 'title')}
-                                   name="title"
-                            />
-                            { this.state.formErrors.title ?
-                                <div className="alert alert-danger">
-                                    <strong>Error!</strong> {this.state.formErrors.title[0]}
-                                </div>
-                            :
-                                <div></div>
-                            }
-                        </div>
+                                <input id="title"
+                                       type="text"
+                                       className="form-control"
+                                       defaultValue={this.state.books.title}
+                                       onChange={this.handleChange.bind(this, 'title')}
+                                       name="title"
+                                />
+                                { this.state.formErrors.length ?
+                                    <div className="alert alert-danger">
+                                        <strong>Error!</strong> {this.state.formErrors.title[0]}
+                                    </div>
+                                    :
+                                    <div></div>
+                                }
+                            </div>
 
 
-                        <div className="form-group">
-                            <label htmlFor="description"  className="control-label">Description:</label>
+                            <div className="form-group">
+                                <label htmlFor="description"  className="control-label">Description:</label>
 
-                            <textarea id="description"
-                                      className="form-control"
-                                      rows="5"
-                                      value={this.state.books.description}
-                                      onChange={this.handleChange.bind(this, 'description')}
-                            />
+                                <textarea id="description"
+                                          className="form-control"
+                                          rows="5"
+                                          value={this.state.books.description}
+                                          onChange={this.handleChange.bind(this, 'description')}
+                                />
 
-                            { this.state.formErrors.description ?
-                                <div className="alert alert-danger">
-                                    <strong>Error!</strong> {this.state.formErrors.description[0]}
-                                </div>
-                                :
-                                <div></div>
-                            }
-                        </div>
+                                { this.state.formErrors.length ?
+                                    <div className="alert alert-danger">
+                                        <strong>Error!</strong> {this.state.formErrors.description[0]}
+                                    </div>
+                                    :
+                                    <div></div>
+                                }
+                            </div>
 
-                        <div className="form-group">
-                            <label htmlFor="image" className="control-label">Image</label>
+                            <div className="form-group">
+                                <label htmlFor="image" className="control-label">Image</label>
 
-                            <FileInput name="myImage"
-                                       id="image"
-                                       accept=".png,.jpg,.jpeg"
-                                       placeholder="Click here"
-                                       //className="inputClass"
-                                       onChange={this.handleChange.bind(this, 'picture')}
-                            />
-                        </div>
+                                <FileInput name="myImage"
+                                           id="image"
+                                           accept=".png,.jpg,.jpeg"
+                                           placeholder="Click here"
+                                    //className="inputClass"
+                                           onChange={this.handleChange.bind(this, 'picture')}
+                                />
+                            </div>
 
-                        {/*<div className="form-group">*/}
+                            {/*<div className="form-group">*/}
 
                             {/*<Select*/}
-                                {/*name="form-field-name"*/}
-                                {/*value="one"*/}
-                                {/*options={options}*/}
-                                {/*onChange={logChange}*/}
-                                {/*multi={true}*/}
-                                {/*joinValues={true}*/}
+                            {/*name="form-field-name"*/}
+                            {/*value="one"*/}
+                            {/*options={options}*/}
+                            {/*onChange={logChange}*/}
+                            {/*multi={true}*/}
+                            {/*joinValues={true}*/}
                             {/*/>*/}
 
-                        {/*</div>*/}
-                        <div className="form-group">
-                            <button onClick={this._onSubmit} className="btn btn-success">Submit</button>
+                            {/*</div>*/}
+                            <div className="form-group">
+                                <button onClick={this._onSubmit} className="btn btn-success">Submit</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        }
+
+
     }
 }
 

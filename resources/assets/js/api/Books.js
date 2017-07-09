@@ -54,13 +54,13 @@ class BooksApi {
             contentType : false,
             enctype: 'multipart/form-data',
             processData:false,
-            success: function() {
-
+            success: function(response) {
+                console.log(response);
                 AppActions.singleBookCreated();
 
             }.bind(this),
             error: function(response) {
-
+                console.log(response);
                 AppActions.singleBookNotCreated(response.responseJSON);
 
             }.bind(this)

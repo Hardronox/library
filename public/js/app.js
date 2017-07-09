@@ -2137,6 +2137,8 @@ var BooksStore = function (_EventEmitter) {
                     this.createSingleBookAttempt(action.value);
                     break;
                 case 'SINGLE_BOOK_CREATED':
+                    console.log('sdasd');
+                    _formErrors = [];
                     _loading = false;
                     window.location.href = "/";
                     break;
@@ -13848,12 +13850,12 @@ var BooksApi = function () {
                 contentType: false,
                 enctype: 'multipart/form-data',
                 processData: false,
-                success: function () {
-
+                success: function (response) {
+                    console.log(response);
                     __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].singleBookCreated();
                 }.bind(this),
                 error: function (response) {
-
+                    console.log(response);
                     __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].singleBookNotCreated(response.responseJSON);
                 }.bind(this)
             });
@@ -14253,7 +14255,6 @@ var BookCreateUpdate = function (_Component) {
     }, {
         key: '_onSubmit',
         value: function _onSubmit() {
-
             var formData = new FormData();
 
             formData.append('title', this.state.books.title);
@@ -14283,96 +14284,98 @@ var BookCreateUpdate = function (_Component) {
             // }
             if (this.state.loading) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null);
-            } else return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { className: 'container' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            } else {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'row' },
+                    { className: 'container' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
-                        { className: 'col-md-12 ' },
+                        { className: 'row' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
-                            { className: 'form-group' },
+                            { className: 'col-md-12 ' },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'label',
-                                { htmlFor: 'title', className: 'control-label' },
-                                'Title'
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'title',
-                                type: 'text',
-                                className: 'form-control',
-                                defaultValue: this.state.books.title,
-                                onChange: this.handleChange.bind(this, 'title'),
-                                name: 'title'
-                            }),
-                            this.state.formErrors.title ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'div',
-                                { className: 'alert alert-danger' },
+                                { className: 'form-group' },
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'strong',
-                                    null,
-                                    'Error!'
+                                    'label',
+                                    { htmlFor: 'title', className: 'control-label' },
+                                    'Title'
                                 ),
-                                ' ',
-                                this.state.formErrors.title[0]
-                            ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null)
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'form-group' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'label',
-                                { htmlFor: 'description', className: 'control-label' },
-                                'Description:'
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'title',
+                                    type: 'text',
+                                    className: 'form-control',
+                                    defaultValue: this.state.books.title,
+                                    onChange: this.handleChange.bind(this, 'title'),
+                                    name: 'title'
+                                }),
+                                this.state.formErrors.length ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    { className: 'alert alert-danger' },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'strong',
+                                        null,
+                                        'Error!'
+                                    ),
+                                    ' ',
+                                    this.state.formErrors.title[0]
+                                ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null)
                             ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('textarea', { id: 'description',
-                                className: 'form-control',
-                                rows: '5',
-                                value: this.state.books.description,
-                                onChange: this.handleChange.bind(this, 'description')
-                            }),
-                            this.state.formErrors.description ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'div',
-                                { className: 'alert alert-danger' },
+                                { className: 'form-group' },
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'strong',
-                                    null,
-                                    'Error!'
+                                    'label',
+                                    { htmlFor: 'description', className: 'control-label' },
+                                    'Description:'
                                 ),
-                                ' ',
-                                this.state.formErrors.description[0]
-                            ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null)
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'form-group' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'label',
-                                { htmlFor: 'image', className: 'control-label' },
-                                'Image'
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('textarea', { id: 'description',
+                                    className: 'form-control',
+                                    rows: '5',
+                                    value: this.state.books.description,
+                                    onChange: this.handleChange.bind(this, 'description')
+                                }),
+                                this.state.formErrors.length ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    { className: 'alert alert-danger' },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'strong',
+                                        null,
+                                        'Error!'
+                                    ),
+                                    ' ',
+                                    this.state.formErrors.description[0]
+                                ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null)
                             ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_file_input___default.a, { name: 'myImage',
-                                id: 'image',
-                                accept: '.png,.jpg,.jpeg',
-                                placeholder: 'Click here'
-                                //className="inputClass"
-                                , onChange: this.handleChange.bind(this, 'picture')
-                            })
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'form-group' },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'button',
-                                { onClick: this._onSubmit, className: 'btn btn-success' },
-                                'Submit'
+                                'div',
+                                { className: 'form-group' },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'label',
+                                    { htmlFor: 'image', className: 'control-label' },
+                                    'Image'
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_file_input___default.a, { name: 'myImage',
+                                    id: 'image',
+                                    accept: '.png,.jpg,.jpeg',
+                                    placeholder: 'Click here'
+                                    //className="inputClass"
+                                    , onChange: this.handleChange.bind(this, 'picture')
+                                })
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                { className: 'form-group' },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'button',
+                                    { onClick: this._onSubmit, className: 'btn btn-success' },
+                                    'Submit'
+                                )
                             )
                         )
                     )
-                )
-            );
+                );
+            }
         }
     }]);
 

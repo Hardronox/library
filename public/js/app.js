@@ -14269,17 +14269,14 @@ var BookCreateUpdate = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            // let Select = require('react-select');
-            //
-            // let options = [
-            //     { value: 'one', label: 'One' },
-            //     { value: 'two', label: 'Two' },
-            //     { value: 'three', label: 'three' }
-            // ];
-            //
-            // function logChange(val) {
-            //     console.dir("Selected: " + val);
-            // }
+            var Select = __webpack_require__(34);
+
+            var options = [{ value: 'one', label: 'One' }, { value: 'two', label: 'Two' }, { value: 'three', label: 'three' }];
+
+            function logChange(val) {
+                // console.dir("Selected:");
+                // console.dir(val);
+            }
             if (this.state.loading) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null);
             } else {
@@ -14359,6 +14356,18 @@ var BookCreateUpdate = function (_Component) {
                                     placeholder: 'Click here'
                                     //className="inputClass"
                                     , onChange: this.handleChange.bind(this, 'picture')
+                                })
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                { className: 'form-group' },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Select, {
+                                    name: 'form-field-name',
+                                    value: 'one',
+                                    options: options,
+                                    onChange: logChange(1),
+                                    multi: true,
+                                    joinValues: true
                                 })
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -62563,6 +62572,7 @@ var CategoryBooks = function (_Component) {
         key: 'handlePageChange',
         value: function handlePageChange(pageNumber) {
             this.setState({ activePage: pageNumber });
+
             __WEBPACK_IMPORTED_MODULE_1__actions_AppActions__["a" /* default */].getBooksByCategoryAttempt([this.props.match.params.name, pageNumber]);
             this.props.history.push('/category/' + this.props.match.params.name + '/page/' + pageNumber);
         }

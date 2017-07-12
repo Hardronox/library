@@ -73,17 +73,18 @@ class BookCreateUpdate extends Component {
     }
 
     render() {
-        // let Select = require('react-select');
-        //
-        // let options = [
-        //     { value: 'one', label: 'One' },
-        //     { value: 'two', label: 'Two' },
-        //     { value: 'three', label: 'three' }
-        // ];
-        //
-        // function logChange(val) {
-        //     console.dir("Selected: " + val);
-        // }
+        let Select = require('react-select');
+
+        let options = [
+            { value: 'one', label: 'One' },
+            { value: 'two', label: 'Two' },
+            { value: 'three', label: 'three' }
+        ];
+
+        function logChange(val) {
+            // console.dir("Selected:");
+            // console.dir(val);
+        }
         if (this.state.loading){
             return <div></div>;
         } else {
@@ -142,18 +143,18 @@ class BookCreateUpdate extends Component {
                                 />
                             </div>
 
-                            {/*<div className="form-group">*/}
+                            <div className="form-group">
 
-                            {/*<Select*/}
-                            {/*name="form-field-name"*/}
-                            {/*value="one"*/}
-                            {/*options={options}*/}
-                            {/*onChange={logChange}*/}
-                            {/*multi={true}*/}
-                            {/*joinValues={true}*/}
-                            {/*/>*/}
+                            <Select
+                                name="form-field-name"
+                                value="one"
+                                options={options}
+                                onChange={logChange(1)}
+                                multi={true}
+                                joinValues={true}
+                            />
 
-                            {/*</div>*/}
+                            </div>
                             <div className="form-group">
                                 <button onClick={this._onSubmit} className="btn btn-success">Submit</button>
                             </div>

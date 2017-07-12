@@ -47,6 +47,7 @@ class CategoryBooks extends Component {
 
     handlePageChange(pageNumber) {
         this.setState({activePage: pageNumber});
+
         AppActions.getBooksByCategoryAttempt([this.props.match.params.name, pageNumber]);
         this.props.history.push('/category/'+this.props.match.params.name+'/page/'+pageNumber);
     }

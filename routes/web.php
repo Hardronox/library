@@ -10,7 +10,6 @@ Route::group(['middleware'=>'isAjax'], function() {
     Route::get('/get-books-by-category', 'BooksController@getBooksByCategory');
     Route::get('/get-books-by-search', 'BooksController@getBooksBySearch');
 
-
     Route::resource('categories', 'CategoriesController');
 
 });

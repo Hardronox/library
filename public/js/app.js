@@ -13905,7 +13905,7 @@ var BooksApi = function () {
         key: 'getBooksByCategoryAttempt',
         value: function getBooksByCategoryAttempt(data) {
             $.ajax({
-                url: '/books',
+                url: '/get-books-by-category',
                 type: 'GET',
                 dataType: 'json',
                 data: {
@@ -13913,14 +13913,12 @@ var BooksApi = function () {
                     page: data[1]
                 },
                 cache: false,
-                success: function (data) {
-                    // console.log(data);
-                    __WEBPACK_IMPORTED_MODULE_1__stores_BooksStore__["a" /* default */]._books = data.map(function (data) {
-
+                success: function (response) {
+                    __WEBPACK_IMPORTED_MODULE_1__stores_BooksStore__["a" /* default */]._books = response[0].map(function (data) {
                         data.description = data.description.substring(0, 60) + '...';
                         return data;
                     });
-                    __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].booksByCategoryLoaded([__WEBPACK_IMPORTED_MODULE_1__stores_BooksStore__["a" /* default */]._books, data[1]]);
+                    __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].booksByCategoryLoaded([__WEBPACK_IMPORTED_MODULE_1__stores_BooksStore__["a" /* default */]._books, response[1]]);
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err);
@@ -14048,7 +14046,7 @@ var CategoriesApi = function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_BookCreateUpdate__ = __webpack_require__(117);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_BooksList__ = __webpack_require__(119);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_CategoryCreateUpdate__ = __webpack_require__(121);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Books__ = __webpack_require__(118);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_CategoryBooks__ = __webpack_require__(284);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_Search__ = __webpack_require__(123);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_View__ = __webpack_require__(124);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_DeleteBook__ = __webpack_require__(122);
@@ -14090,7 +14088,7 @@ var AppRoutes = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__components_View__["a" /* default */], props);
         } }),
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/category/:name/page/:page', render: function render(props) {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_Books__["a" /* default */], props);
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_CategoryBooks__["a" /* default */], props);
         } }),
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/create-category', component: __WEBPACK_IMPORTED_MODULE_5__components_CategoryCreateUpdate__["a" /* default */] }),
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/update-category/:name', render: function render(props) {
@@ -14385,147 +14383,7 @@ var BookCreateUpdate = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (BookCreateUpdate);
 
 /***/ }),
-/* 118 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__actions_AppActions__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Book__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_router_dom__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_js_pagination__ = __webpack_require__(230);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_js_pagination___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react_js_pagination__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-
-
-
-
-var CategoryBooks = function (_Component) {
-    _inherits(CategoryBooks, _Component);
-
-    function CategoryBooks(props) {
-        _classCallCheck(this, CategoryBooks);
-
-        var _this = _possibleConstructorReturn(this, (CategoryBooks.__proto__ || Object.getPrototypeOf(CategoryBooks)).call(this, props));
-
-        _this.state = _this._getState();
-        _this._onChange = _this._onChange.bind(_this);
-        _this.handlePageChange = _this.handlePageChange.bind(_this);
-        return _this;
-    }
-
-    _createClass(CategoryBooks, [{
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-            __WEBPACK_IMPORTED_MODULE_1__actions_AppActions__["a" /* default */].getBooksByCategoryAttempt([this.props.match.params.name, this.props.match.params.page]);
-        }
-    }, {
-        key: 'componentWillUnmount',
-        value: function componentWillUnmount() {
-            __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__["a" /* default */].enableLoading();
-            __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__["a" /* default */].unsetBooks();
-            __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__["a" /* default */].removeChangeListener(this._onChange);
-        }
-    }, {
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__["a" /* default */].addChangeListener(this._onChange);
-        }
-    }, {
-        key: '_onChange',
-        value: function _onChange() {
-            this.setState({
-                books: __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__["a" /* default */].getAll(),
-                booksCount: __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__["a" /* default */].getCount()
-            });
-        }
-    }, {
-        key: '_getState',
-        value: function _getState() {
-
-            return {
-                books: __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__["a" /* default */].getAll(),
-                booksCount: __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__["a" /* default */].getCount(),
-                activePage: this.props.match.params.page
-            };
-        }
-    }, {
-        key: 'handlePageChange',
-        value: function handlePageChange(pageNumber) {
-            this.setState({ activePage: pageNumber });
-            __WEBPACK_IMPORTED_MODULE_1__actions_AppActions__["a" /* default */].getBooksByCategoryAttempt([this.props.match.params.name, pageNumber]);
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { className: 'container' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'row' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'col-md-7' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'h3',
-                            null,
-                            'Books in "',
-                            this.props.match.params.name,
-                            '" category:'
-                        ),
-                        _.times(this.state.books.length, function (i) {
-                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Book__["a" /* default */], { book: _this2.state.books[i],
-                                type: 'categoryPage',
-                                key: i
-                            });
-                        })
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'col-md-4' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Link */],
-                            { to: { pathname: '/update-category/' + this.props.match.params.name } },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'button',
-                                { className: 'btn btn-warning' },
-                                'Update Category'
-                            )
-                        )
-                    )
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_js_pagination___default.a, {
-                    activePage: parseInt(this.state.activePage) //parseInt(this.props.match.params.page)
-                    , itemsCountPerPage: 5,
-                    totalItemsCount: this.state.booksCount - 5 //
-                    , pageRangeDisplayed: 5,
-                    onChange: this.handlePageChange
-                })
-            );
-        }
-    }]);
-
-    return CategoryBooks;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (CategoryBooks);
-
-/***/ }),
+/* 118 */,
 /* 119 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -62618,6 +62476,153 @@ module.exports = function(module) {
 __webpack_require__(111);
 module.exports = __webpack_require__(112);
 
+
+/***/ }),
+/* 278 */,
+/* 279 */,
+/* 280 */,
+/* 281 */,
+/* 282 */,
+/* 283 */,
+/* 284 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__actions_AppActions__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Book__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_router_dom__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_js_pagination__ = __webpack_require__(230);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_js_pagination___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react_js_pagination__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+
+var CategoryBooks = function (_Component) {
+    _inherits(CategoryBooks, _Component);
+
+    function CategoryBooks(props) {
+        _classCallCheck(this, CategoryBooks);
+
+        var _this = _possibleConstructorReturn(this, (CategoryBooks.__proto__ || Object.getPrototypeOf(CategoryBooks)).call(this, props));
+
+        _this.state = _this._getState();
+        _this._onChange = _this._onChange.bind(_this);
+        _this.handlePageChange = _this.handlePageChange.bind(_this);
+        return _this;
+    }
+
+    _createClass(CategoryBooks, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            __WEBPACK_IMPORTED_MODULE_1__actions_AppActions__["a" /* default */].getBooksByCategoryAttempt([this.props.match.params.name, this.props.match.params.page]);
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__["a" /* default */].enableLoading();
+            __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__["a" /* default */].unsetBooks();
+            __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__["a" /* default */].removeChangeListener(this._onChange);
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__["a" /* default */].addChangeListener(this._onChange);
+        }
+    }, {
+        key: '_onChange',
+        value: function _onChange() {
+            this.setState({
+                books: __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__["a" /* default */].getAll(),
+                booksCount: __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__["a" /* default */].getCount()
+            });
+        }
+    }, {
+        key: '_getState',
+        value: function _getState() {
+            return {
+                books: __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__["a" /* default */].getAll(),
+                booksCount: __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__["a" /* default */].getCount(),
+                activePage: this.props.match.params.page
+            };
+        }
+    }, {
+        key: 'handlePageChange',
+        value: function handlePageChange(pageNumber) {
+            this.setState({ activePage: pageNumber });
+            __WEBPACK_IMPORTED_MODULE_1__actions_AppActions__["a" /* default */].getBooksByCategoryAttempt([this.props.match.params.name, pageNumber]);
+            this.props.history.push('/category/' + this.props.match.params.name + '/page/' + pageNumber);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'container' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'row' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'col-md-7' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'h3',
+                            null,
+                            'Books in "',
+                            this.props.match.params.name,
+                            '" category:'
+                        ),
+                        _.times(this.state.books.length, function (i) {
+                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Book__["a" /* default */], { book: _this2.state.books[i],
+                                type: 'categoryPage',
+                                key: i
+                            });
+                        })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'col-md-4' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Link */],
+                            { to: { pathname: '/update-category/' + this.props.match.params.name } },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'button',
+                                { className: 'btn btn-warning' },
+                                'Update Category'
+                            )
+                        )
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_js_pagination___default.a, {
+                    activePage: parseInt(this.state.activePage),
+                    itemsCountPerPage: 5,
+                    totalItemsCount: this.state.booksCount - 5,
+                    pageRangeDisplayed: 5,
+                    onChange: this.handlePageChange
+                })
+            );
+        }
+    }]);
+
+    return CategoryBooks;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (CategoryBooks);
 
 /***/ })
 /******/ ]);

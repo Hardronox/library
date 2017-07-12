@@ -111,7 +111,7 @@ class BooksApi {
 
     getBooksByCategoryAttempt(data) {
         $.ajax({
-            url: '/books',
+            url: '/get-books-by-category',
             type: 'GET',
             dataType: 'json',
             data:{
@@ -119,15 +119,12 @@ class BooksApi {
                 page: data[1]
             },
             cache: false,
-            success: function(data) {
-                // console.log(data);
-                BooksStore._books= data.map(function(data) {
-
+            success: function(response) {
+                BooksStore._books= response[0].map(function(data) {
                     data.description= data.description.substring(0, 60)+'...';
                     return data;
                 });
-                AppActions.booksByCategoryLoaded([BooksStore._books, data[1]]);
-
+                AppActions.booksByCategoryLoaded([BooksStore._books, response[1]]);
 
             }.bind(this),
             error: function(xhr, status, err) {

@@ -9,7 +9,6 @@ import Pagination from "react-js-pagination";
 class CategoryBooks extends Component {
 
     constructor(props) {
-
         super(props);
 
         this.state = this._getState();
@@ -39,7 +38,6 @@ class CategoryBooks extends Component {
     }
 
     _getState () {
-
         return {
             books: BooksStore.getAll(),
             booksCount: BooksStore.getCount(),
@@ -50,6 +48,7 @@ class CategoryBooks extends Component {
     handlePageChange(pageNumber) {
         this.setState({activePage: pageNumber});
         AppActions.getBooksByCategoryAttempt([this.props.match.params.name, pageNumber]);
+        this.props.history.push('/category/'+this.props.match.params.name+'/page/'+pageNumber);
     }
 
     render() {
@@ -75,9 +74,9 @@ class CategoryBooks extends Component {
                 </div>
 
                 <Pagination
-                    activePage={parseInt(this.state.activePage)} //parseInt(this.props.match.params.page)
+                    activePage={parseInt(this.state.activePage)}
                     itemsCountPerPage={5}
-                    totalItemsCount={this.state.booksCount-5} //
+                    totalItemsCount={this.state.booksCount-5}
                     pageRangeDisplayed={5}
                     onChange={this.handlePageChange}
                 />

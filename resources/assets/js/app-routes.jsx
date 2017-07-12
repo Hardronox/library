@@ -10,14 +10,13 @@ import Books from './components/BooksList';
 
 import CategoryCreateUpdate from './components/CategoryCreateUpdate';
 
-import CategoryBooks from './components/Books';
+import CategoryBooks from './components/CategoryBooks';
 
 import Search from './components/Search';
 
 import View from './components/View';
 
 import DeleteBook from './components/DeleteBook';
-
 
 
 const AppRoutes = (

@@ -11,6 +11,6 @@ class BookCategoryTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\BookCategory::class, 200)->create();
+        factory(App\Models\BookCategory::class, 200)->create();
     }
 }

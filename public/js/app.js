@@ -5407,7 +5407,6 @@ var Book = function (_Component) {
     _createClass(Book, [{
         key: "_displayByType",
         value: function _displayByType() {
-
             switch (this.props.type) {
 
                 case 'viewPage':
@@ -13850,8 +13849,7 @@ var BooksApi = function () {
                 contentType: false,
                 enctype: 'multipart/form-data',
                 processData: false,
-                success: function (response) {
-                    console.log(response);
+                success: function () {
                     __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].singleBookCreated();
                 }.bind(this),
                 error: function (response) {
@@ -13863,9 +13861,8 @@ var BooksApi = function () {
     }, {
         key: 'updateSingleBookAttempt',
         value: function updateSingleBookAttempt(data) {
-            console.log(data);
             $.ajax({
-                url: '/books/' + data.get('oldName'),
+                url: '/books/' + data.get('id'),
                 type: 'POST',
                 dataType: 'json',
                 data: data,
@@ -13874,7 +13871,6 @@ var BooksApi = function () {
                 enctype: 'application/x-www-form-urlencoded',
                 processData: false,
                 success: function () {
-
                     __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].singleBookUpdated();
                 }.bind(this),
                 error: function (response) {
@@ -14280,7 +14276,6 @@ var BookCreateUpdate = function (_Component) {
             if (this.state.loading) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null);
             } else {
-                console.log(this.state.formErrors);
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'container' },
@@ -14331,7 +14326,7 @@ var BookCreateUpdate = function (_Component) {
                                     value: this.state.books.description,
                                     onChange: this.handleChange.bind(this, 'description')
                                 }),
-                                this.state.formErrors.length ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                this.state.formErrors.description ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'div',
                                     { className: 'alert alert-danger' },
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -14792,15 +14787,26 @@ var CategoryCreateUpdate = function (_Component) {
     function CategoryCreateUpdate(props) {
         _classCallCheck(this, CategoryCreateUpdate);
 
+        //this.state = this._getState();
         var _this = _possibleConstructorReturn(this, (CategoryCreateUpdate.__proto__ || Object.getPrototypeOf(CategoryCreateUpdate)).call(this, props));
 
         _this.state = {
-            category: ''
+            category: _this.props.match.params.name,
+            formErrors: []
         };
         _this._onChange = _this._onChange.bind(_this);
         _this._onSubmit = _this._onSubmit.bind(_this);
         return _this;
     }
+
+    // componentWillMount() {
+    //     if (this.props.match.params.id)
+    //         AppActions.getSingleBookAttempt(this.props.match.params.id);
+    //     else
+    //         this.setState({
+    //             loading: false
+    //         });
+    // }
 
     _createClass(CategoryCreateUpdate, [{
         key: 'componentWillUnmount',
@@ -14818,6 +14824,15 @@ var CategoryCreateUpdate = function (_Component) {
             this.setState({
                 loading: __WEBPACK_IMPORTED_MODULE_3__stores_CategoriesStore__["a" /* default */].getStatus()
             });
+        }
+    }, {
+        key: '_getState',
+        value: function _getState() {
+            return {
+                books: BooksStore.getAll(),
+                loading: BooksStore.getStatus(),
+                formErrors: []
+            };
         }
     }, {
         key: 'handleChange',
@@ -14886,6 +14901,17 @@ var CategoryCreateUpdate = function (_Component) {
                                 name: 'name'
                             })
                         ),
+                        this.state.formErrors.name ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'alert alert-danger' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'strong',
+                                null,
+                                'Error!'
+                            ),
+                            ' ',
+                            this.state.formErrors.name[0]
+                        ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
                             { className: 'form-group' },
@@ -15366,7 +15392,7 @@ var Book = function (_Component) {
                     { className: 'media-body' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Link */],
-                        { to: { pathname: '/view/' + this.props.props.book.id } },
+                        { to: { pathname: '/book/' + this.props.props.book.id } },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'h4',
                             { className: 'media-heading' },

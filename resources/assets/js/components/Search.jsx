@@ -12,15 +12,14 @@ class Search extends Component {
 
         super(props);
         this.state = this._getState();
-        this._onChange = this._onChange.bind(this)
-        this.handleChange = this.handleChange.bind(this)
-        this.search = this.search.bind(this)
+        this._onChange = this._onChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.search = this.search.bind(this);
     }
 
     componentWillMount() {
         AppActions.getBooksBySearchAttempt(this.props.match.params.query);
     }
-
 
     componentWillUnmount() {
         BooksStore.removeChangeListener(this._onChange);

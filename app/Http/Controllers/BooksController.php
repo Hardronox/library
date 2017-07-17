@@ -9,14 +9,23 @@ use Illuminate\Http\Request;
 
 class BooksController extends Controller
 {
+    /**
+     * @var BookRepository
+     */
     private $repository;
 
+    /**
+     * BooksController constructor.
+     * @param BookRepository $repository
+     */
     public function __construct(BookRepository $repository)
     {
         $this->repository = $repository;
     }
 
-
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index()
     {
         $books = $this->repository->loadBooksForMainPage();
@@ -25,15 +34,22 @@ class BooksController extends Controller
                     ->json($books);
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function show($id)
     {
         $book = $this->repository->loadBookForShow($id);
 
         return response()
                     ->json($book);
-
     }
 
+    /**
+     * @param CreateUpdateBookRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(CreateUpdateBookRequest $request)
     {
         $book = $this->repository->createBook($request);
@@ -42,14 +58,23 @@ class BooksController extends Controller
                     ->json($book);
     }
 
+    /**
+     * @param CreateUpdateBookRequest $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(CreateUpdateBookRequest $request, $id)
     {
-        $book = $this->repository->loadBookForShow($request, $id);
+        $book = $this->repository->updateBook($request, $id);
 
         return response()
                     ->json($book);
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy($id)
     {
         $this->repository->deleteBook($id);
@@ -58,7 +83,10 @@ class BooksController extends Controller
                     ->json('done');
     }
 
-
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getBooksBySearch(Request $request)
     {
         $books = $this->repository->loadBooksForSearch($request);
@@ -67,6 +95,10 @@ class BooksController extends Controller
             ->json($books);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getBooksByCategory(Request $request)
     {
         $data = $this->repository->loadBooksForCategory($request);
@@ -75,6 +107,6 @@ class BooksController extends Controller
         $count=$data[1];
 
         return response()
-            ->json([$books, $count]); //, $categories
+            ->json([$books, $count]);
     }
 }

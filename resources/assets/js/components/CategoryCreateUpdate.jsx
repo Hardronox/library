@@ -10,13 +10,24 @@ class CategoryCreateUpdate extends Component {
     constructor(props) {
 
         super(props);
+        //this.state = this._getState();
         this.state =
             {
-                category: ''
+                category: this.props.match.params.name,
+                formErrors: []
             };
         this._onChange = this._onChange.bind(this);
         this._onSubmit = this._onSubmit.bind(this)
     }
+
+    // componentWillMount() {
+    //     if (this.props.match.params.id)
+    //         AppActions.getSingleBookAttempt(this.props.match.params.id);
+    //     else
+    //         this.setState({
+    //             loading: false
+    //         });
+    // }
 
     componentWillUnmount() {
         CategoriesStore.removeChangeListener(this._onChange);
@@ -30,6 +41,14 @@ class CategoryCreateUpdate extends Component {
         this.setState({
             loading: CategoriesStore.getStatus()
         })
+    }
+
+    _getState () {
+        return {
+            books: BooksStore.getAll(),
+            loading: BooksStore.getStatus(),
+            formErrors: [],
+        };
     }
 
     handleChange(event) {
@@ -74,7 +93,6 @@ class CategoryCreateUpdate extends Component {
             return <div></div>;
         } else
             return (
-
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6 ">
@@ -89,6 +107,13 @@ class CategoryCreateUpdate extends Component {
                                        name="name"
                                 />
                             </div>
+                            { this.state.formErrors.name ?
+                                <div className="alert alert-danger">
+                                    <strong>Error!</strong> {this.state.formErrors.name[0]}
+                                </div>
+                                :
+                                <div></div>
+                            }
 
                             {/*<div className="form-group">*/}
 

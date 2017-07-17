@@ -12,9 +12,7 @@ class Book extends Component {
         this.state = {}
     }
 
-
     _displayByType() {
-
         switch (this.props.type) {
 
             case 'viewPage':
@@ -30,7 +28,6 @@ class Book extends Component {
                 return <CategoryPageBook props={this.props}/>;
                 break;
         }
-
     }
 
     render() {

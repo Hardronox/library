@@ -54,10 +54,8 @@ class BooksApi {
             contentType : false,
             enctype: 'multipart/form-data',
             processData:false,
-            success: function(response) {
-                console.log(response);
+            success: function() {
                 AppActions.singleBookCreated();
-
             }.bind(this),
             error: function(response) {
                 console.log(response);
@@ -68,9 +66,8 @@ class BooksApi {
     }
 
     updateSingleBookAttempt(data) {
-        console.log(data);
         $.ajax({
-            url: `/books/${data.get('oldName')}`,
+            url: `/books/${data.get('id')}`,
             type: 'POST',
             dataType: 'json',
             data: data,
@@ -79,9 +76,7 @@ class BooksApi {
             enctype: 'application/x-www-form-urlencoded',
             processData:false,
             success: function() {
-
                 AppActions.singleBookUpdated();
-
             }.bind(this),
             error: function(response) {
 

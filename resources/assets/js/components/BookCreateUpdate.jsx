@@ -88,7 +88,6 @@ class BookCreateUpdate extends Component {
         if (this.state.loading){
             return <div></div>;
         } else {
-            console.log(this.state.formErrors);
             return (
                 <div className="container">
                     <div className="row">
@@ -123,7 +122,7 @@ class BookCreateUpdate extends Component {
                                           onChange={this.handleChange.bind(this, 'description')}
                                 />
 
-                                { this.state.formErrors.length ?
+                                { this.state.formErrors.description ?
                                     <div className="alert alert-danger">
                                         <strong>Error!</strong> {this.state.formErrors.description[0]}
                                     </div>

@@ -12,7 +12,8 @@ class BookCreateUpdate extends Component {
         super(props);
         this.state = this._getState();
         this._onChange = this._onChange.bind(this);
-        this._onSubmit = this._onSubmit.bind(this)
+        this._onSubmit = this._onSubmit.bind(this);
+        this.changeCategory = this.changeCategory.bind(this);
     }
 
     componentWillMount() {
@@ -46,6 +47,7 @@ class BookCreateUpdate extends Component {
             books: BooksStore.getAll(),
             loading: BooksStore.getStatus(),
             formErrors: [],
+            value: []
         };
     }
 
@@ -72,19 +74,22 @@ class BookCreateUpdate extends Component {
             AppActions.createSingleBookAttempt(formData);
     }
 
-    render() {
-        let Select = require('react-select');
+    changeCategory(value) {
+        console.log('You have selected: ', value);
+        this.setState({ value });
+    }
 
+    render() {
         let options = [
-            { value: 'one', label: 'One' },
-            { value: 'two', label: 'Two' },
-            { value: 'three', label: 'three' }
+            { label: 'Banana', value: '1' },
+            { label: 'Apple', value: '2' },
+            { label: 'Mango', value: '3' },
+            { label: 'Goa', value: '4' },
+            { label: 'Grapes', value: '5' },
+            { label: 'Pine Apple', value: '6' },
         ];
 
-        function logChange(val) {
-            // console.dir("Selected:");
-            // console.dir(val);
-        }
+
         if (this.state.loading){
             return <div></div>;
         } else {
@@ -110,7 +115,6 @@ class BookCreateUpdate extends Component {
                                     <div></div>
                                 }
                             </div>
-
 
                             <div className="form-group">
                                 <label htmlFor="description"  className="control-label">Description:</label>
@@ -144,16 +148,14 @@ class BookCreateUpdate extends Component {
                             </div>
 
                             <div className="form-group">
-
-                            <Select
-                                name="form-field-name"
-                                value="one"
-                                options={options}
-                                onChange={logChange(1)}
-                                multi={true}
-                                joinValues={true}
-                            />
-
+                                <Select
+                                    multi
+                                    joinValues
+                                    value={this.state.value}
+                                    placeholder="Select your favourite(s)"
+                                    options={options}
+                                    onChange={this.changeCategory}
+                                />
                             </div>
                             <div className="form-group">
                                 <button onClick={this._onSubmit} className="btn btn-success">Submit</button>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import BooksStore from '../stores/BooksStore';
+import CategoriesStore from '../stores/CategoriesStore';
 import AppActions from '../actions/AppActions';
 import FileInput from 'react-file-input';
 
@@ -17,6 +18,7 @@ class BookCreateUpdate extends Component {
     }
 
     componentWillMount() {
+        AppActions.getCategoriesAttempt();
         if (this.props.match.params.id)
             AppActions.getSingleBookAttempt(this.props.match.params.id);
         else
@@ -32,13 +34,22 @@ class BookCreateUpdate extends Component {
 
     componentDidMount() {
         BooksStore.addChangeListener(this._onChange);
+        CategoriesStore.addChangeListener(this._onChange);
     }
 
     _onChange () {
+        let categories=[];
+        let options=CategoriesStore.getAll();
+
+        {_.times(options.length, i =>
+            categories.push({label: options[i].name, value: options[i].name})
+        )}
+
         this.setState({
             books: BooksStore.getAll(),
-            loading: BooksStore.getStatus(),
+            loading: false,
             formErrors: BooksStore.getFormErrors(),
+            categories: categories
         });
     }
 
@@ -46,6 +57,7 @@ class BookCreateUpdate extends Component {
         return {
             books: BooksStore.getAll(),
             loading: BooksStore.getStatus(),
+            categories: CategoriesStore.getAll(),
             formErrors: [],
             value: []
         };
@@ -80,14 +92,15 @@ class BookCreateUpdate extends Component {
     }
 
     render() {
-        let options = [
-            { label: 'Banana', value: '1' },
-            { label: 'Apple', value: '2' },
-            { label: 'Mango', value: '3' },
-            { label: 'Goa', value: '4' },
-            { label: 'Grapes', value: '5' },
-            { label: 'Pine Apple', value: '6' },
-        ];
+
+        // let options = [
+        //     { label: 'Banana', value: '1' },
+        //     { label: 'Apple', value: '2' },
+        //     { label: 'Mango', value: '3' },
+        //     { label: 'Goa', value: '4' },
+        //     { label: 'Grapes', value: '5' },
+        //     { label: 'Pine Apple', value: '6' },
+        // ];
 
 
         if (this.state.loading){
@@ -153,7 +166,7 @@ class BookCreateUpdate extends Component {
                                     joinValues
                                     value={this.state.value}
                                     placeholder="Select your favourite(s)"
-                                    options={options}
+                                    options={this.state.categories}
                                     onChange={this.changeCategory}
                                 />
                             </div>

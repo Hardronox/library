@@ -14288,17 +14288,6 @@ var BookCreateUpdate = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-
-            // let options = [
-            //     { label: 'Banana', value: '1' },
-            //     { label: 'Apple', value: '2' },
-            //     { label: 'Mango', value: '3' },
-            //     { label: 'Goa', value: '4' },
-            //     { label: 'Grapes', value: '5' },
-            //     { label: 'Pine Apple', value: '6' },
-            // ];
-
-
             if (this.state.loading) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null);
             } else {
@@ -14383,11 +14372,17 @@ var BookCreateUpdate = function (_Component) {
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'div',
                                 { className: 'form-group' },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'label',
+                                    { htmlFor: 'category', className: 'control-label' },
+                                    'Select category(optional)'
+                                ),
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_select___default.a, {
+                                    id: 'category',
                                     multi: true,
                                     joinValues: true,
                                     value: this.state.value,
-                                    placeholder: 'Select your favourite(s)',
+                                    placeholder: 'Select categories',
                                     options: this.state.categories,
                                     onChange: this.changeCategory
                                 })
@@ -14816,28 +14811,21 @@ var CategoryCreateUpdate = function (_Component) {
         //this.state = this._getState();
         var _this = _possibleConstructorReturn(this, (CategoryCreateUpdate.__proto__ || Object.getPrototypeOf(CategoryCreateUpdate)).call(this, props));
 
-        _this.state = {
-            category: _this.props.match.params.name,
-            formErrors: []
-        };
+        _this.state = _this._getState();
         _this._onChange = _this._onChange.bind(_this);
         _this._onSubmit = _this._onSubmit.bind(_this);
+        _this.changeCategory = _this.changeCategory.bind(_this);
         return _this;
     }
 
-    // componentWillMount() {
-    //     if (this.props.match.params.id)
-    //         AppActions.getSingleBookAttempt(this.props.match.params.id);
-    //     else
-    //         this.setState({
-    //             loading: false
-    //         });
-    // }
-
     _createClass(CategoryCreateUpdate, [{
-        key: 'componentWillUnmount',
-        value: function componentWillUnmount() {
-            __WEBPACK_IMPORTED_MODULE_3__stores_CategoriesStore__["a" /* default */].removeChangeListener(this._onChange);
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+
+            __WEBPACK_IMPORTED_MODULE_4__actions_AppActions__["a" /* default */].getCategoriesAttempt();
+            this.setState({
+                loading: false
+            });
         }
     }, {
         key: 'componentDidMount',
@@ -14845,19 +14833,34 @@ var CategoryCreateUpdate = function (_Component) {
             __WEBPACK_IMPORTED_MODULE_3__stores_CategoriesStore__["a" /* default */].addChangeListener(this._onChange);
         }
     }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            __WEBPACK_IMPORTED_MODULE_3__stores_CategoriesStore__["a" /* default */].removeChangeListener(this._onChange);
+        }
+    }, {
         key: '_onChange',
         value: function _onChange() {
+            var categories = [];
+            var options = __WEBPACK_IMPORTED_MODULE_3__stores_CategoriesStore__["a" /* default */].getAll();
+
+            console.log(options);
+            {
+                _.times(options.length, function (i) {
+                    return categories.push({ label: options[i].name, value: options[i].name });
+                });
+            }
             this.setState({
-                loading: __WEBPACK_IMPORTED_MODULE_3__stores_CategoriesStore__["a" /* default */].getStatus()
+                loading: __WEBPACK_IMPORTED_MODULE_3__stores_CategoriesStore__["a" /* default */].getStatus(),
+                parentCategories: categories
             });
         }
     }, {
         key: '_getState',
         value: function _getState() {
             return {
-                books: BooksStore.getAll(),
-                loading: BooksStore.getStatus(),
-                formErrors: []
+                category: this.props.match.params.name,
+                formErrors: [],
+                parentCategories: __WEBPACK_IMPORTED_MODULE_3__stores_CategoriesStore__["a" /* default */].getAll()
             };
         }
     }, {
@@ -14886,20 +14889,14 @@ var CategoryCreateUpdate = function (_Component) {
             this.props.history.push('/');
         }
     }, {
+        key: 'changeCategory',
+        value: function changeCategory(value) {
+            console.log('You have selected: ', value);
+            this.setState({ value: value });
+        }
+    }, {
         key: 'render',
         value: function render() {
-            // let Select = require('react-select');
-            //
-            // let options = [
-            //     { value: 'one', label: 'One' },
-            //     { value: 'two', label: 'Two' },
-            //     { value: 'three', label: 'three' }
-            // ];
-            //
-            // function logChange(val) {
-            //     console.dir("Selected: " + val);
-            // }
-
             if (this.state.loading) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null);
             } else return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -14938,6 +14935,24 @@ var CategoryCreateUpdate = function (_Component) {
                             ' ',
                             this.state.formErrors.name[0]
                         ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'form-group' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'label',
+                                { htmlFor: 'parent', className: 'control-label' },
+                                'Select parent category(optional)'
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_select___default.a, {
+                                id: 'parent',
+                                multi: true,
+                                joinValues: true,
+                                value: this.state.value,
+                                placeholder: 'Parent category',
+                                options: this.state.parentCategories,
+                                onChange: this.changeCategory
+                            })
+                        ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
                             { className: 'form-group' },

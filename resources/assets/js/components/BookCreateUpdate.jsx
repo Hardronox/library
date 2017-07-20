@@ -92,17 +92,6 @@ class BookCreateUpdate extends Component {
     }
 
     render() {
-
-        // let options = [
-        //     { label: 'Banana', value: '1' },
-        //     { label: 'Apple', value: '2' },
-        //     { label: 'Mango', value: '3' },
-        //     { label: 'Goa', value: '4' },
-        //     { label: 'Grapes', value: '5' },
-        //     { label: 'Pine Apple', value: '6' },
-        // ];
-
-
         if (this.state.loading){
             return <div></div>;
         } else {
@@ -161,11 +150,13 @@ class BookCreateUpdate extends Component {
                             </div>
 
                             <div className="form-group">
+                                <label htmlFor="category" className="control-label">Select category(optional)</label>
                                 <Select
+                                    id="category"
                                     multi
                                     joinValues
                                     value={this.state.value}
-                                    placeholder="Select your favourite(s)"
+                                    placeholder="Select categories"
                                     options={this.state.categories}
                                     onChange={this.changeCategory}
                                 />

@@ -11,43 +11,48 @@ class CategoryCreateUpdate extends Component {
 
         super(props);
         //this.state = this._getState();
-        this.state =
-            {
-                category: this.props.match.params.name,
-                formErrors: []
-            };
+        this.state = this._getState();
         this._onChange = this._onChange.bind(this);
-        this._onSubmit = this._onSubmit.bind(this)
+        this._onSubmit = this._onSubmit.bind(this);
+        this.changeCategory = this.changeCategory.bind(this);
     }
 
-    // componentWillMount() {
-    //     if (this.props.match.params.id)
-    //         AppActions.getSingleBookAttempt(this.props.match.params.id);
-    //     else
-    //         this.setState({
-    //             loading: false
-    //         });
-    // }
+    componentWillMount() {
 
-    componentWillUnmount() {
-        CategoriesStore.removeChangeListener(this._onChange);
+        AppActions.getCategoriesAttempt();
+        this.setState({
+            loading: false
+        });
     }
 
     componentDidMount() {
         CategoriesStore.addChangeListener(this._onChange);
     }
 
+    componentWillUnmount() {
+        CategoriesStore.removeChangeListener(this._onChange);
+    }
+
+
     _onChange () {
+        let categories=[];
+        let options=CategoriesStore.getAll();
+
+        console.log(options);
+        {_.times(options.length, i =>
+            categories.push({label: options[i].name, value: options[i].name})
+        )}
         this.setState({
-            loading: CategoriesStore.getStatus()
+            loading: CategoriesStore.getStatus(),
+            parentCategories: categories,
         })
     }
 
     _getState () {
         return {
-            books: BooksStore.getAll(),
-            loading: BooksStore.getStatus(),
+            category: this.props.match.params.name,
             formErrors: [],
+            parentCategories: CategoriesStore.getAll()
         };
     }
 
@@ -76,19 +81,12 @@ class CategoryCreateUpdate extends Component {
         this.props.history.push('/');
     }
 
-    render() {
-        // let Select = require('react-select');
-        //
-        // let options = [
-        //     { value: 'one', label: 'One' },
-        //     { value: 'two', label: 'Two' },
-        //     { value: 'three', label: 'three' }
-        // ];
-        //
-        // function logChange(val) {
-        //     console.dir("Selected: " + val);
-        // }
+    changeCategory(value) {
+        console.log('You have selected: ', value);
+        this.setState({ value });
+    }
 
+    render() {
         if (this.state.loading){
             return <div></div>;
         } else
@@ -115,18 +113,18 @@ class CategoryCreateUpdate extends Component {
                                 <div></div>
                             }
 
-                            {/*<div className="form-group">*/}
-
-                            {/*<Select*/}
-                            {/*name="form-field-name"*/}
-                            {/*value="one"*/}
-                            {/*options={options}*/}
-                            {/*onChange={logChange}*/}
-                            {/*multi={true}*/}
-                            {/*joinValues={true}*/}
-                            {/*/>*/}
-
-                            {/*</div>*/}
+                            <div className="form-group">
+                                <label htmlFor="parent" className="control-label">Select parent category(optional)</label>
+                                <Select
+                                    id="parent"
+                                    multi
+                                    joinValues
+                                    value={this.state.value}
+                                    placeholder="Parent category"
+                                    options={this.state.parentCategories}
+                                    onChange={this.changeCategory}
+                                />
+                            </div>
                             <div className="form-group">
                                 <button onClick={this._onSubmit}
                                         className="btn btn-success"

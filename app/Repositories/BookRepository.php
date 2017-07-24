@@ -40,12 +40,11 @@ class BookRepository
             $book->picture= $imageName;
         }
 
-        var_dump($request->all());
-//        $category= Category::whereIn('name','=', $post['category_name'])->get();
-//        $book->categories()->attach($category); // associate($category);
+        $category= Category::whereIn('name', $request->input('categories'))->get();
+        //var_dump('<pre>',$category);
 
         $book->save();
-
+        $book->categories()->attach($category); // associate($category);
         return $book;
     }
 

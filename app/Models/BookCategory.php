@@ -21,5 +21,7 @@ class BookCategory extends Model
     protected $fillable = [
         'book_id',
         'category_id',
+        'created_at',
+        'updated_at'
     ];
 }

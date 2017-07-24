@@ -59,7 +59,7 @@ class BookCreateUpdate extends Component {
             loading: BooksStore.getStatus(),
             categories: CategoriesStore.getAll(),
             formErrors: [],
-            value: []
+            selectedCategories: []
         };
     }
 
@@ -73,22 +73,30 @@ class BookCreateUpdate extends Component {
     _onSubmit () {
         let formData= new FormData();
 
+        console.log(this.state.selectedCategories);
         formData.append('title', this.state.books.title);
         formData.append('description', this.state.books.description);
         formData.append('picture', this.state.books.picture);
 
+        // for (let i = 0; i < this.state.selectedCategories.length; i++) {
+        //     formData.append('categories[]', this.state.selectedCategories[i].value);
+        // }
+        this.state.selectedCategories.forEach(function(item) {
+            formData.append('categories[]', item.value);
+        });
         // if for update book, else for create
         if (this.props.match.params.id) {
             formData.append('id', this.state.books.id);
             formData.append('_method', 'PUT');
             AppActions.updateSingleBookAttempt(formData);
         } else
-            AppActions.createSingleBookAttempt(formData);
+            AppActions.createSingleBookAttempt(formData);                                                                                                                                                                                                                       
     }
 
     changeCategory(value) {
         console.log('You have selected: ', value);
-        this.setState({ value });
+        this.setState({
+            selectedCategories: value });
     }
 
     render() {
@@ -155,7 +163,7 @@ class BookCreateUpdate extends Component {
                                     id="category"
                                     multi
                                     joinValues
-                                    value={this.state.value}
+                                    value={this.state.selectedCategories}
                                     placeholder="Select categories"
                                     options={this.state.categories}
                                     onChange={this.changeCategory}

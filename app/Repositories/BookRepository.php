@@ -40,6 +40,10 @@ class BookRepository
             $book->picture= $imageName;
         }
 
+        var_dump($request->all());
+//        $category= Category::whereIn('name','=', $post['category_name'])->get();
+//        $book->categories()->attach($category); // associate($category);
+
         $book->save();
 
         return $book;

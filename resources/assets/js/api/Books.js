@@ -1,10 +1,7 @@
 import AppActions from '../actions/AppActions';
 import BooksStore from '../stores/BooksStore';
 
-
 class BooksApi {
-
-
 
     getAllBooksAttempt() {
 
@@ -58,7 +55,6 @@ class BooksApi {
                 AppActions.singleBookCreated();
             }.bind(this),
             error: function(response) {
-                console.log(response);
                 AppActions.singleBookNotCreated(response.responseJSON);
 
             }.bind(this)

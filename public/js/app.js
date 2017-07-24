@@ -13853,7 +13853,6 @@ var BooksApi = function () {
                     __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].singleBookCreated();
                 }.bind(this),
                 error: function (response) {
-                    console.log(response);
                     __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].singleBookNotCreated(response.responseJSON);
                 }.bind(this)
             });
@@ -14252,7 +14251,7 @@ var BookCreateUpdate = function (_Component) {
                 loading: __WEBPACK_IMPORTED_MODULE_3__stores_BooksStore__["a" /* default */].getStatus(),
                 categories: __WEBPACK_IMPORTED_MODULE_4__stores_CategoriesStore__["a" /* default */].getAll(),
                 formErrors: [],
-                value: []
+                selectedCategories: []
             };
         }
     }, {
@@ -14268,10 +14267,17 @@ var BookCreateUpdate = function (_Component) {
         value: function _onSubmit() {
             var formData = new FormData();
 
+            console.log(this.state.selectedCategories);
             formData.append('title', this.state.books.title);
             formData.append('description', this.state.books.description);
             formData.append('picture', this.state.books.picture);
 
+            // for (let i = 0; i < this.state.selectedCategories.length; i++) {
+            //     formData.append('categories[]', this.state.selectedCategories[i].value);
+            // }
+            this.state.selectedCategories.forEach(function (item) {
+                formData.append('categories[]', item.value);
+            });
             // if for update book, else for create
             if (this.props.match.params.id) {
                 formData.append('id', this.state.books.id);
@@ -14283,7 +14289,8 @@ var BookCreateUpdate = function (_Component) {
         key: 'changeCategory',
         value: function changeCategory(value) {
             console.log('You have selected: ', value);
-            this.setState({ value: value });
+            this.setState({
+                selectedCategories: value });
         }
     }, {
         key: 'render',
@@ -14381,7 +14388,7 @@ var BookCreateUpdate = function (_Component) {
                                     id: 'category',
                                     multi: true,
                                     joinValues: true,
-                                    value: this.state.value,
+                                    value: this.state.selectedCategories,
                                     placeholder: 'Select categories',
                                     options: this.state.categories,
                                     onChange: this.changeCategory

@@ -179,6 +179,36 @@ class AppActions {
             value: data
         });
     }
+    // --------------------------------------------------------
+
+    registerAttempt(data) {
+        AppDispatcher.dispatch({
+            actionType: 'UPDATE_SINGLE_CATEGORY_ATTEMPT',
+            value: data
+        });
+    }
+
+    registerSuccess(data) {
+        AppDispatcher.dispatch({
+            actionType: 'SINGLE_CATEGORY_UPDATED',
+            value: data
+        });
+    }
+    // --------------------------------------------------------
+
+    loginAttempt(data) {
+        AppDispatcher.dispatch({
+            actionType: 'UPDATE_SINGLE_CATEGORY_ATTEMPT',
+            value: data
+        });
+    }
+
+    loginSuccess(data) {
+        AppDispatcher.dispatch({
+            actionType: 'SINGLE_CATEGORY_UPDATED',
+            value: data
+        });
+    }
 }
 
 

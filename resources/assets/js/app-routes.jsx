@@ -4,6 +4,9 @@ import { Route } from 'react-router-dom';
 
 import Header from './components/layouts/Header';
 
+import Register from './components/auth/Register';
+import Login from './components/auth/Login';
+
 import BookCreateUpdate from './components/BookCreateUpdate';
 
 import Books from './components/BooksList';
@@ -26,6 +29,10 @@ const AppRoutes = (
 
         {/* Book Routes*/}
         <Route path="/" exact name="books" component={Books}/>
+
+        <Route path="/register" component={Register}/>
+
+        <Route path="/login" component={Login}/>
 
         <Route path="/add-book" component={BookCreateUpdate}/>
 

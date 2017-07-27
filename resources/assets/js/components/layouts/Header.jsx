@@ -46,16 +46,17 @@ class Header extends Component {
                                     Add Book
                                 </Link>
                             </li>
-
-                            <li className="dropdown">
-                                <ul className="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="{{ route('logout') }}">
-                                            Logout
-                                        </a>
-                                    </li>
-                                </ul>
+                            <li>
+                                <Link className="navbar-brand" to={{ pathname: '/login' }}>
+                                    Sign In
+                                </Link>
                             </li>
+                            <li>
+                                <Link className="navbar-brand" to={{ pathname: '/register' }}>
+                                    Sign Up
+                                </Link>
+                            </li>
+
                         </ul>
                     </div>
                 </div>

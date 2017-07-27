@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
-import BooksStore from '../stores/BooksStore';
-import CategoriesStore from '../stores/CategoriesStore';
-import AppActions from '../actions/AppActions';
-import FileInput from 'react-file-input';
+import AppActions from '../../actions/AppActions';
 
-class BookCreateUpdate extends Component {
+class Register extends Component {
 
     constructor(props) {
 
@@ -46,20 +43,13 @@ class BookCreateUpdate extends Component {
         )}
 
         this.setState({
-            books: BooksStore.getAll(),
-            loading: false,
-            formErrors: BooksStore.getFormErrors(),
-            categories: categories
+            formErrors: BooksStore.getFormErrors()
         });
     }
 
     _getState () {
         return {
-            books: BooksStore.getAll(),
-            loading: BooksStore.getStatus(),
-            categories: CategoriesStore.getAll(),
-            formErrors: [],
-            selectedCategories: []
+            formErrors: []
         };
     }
 
@@ -180,4 +170,4 @@ class BookCreateUpdate extends Component {
     }
 }
 
-export default BookCreateUpdate;
+export default Register;

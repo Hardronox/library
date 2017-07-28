@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import 'react-select/dist/react-select.css';
 import AppActions from '../../actions/AppActions';
-
+import AuthStore from '../../stores/AuthStore';
 
 class Login extends Component {
 
@@ -10,109 +11,159 @@ class Login extends Component {
         this.state = this._getState();
         this._onChange = this._onChange.bind(this);
         this._onSubmit = this._onSubmit.bind(this);
-        this.changeCategory = this.changeCategory.bind(this);
     }
 
     componentWillMount() {
-
         AppActions.getCategoriesAttempt();
-        this.setState({
-            loading: false
-        });
-    }
-
-    componentDidMount() {
-        CategoriesStore.addChangeListener(this._onChange);
+        if (this.props.match.params.id)
+            AppActions.getSingleBookAttempt(this.props.match.params.id);
+        else
+            this.setState({
+                loading: false
+            });
     }
 
     componentWillUnmount() {
-        CategoriesStore.removeChangeListener(this._onChange);
+        AuthStore.removeChangeListener(this._onChange);
+        AuthStore.unsetFormErrors();
     }
 
+    componentDidMount() {
+        AuthStore.addChangeListener(this._onChange);
+    }
 
     _onChange () {
         let categories=[];
-        let options=CategoriesStore.getAll();
+        let options=AuthStore.getAll();
 
-        console.log(options);
         {_.times(options.length, i =>
             categories.push({label: options[i].name, value: options[i].name})
         )}
+
         this.setState({
-            loading: CategoriesStore.getStatus(),
-            parentCategories: categories,
-        })
+            formErrors: AuthStore.getFormErrors()
+        });
     }
 
     _getState () {
         return {
-            category: this.props.match.params.name,
-            formErrors: [],
-            parentCategories: CategoriesStore.getAll()
+            formErrors: []
         };
     }
 
-    handleChange(event) {
+    handleChange(name, event) {
 
         let state = Object.assign({}, this.state);
-        state.category = event.target.value;
+        state.books[name] = (name==='picture') ? event.target.files[0] : event.target.value;
         this.setState(state);
     }
 
     _onSubmit () {
+        let formData= new FormData();
 
-            AppActions.createSingleCategoryAttempt(this.state.category);
+        console.log(this.state.selectedCategories);
+        formData.append('title', this.state.books.title);
+        formData.append('description', this.state.books.description);
 
-        this.props.history.push('/');
+        this.state.selectedCategories.forEach(function(item) {
+            formData.append('categories[]', item.value);
+        });
+
+        AppActions.createSingleBookAttempt(formData);
     }
 
     changeCategory(value) {
         console.log('You have selected: ', value);
-        this.setState({ value });
+        this.setState({
+            selectedCategories: value });
     }
 
     render() {
         if (this.state.loading){
             return <div></div>;
-        } else
+        } else {
             return (
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-6 ">
-                            <div className="form-group">
-                                <label htmlFor="name" className="control-label">Name</label>
+                        <div className="col-md-8 col-md-offset-2">
+                            <div className="panel panel-default">
+                                <div className="panel-heading">Login</div>
+                                <div className="panel-body">
+                                    <form className="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
 
-                                <input id="name"
-                                       type="text"
-                                       className="form-control"
-                                       defaultValue={this.props.match.params.name}
-                                       onChange={this.handleChange.bind(this)}
-                                       name="name"
-                                />
-                            </div>
-                            { this.state.formErrors.name ?
-                                <div className="alert alert-danger">
-                                    <strong>Error!</strong> {this.state.formErrors.name[0]}
+                                        <div className="form-group">
+                                            <label htmlFor="email" className="col-md-4 control-label">E-Mail Address</label>
+
+                                            <div className="col-md-6">
+                                                    <input id="email"
+                                                           type="email"
+                                                           className="form-control"
+                                                           defaultValue={'this.state.books.title'}
+                                                           onChange={this.handleChange.bind(this, 'title')}
+                                                           name="title"
+                                                    />
+                                                    { this.state.formErrors.title ?
+                                                        <div className="alert alert-danger">
+                                                            <strong>Error!</strong> {this.state.formErrors.title[0]}
+                                                        </div>
+                                                        :
+                                                        <div></div>
+                                                    }
+                                                    
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="form-group">
+                                            <label htmlFor="password" className="col-md-4 control-label">Password</label>
+
+                                            <div className="col-md-6">
+                                                <input id="title"
+                                                       type="password"
+                                                       className="form-control"
+                                                       defaultValue={'this.state.books.title'}
+                                                       onChange={this.handleChange.bind(this, 'title')}
+                                                       name="title"
+                                                />
+                                                { this.state.formErrors.title ?
+                                                    <div className="alert alert-danger">
+                                                        <strong>Error!</strong> {this.state.formErrors.title[0]}
+                                                    </div>
+                                                    :
+                                                    <div></div>
+                                                }
+                                            </div>
+                                            
+                                        </div>
+
+                                        <div className="form-group">
+                                            <div className="col-md-6 col-md-offset-4">
+                                                <div className="checkbox">
+                                                    <label>
+                                                        <input type="checkbox" name="remember"/> Remember Me
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="form-group">
+                                            <div className="col-md-8 col-md-offset-4">
+                                                <button type="submit" className="btn btn-primary">
+                                                    Login
+                                                </button>
+
+                                                <a className="btn btn-link" href="">
+                                                    Forgot Your Password?
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
-                                :
-                                <div></div>
-                            }
-
-                            <div className="form-group">
-                                <label htmlFor="parent" className="control-label">Select parent category(optional)</label>
-                            </div>
-                            <div className="form-group">
-                                <button onClick={this._onSubmit}
-                                        className="btn btn-success"
-                                        disabled={!this.state.category}
-                                >
-                                    Submit
-                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             );
+        }
     }
 }
 

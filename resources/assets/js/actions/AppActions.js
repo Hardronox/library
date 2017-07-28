@@ -183,14 +183,14 @@ class AppActions {
 
     registerAttempt(data) {
         AppDispatcher.dispatch({
-            actionType: 'UPDATE_SINGLE_CATEGORY_ATTEMPT',
+            actionType: 'REGISTER_ATTEMPT',
             value: data
         });
     }
 
     registerSuccess(data) {
         AppDispatcher.dispatch({
-            actionType: 'SINGLE_CATEGORY_UPDATED',
+            actionType: 'REGISTER_SUCCESS',
             value: data
         });
     }
@@ -198,14 +198,14 @@ class AppActions {
 
     loginAttempt(data) {
         AppDispatcher.dispatch({
-            actionType: 'UPDATE_SINGLE_CATEGORY_ATTEMPT',
+            actionType: 'LOGIN_ATTEMPT',
             value: data
         });
     }
 
     loginSuccess(data) {
         AppDispatcher.dispatch({
-            actionType: 'SINGLE_CATEGORY_UPDATED',
+            actionType: 'LOGIN_SUCCESS',
             value: data
         });
     }

@@ -1,7 +1,7 @@
 import AppDispatcher from '../dispatchers/AppDispatcher';
 import { EventEmitter } from 'events';
 import AppActions from '../actions/AppActions';
-import BooksApi from '../api/Books';
+import AuthApi from '../api/Auth';
 
 let _user = [];
 let _loading=true;
@@ -19,7 +19,7 @@ class BooksStore extends EventEmitter {
     }
 
     getAll() {
-        return _books;
+        return _user;
     }
 
 
@@ -35,7 +35,7 @@ class BooksStore extends EventEmitter {
         _formErrors=[];
     }
 
-    unsetBooks() {
+    unsetUser() {
         _user=[];
     }
 
@@ -43,12 +43,12 @@ class BooksStore extends EventEmitter {
         _loading = true;
     }
 
-    deleteSingleBookAttempt(id) {
-        BooksApi.deleteSingleBookAttempt(id);
+    registerAttempt(id) {
+        AuthApi.registerAttempt(id);
     }
 
-    createSingleBookAttempt(data) {
-        BooksApi.createSingleBookAttempt(data);
+    loginAttempt(data) {
+        AuthApi.loginAttempt(data);
     }
 
     addChangeListener(callback) {
@@ -62,29 +62,35 @@ class BooksStore extends EventEmitter {
     dispatcherCallback(action) {
         switch (action.actionType) {
 
-            case 'CREATE_SINGLE_BOOK_ATTEMPT':
+            case 'REGISTER_ATTEMPT':
                 this.createSingleBookAttempt(action.value);
                 break;
-            case 'SINGLE_BOOK_CREATED':
-                console.log('sdasd');
+            case 'REGISTER_SUCCESS':
                 _formErrors=[];
                 _loading=false;
                 window.location.href = "/";
                 break;
-            case 'SINGLE_BOOK_NOT_CREATED':
+            case 'REGISTER_FAILED':
                 _formErrors=action.value;
                 _loading=false;
                 break;
 
-            case 'DELETE_SINGLE_BOOK_ATTEMPT':
-                this.deleteSingleBookAttempt(action.value);
+            case 'LOGIN_ATTEMPT':
+                this.createSingleBookAttempt(action.value);
                 break;
-
+            case 'LOGIN_SUCCESS':
+                _formErrors=[];
+                _loading=false;
+                window.location.href = "/";
+                break;
+            case 'LOGIN_FAILED':
+                _formErrors=action.value;
+                _loading=false;
+                break;
 
             case 'UNSET_FORM_ERRORS':
                 this.unsetFormErrors();
                 break;
-
 
             case 'UNSET_FORM_SUBMITTED':
                 this.unsetFormSubmitted();

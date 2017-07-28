@@ -14,13 +14,13 @@
 
 Route::group(['middleware'=>'isAjax'], function() {
 
-    Auth::routes();
-
-
     Route::resource('books', 'BooksController');
 
     Route::get('/get-books-by-category', 'BooksController@getBooksByCategory');
     Route::get('/get-books-by-search', 'BooksController@getBooksBySearch');
+
+    Route::post('/register', 'BooksController@getBooksBySearch');
+    Route::post('/login', 'BooksController@getBooksBySearch');
 
     Route::resource('categories', 'CategoriesController');
 

@@ -3,7 +3,7 @@ import AuthStore from '../stores/AuthStore';
 
 class AuthApi {
 
-    register(data) {
+    registerAttempt(data) {
         $.ajax({
             url: `/register`,
             type: 'POST',
@@ -11,16 +11,16 @@ class AuthApi {
             data: data,
             cache: false,
             success: function() {
-                AppActions.singleBookCreated();
+                AppActions.registerSuccess();
             }.bind(this),
             error: function(response) {
-                AppActions.singleBookNotCreated(response.responseJSON);
+                AppActions.registerFailed(response.responseJSON);
 
             }.bind(this)
         });
     }
 
-    login(data) {
+    loginAttempt(data) {
         $.ajax({
             url: `/login`,
             type: 'POST',
@@ -28,12 +28,10 @@ class AuthApi {
             data: data,
             cache: false,
             success: function() {
-
-                AppActions.singleBookDeleted();
-
+                AppActions.loginSuccess();
             }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(status, err);
+            error: function(response) {
+                AppActions.loginFailed(response.responseJSON);
             }.bind(this)
         });
     }

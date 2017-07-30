@@ -10,7 +10,6 @@ class CategoryBooks extends Component {
 
     constructor(props) {
         super(props);
-
         this.state = this._getState();
         this._onChange = this._onChange.bind(this);
         this.handlePageChange = this.handlePageChange.bind(this);

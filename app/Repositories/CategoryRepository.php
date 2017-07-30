@@ -6,11 +6,18 @@ use App\Models\Category;
 
 class CategoryRepository
 {
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
     public function loadCategoriesForMainPage()
     {
         return Category::all();
     }
 
+    /**
+     * @param $request
+     * @return Category
+     */
     public function createCategory($request)
     {
         $parentCategory= Category::where('name', $request->input('parentCategory'))->first();
@@ -24,6 +31,11 @@ class CategoryRepository
         return $newCategory;
     }
 
+    /**
+     * @param $request
+     * @param $name
+     * @return mixed
+     */
     public function updateCategory($request, $name)
     {
         $category= Category::where('name', $name)->first();
@@ -32,10 +44,5 @@ class CategoryRepository
         $category->save();
 
         return $category;
-    }
-
-    public function deleteCategory($id)
-    {
-        //
     }
 }

@@ -5637,7 +5637,6 @@ var Book = function (_Component) {
         key: "_displayByType",
         value: function _displayByType() {
             switch (this.props.type) {
-
                 case 'viewPage':
                     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__books_ViewPageBook__["a" /* default */], { props: this.props });
                     break;
@@ -7185,7 +7184,7 @@ var BooksStore = function (_EventEmitter) {
                 case 'REGISTER_SUCCESS':
                     _formErrors = [];
                     _loading = false;
-                    //window.location.href = "/";
+                    window.location.href = "/";
                     break;
                 case 'REGISTER_FAILED':
                     _formErrors = action.value;
@@ -7193,9 +7192,10 @@ var BooksStore = function (_EventEmitter) {
                     break;
 
                 case 'LOGIN_ATTEMPT':
-                    this.createSingleBookAttempt(action.value);
+                    this.loginAttempt(action.value);
                     break;
                 case 'LOGIN_SUCCESS':
+                    localStorage.setItem('jwt', action.value.token);
                     _formErrors = [];
                     _loading = false;
                     window.location.href = "/";
@@ -14022,11 +14022,9 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore__ = __webpack_require__(48);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 
 
 
@@ -14047,8 +14045,8 @@ var AuthApi = function () {
                 contentType: false,
                 enctype: 'application/x-www-form-urlencoded',
                 processData: false,
-                success: function () {
-                    __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].registerSuccess();
+                success: function (response) {
+                    __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].registerSuccess(response);
                 }.bind(this),
                 error: function (response) {
                     __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].registerFailed(response.responseJSON);
@@ -14064,8 +14062,11 @@ var AuthApi = function () {
                 dataType: 'json',
                 data: data,
                 cache: false,
-                success: function () {
-                    __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].loginSuccess();
+                contentType: false,
+                enctype: 'application/x-www-form-urlencoded',
+                processData: false,
+                success: function (response) {
+                    __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].loginSuccess(response);
                 }.bind(this),
                 error: function (response) {
                     __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].loginFailed(response.responseJSOghN);
@@ -14108,7 +14109,6 @@ var BooksApi = function () {
                 dataType: 'json',
                 cache: false,
                 success: function (data) {
-
                     __WEBPACK_IMPORTED_MODULE_1__stores_BooksStore__["a" /* default */]._books = data;
                     __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].allBooksLoaded(__WEBPACK_IMPORTED_MODULE_1__stores_BooksStore__["a" /* default */]._books);
                 }.bind(this),
@@ -14126,7 +14126,6 @@ var BooksApi = function () {
                 dataType: 'json',
                 cache: false,
                 success: function (data) {
-
                     __WEBPACK_IMPORTED_MODULE_1__stores_BooksStore__["a" /* default */]._books = data;
                     __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].singleBookLoaded(__WEBPACK_IMPORTED_MODULE_1__stores_BooksStore__["a" /* default */]._books);
                 }.bind(this),
@@ -14171,7 +14170,6 @@ var BooksApi = function () {
                     __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].singleBookUpdated();
                 }.bind(this),
                 error: function (response) {
-
                     __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].singleBookNotUpdated(response.responseJSON);
                 }.bind(this)
             });
@@ -14183,10 +14181,8 @@ var BooksApi = function () {
                 url: '/books/' + id,
                 type: 'DELETE',
                 dataType: 'json',
-
                 cache: false,
                 success: function () {
-
                     __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].singleBookDeleted();
                 }.bind(this),
                 error: function (xhr, status, err) {
@@ -14271,7 +14267,6 @@ var CategoriesApi = function () {
                 dataType: 'json',
                 cache: false,
                 success: function (data) {
-
                     __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].categoriesLoaded(data);
                 }.bind(this),
                 error: function (xhr, status, err) {
@@ -14370,9 +14365,9 @@ var AppRoutes = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     'div',
     null,
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_layouts_Header__["a" /* default */], null),
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/', exact: true, name: 'books', component: __WEBPACK_IMPORTED_MODULE_6__components_BooksList__["a" /* default */] }),
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/register', component: __WEBPACK_IMPORTED_MODULE_3__components_auth_Register__["a" /* default */] }),
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/login', component: __WEBPACK_IMPORTED_MODULE_4__components_auth_Login__["a" /* default */] }),
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/', exact: true, name: 'books', component: __WEBPACK_IMPORTED_MODULE_6__components_BooksList__["a" /* default */] }),
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/add-book', component: __WEBPACK_IMPORTED_MODULE_5__components_BookCreateUpdate__["a" /* default */] }),
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/update-book/:id', render: function render(props) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_BookCreateUpdate__["a" /* default */], props);
@@ -14505,16 +14500,18 @@ var BookCreateUpdate = function (_Component) {
         _this._onChange = _this._onChange.bind(_this);
         _this._onSubmit = _this._onSubmit.bind(_this);
         _this.changeCategory = _this.changeCategory.bind(_this);
+        _this.jwt = localStorage.getItem('jwt');
         return _this;
     }
 
     _createClass(BookCreateUpdate, [{
         key: 'componentWillMount',
         value: function componentWillMount() {
+
+            if (!this.jwt) this.props.history.push('/login');
+
             __WEBPACK_IMPORTED_MODULE_5__actions_AppActions__["a" /* default */].getCategoriesAttempt();
-            if (this.props.match.params.id) __WEBPACK_IMPORTED_MODULE_5__actions_AppActions__["a" /* default */].getSingleBookAttempt(this.props.match.params.id);else this.setState({
-                loading: false
-            });
+            if (this.props.match.params.id) __WEBPACK_IMPORTED_MODULE_5__actions_AppActions__["a" /* default */].getSingleBookAttempt(this.props.match.params.id);
         }
     }, {
         key: 'componentWillUnmount',
@@ -15117,24 +15114,22 @@ var CategoryCreateUpdate = function (_Component) {
     function CategoryCreateUpdate(props) {
         _classCallCheck(this, CategoryCreateUpdate);
 
-        //this.state = this._getState();
         var _this = _possibleConstructorReturn(this, (CategoryCreateUpdate.__proto__ || Object.getPrototypeOf(CategoryCreateUpdate)).call(this, props));
 
         _this.state = _this._getState();
         _this._onChange = _this._onChange.bind(_this);
         _this._onSubmit = _this._onSubmit.bind(_this);
         _this.changeCategory = _this.changeCategory.bind(_this);
+        _this.jwt = localStorage.getItem('jwt');
         return _this;
     }
 
     _createClass(CategoryCreateUpdate, [{
         key: 'componentWillMount',
         value: function componentWillMount() {
+            if (!this.jwt) this.props.history.push('/login');
 
             __WEBPACK_IMPORTED_MODULE_4__actions_AppActions__["a" /* default */].getCategoriesAttempt();
-            this.setState({
-                loading: false
-            });
         }
     }, {
         key: 'componentDidMount',
@@ -15314,15 +15309,16 @@ var DeleteBook = function (_Component) {
         var _this = _possibleConstructorReturn(this, (DeleteBook.__proto__ || Object.getPrototypeOf(DeleteBook)).call(this, props));
 
         _this._onChange = _this._onChange.bind(_this);
+        _this.jwt = localStorage.getItem('jwt');
         return _this;
     }
 
     _createClass(DeleteBook, [{
         key: 'componentWillMount',
         value: function componentWillMount() {
+            if (!this.jwt) this.props.history.push('/login');
 
             __WEBPACK_IMPORTED_MODULE_3__actions_AppActions__["a" /* default */].deleteSingleBookAttempt(this.props.match.params.id);
-
             this.props.history.push('/');
         }
     }, {
@@ -15358,9 +15354,8 @@ var DeleteBook = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__actions_AppActions__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_CategoriesStore__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Book__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_router_dom__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Book__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_router_dom__ = __webpack_require__(13);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -15368,7 +15363,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 
 
 
@@ -15453,7 +15447,7 @@ var Search = function (_Component) {
                             '" '
                         ),
                         _.times(this.state.books.length, function (i) {
-                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Book__["a" /* default */], { book: _this2.state.books[i],
+                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Book__["a" /* default */], { book: _this2.state.books[i],
                                 type: 'searchPage',
                                 key: i
                             });
@@ -15481,7 +15475,7 @@ var Search = function (_Component) {
                                 })
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                __WEBPACK_IMPORTED_MODULE_5_react_router_dom__["c" /* Link */],
+                                __WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Link */],
                                 { to: { pathname: '/search/' + this.state.searchValue } },
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'button',
@@ -15513,9 +15507,8 @@ var Search = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__actions_AppActions__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_CategoriesStore__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Book__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_router_dom__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Book__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_router_dom__ = __webpack_require__(13);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -15523,7 +15516,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 
 
 
@@ -15589,7 +15581,7 @@ var View = function (_Component) {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'col-md-8' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Book__["a" /* default */], { book: this.state.books,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Book__["a" /* default */], { book: this.state.books,
                             type: 'viewPage'
                         })
                     ),
@@ -15597,7 +15589,7 @@ var View = function (_Component) {
                         'div',
                         { className: 'col-md-3' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_5_react_router_dom__["c" /* Link */],
+                            __WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Link */],
                             { to: { pathname: '/update-book/' + this.state.books.id } },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'button',
@@ -15606,7 +15598,7 @@ var View = function (_Component) {
                             )
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_5_react_router_dom__["c" /* Link */],
+                            __WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Link */],
                             { to: { pathname: '/delete-book/' + this.state.books.id } },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'button',
@@ -15665,9 +15657,6 @@ var Login = function (_Component) {
     }
 
     _createClass(Login, [{
-        key: 'componentWillMount',
-        value: function componentWillMount() {}
-    }, {
         key: 'componentWillUnmount',
         value: function componentWillUnmount() {
             __WEBPACK_IMPORTED_MODULE_3__stores_AuthStore__["a" /* default */].removeChangeListener(this._onChange);
@@ -15698,7 +15687,6 @@ var Login = function (_Component) {
     }, {
         key: 'handleChange',
         value: function handleChange(name, event) {
-
             var state = Object.assign({}, this.state);
             state[name] = event.target.value;
             this.setState(state);
@@ -15706,13 +15694,12 @@ var Login = function (_Component) {
     }, {
         key: '_onSubmit',
         value: function _onSubmit() {
-
             var formData = new FormData();
 
             formData.append('email', this.state.email);
             formData.append('password', this.state.password);
 
-            __WEBPACK_IMPORTED_MODULE_2__actions_AppActions__["a" /* default */].registerAttempt(formData);
+            __WEBPACK_IMPORTED_MODULE_2__actions_AppActions__["a" /* default */].loginAttempt(formData);
         }
     }, {
         key: 'render',
@@ -15869,9 +15856,6 @@ var Register = function (_Component) {
     }
 
     _createClass(Register, [{
-        key: 'componentWillMount',
-        value: function componentWillMount() {}
-    }, {
         key: 'componentWillUnmount',
         value: function componentWillUnmount() {
             __WEBPACK_IMPORTED_MODULE_3__stores_AuthStore__["a" /* default */].removeChangeListener(this._onChange);
@@ -15886,6 +15870,7 @@ var Register = function (_Component) {
         key: '_getState',
         value: function _getState() {
             return {
+                name: '',
                 email: '',
                 password: '',
                 formErrors: []
@@ -15902,7 +15887,6 @@ var Register = function (_Component) {
     }, {
         key: 'handleChange',
         value: function handleChange(name, event) {
-
             var state = Object.assign({}, this.state);
             state[name] = event.target.value;
             this.setState(state);
@@ -15912,8 +15896,9 @@ var Register = function (_Component) {
         value: function _onSubmit() {
             var formData = new FormData();
             formData.append('email', this.state.email);
+            formData.append('name', this.state.name);
             formData.append('password', this.state.password);
-            //console.log(formData.get('email'));
+
             __WEBPACK_IMPORTED_MODULE_2__actions_AppActions__["a" /* default */].registerAttempt(formData);
         }
     }, {
@@ -15947,6 +15932,37 @@ var Register = function (_Component) {
                                         { className: 'form-group' },
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                             'label',
+                                            { htmlFor: 'name', className: 'col-md-4 control-label' },
+                                            'Name'
+                                        ),
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                            'div',
+                                            { className: 'col-md-6' },
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'name',
+                                                type: 'email',
+                                                className: 'form-control',
+                                                defaultValue: this.state.email,
+                                                onChange: this.handleChange.bind(this, 'name'),
+                                                name: 'title'
+                                            }),
+                                            this.state.formErrors.name ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                'div',
+                                                { className: 'alert alert-danger' },
+                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                    'strong',
+                                                    null,
+                                                    'Error!'
+                                                ),
+                                                ' ',
+                                                this.state.formErrors.name[0]
+                                            ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null)
+                                        )
+                                    ),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'div',
+                                        { className: 'form-group', style: { marginTop: "50px" } },
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                            'label',
                                             { htmlFor: 'email', className: 'col-md-4 control-label' },
                                             'E-Mail Address'
                                         ),
@@ -15975,7 +15991,7 @@ var Register = function (_Component) {
                                     ),
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                         'div',
-                                        { className: 'form-group', style: { marginTop: "50px" } },
+                                        { className: 'form-group', style: { marginTop: "100px" } },
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                             'label',
                                             { htmlFor: 'password', className: 'col-md-4 control-label' },
@@ -16006,7 +16022,7 @@ var Register = function (_Component) {
                                     ),
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                         'div',
-                                        { className: 'form-group', style: { marginTop: "100px" } },
+                                        { className: 'form-group', style: { marginTop: "150px" } },
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                             'div',
                                             { className: 'col-md-8 col-md-offset-4' },
@@ -16245,10 +16261,7 @@ var Book = function (_Component) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__actions_AppActions__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__books_MainPageBook__ = __webpack_require__(71);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_router_dom__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(13);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -16260,19 +16273,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-
-
-
 var Header = function (_Component) {
     _inherits(Header, _Component);
 
     function Header(props) {
         _classCallCheck(this, Header);
 
-        return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).call(this, props));
+
+        _this.jwt = localStorage.getItem('jwt');
+        return _this;
     }
 
     _createClass(Header, [{
+        key: '_onLogOut',
+        value: function _onLogOut() {
+            localStorage.removeItem('jwt');
+            this.props.history.push('/');
+        }
+    }, {
         key: 'render',
         value: function render() {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -16297,7 +16316,7 @@ var Header = function (_Component) {
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'icon-bar' })
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Link */],
+                            __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Link */],
                             { className: 'navbar-brand', to: { pathname: '/' } },
                             'Laravel'
                         )
@@ -16310,14 +16329,14 @@ var Header = function (_Component) {
                             { className: 'nav navbar-nav' },
                             '\xA0'
                         ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        this.jwt ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'ul',
                             { className: 'nav navbar-nav navbar-right' },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'li',
                                 null,
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    __WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Link */],
+                                    __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Link */],
                                     { to: { pathname: '/create-category' } },
                                     'Add Category'
                                 )
@@ -16326,7 +16345,7 @@ var Header = function (_Component) {
                                 'li',
                                 null,
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    __WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Link */],
+                                    __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Link */],
                                     { className: 'navbar-brand', to: { pathname: '/add-book' } },
                                     'Add Book'
                                 )
@@ -16335,7 +16354,19 @@ var Header = function (_Component) {
                                 'li',
                                 null,
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    __WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Link */],
+                                    __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Link */],
+                                    { onClick: this._onLogOut, className: 'navbar-brand', to: { pathname: '/' } },
+                                    'Log out'
+                                )
+                            )
+                        ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'ul',
+                            { className: 'nav navbar-nav navbar-right' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'li',
+                                null,
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Link */],
                                     { className: 'navbar-brand', to: { pathname: '/login' } },
                                     'Sign In'
                                 )
@@ -16344,7 +16375,7 @@ var Header = function (_Component) {
                                 'li',
                                 null,
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    __WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Link */],
+                                    __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Link */],
                                     { className: 'navbar-brand', to: { pathname: '/register' } },
                                     'Sign Up'
                                 )

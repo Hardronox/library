@@ -1,5 +1,4 @@
 import AppActions from '../actions/AppActions';
-import AuthStore from '../stores/AuthStore';
 
 class AuthApi {
 
@@ -13,12 +12,11 @@ class AuthApi {
             contentType : false,
             enctype: 'application/x-www-form-urlencoded',
             processData:false,
-            success: function() {
-                AppActions.registerSuccess();
+            success: function(response) {
+                AppActions.registerSuccess(response);
             }.bind(this),
             error: function(response) {
                 AppActions.registerFailed(response.responseJSON);
-
             }.bind(this)
         });
     }
@@ -30,8 +28,11 @@ class AuthApi {
             dataType: 'json',
             data: data,
             cache: false,
-            success: function() {
-                AppActions.loginSuccess();
+            contentType : false,
+            enctype: 'application/x-www-form-urlencoded',
+            processData:false,
+            success: function(response) {
+                AppActions.loginSuccess(response);
             }.bind(this),
             error: function(response) {
                 AppActions.loginFailed(response.responseJSOghN);

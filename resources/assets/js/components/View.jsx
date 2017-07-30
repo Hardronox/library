@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import AppActions from '../actions/AppActions';
 import BooksStore from '../stores/BooksStore'
-import CategoriesStore from '../stores/CategoriesStore'
 import Book from "./Book";
 import { Link } from 'react-router-dom'
 
@@ -9,7 +8,6 @@ import { Link } from 'react-router-dom'
 class View extends Component {
 
     constructor(props) {
-
         super(props);
         this.state = this._getState();
         this._onChange = this._onChange.bind(this)

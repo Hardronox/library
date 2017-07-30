@@ -9,22 +9,22 @@ import FileInput from 'react-file-input';
 class BookCreateUpdate extends Component {
 
     constructor(props) {
-
         super(props);
         this.state = this._getState();
         this._onChange = this._onChange.bind(this);
         this._onSubmit = this._onSubmit.bind(this);
         this.changeCategory = this.changeCategory.bind(this);
+        this.jwt=localStorage.getItem('jwt')
     }
 
     componentWillMount() {
+
+        if (!this.jwt)
+            this.props.history.push('/login');
+
         AppActions.getCategoriesAttempt();
         if (this.props.match.params.id)
             AppActions.getSingleBookAttempt(this.props.match.params.id);
-        else
-            this.setState({
-                loading: false
-            });
     }
 
     componentWillUnmount() {

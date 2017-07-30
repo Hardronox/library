@@ -4,25 +4,22 @@ import 'react-select/dist/react-select.css';
 import CategoriesStore from '../stores/CategoriesStore'
 import AppActions from '../actions/AppActions';
 
-
 class CategoryCreateUpdate extends Component {
 
     constructor(props) {
-
         super(props);
-        //this.state = this._getState();
         this.state = this._getState();
         this._onChange = this._onChange.bind(this);
         this._onSubmit = this._onSubmit.bind(this);
         this.changeCategory = this.changeCategory.bind(this);
+        this.jwt=localStorage.getItem('jwt');
     }
 
     componentWillMount() {
+        if (!this.jwt)
+            this.props.history.push('/login');
 
         AppActions.getCategoriesAttempt();
-        this.setState({
-            loading: false
-        });
     }
 
     componentDidMount() {

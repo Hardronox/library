@@ -27,12 +27,13 @@ const AppRoutes = (
 
         <Header/>
 
-        {/* Book Routes*/}
-        <Route path="/" exact name="books" component={Books}/>
-
+        {/* Auth Routes*/}
         <Route path="/register" component={Register}/>
 
         <Route path="/login" component={Login}/>
+
+        {/* Book Routes*/}
+        <Route path="/" exact name="books" component={Books}/>
 
         <Route path="/add-book" component={BookCreateUpdate}/>
 

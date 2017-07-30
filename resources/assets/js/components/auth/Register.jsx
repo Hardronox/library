@@ -6,16 +6,11 @@ import AuthStore from '../../stores/AuthStore';
 class Register extends Component {
 
     constructor(props) {
-
         super(props);
         this.state = this._getState();
         this._onChange = this._onChange.bind(this);
         this._onSubmit = this._onSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-    }
-
-    componentWillMount() {
-
     }
 
     componentWillUnmount() {
@@ -29,6 +24,7 @@ class Register extends Component {
 
     _getState () {
         return {
+            name: '',
             email: '',
             password: '',
             formErrors: []
@@ -43,7 +39,6 @@ class Register extends Component {
     }
 
     handleChange(name, event) {
-
         let state = Object.assign({}, this.state);
         state[name] = event.target.value;
         this.setState(state);
@@ -52,8 +47,9 @@ class Register extends Component {
     _onSubmit () {
         let formData= new FormData();
         formData.append('email', this.state.email);
+        formData.append('name', this.state.name);
         formData.append('password', this.state.password);
-        //console.log(formData.get('email'));
+
         AppActions.registerAttempt(formData);
     }
 
@@ -69,6 +65,27 @@ class Register extends Component {
                                 <div className="panel-heading">Register</div>
                                 <div className="panel-body">
                                     <div className="form-group" >
+                                        <label htmlFor="name" className="col-md-4 control-label">Name</label>
+
+                                        <div className="col-md-6">
+                                            <input id="name"
+                                                   type="email"
+                                                   className="form-control"
+                                                   defaultValue={this.state.email}
+                                                   onChange={this.handleChange.bind(this, 'name')}
+                                                   name="title"
+                                            />
+                                            { this.state.formErrors.name ?
+                                                <div className="alert alert-danger">
+                                                    <strong>Error!</strong> {this.state.formErrors.name[0]}
+                                                </div>
+                                                :
+                                                <div></div>
+                                            }
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group" style={{marginTop : "50px"}}>
                                         <label htmlFor="email" className="col-md-4 control-label">E-Mail Address</label>
 
                                         <div className="col-md-6">
@@ -86,11 +103,10 @@ class Register extends Component {
                                                 :
                                                 <div></div>
                                             }
-
                                         </div>
                                     </div>
 
-                                    <div className="form-group" style={{marginTop : "50px"}}>
+                                    <div className="form-group" style={{marginTop : "100px"}}>
                                         <label htmlFor="password" className="col-md-4 control-label">Password</label>
 
                                         <div className="col-md-6">
@@ -112,7 +128,7 @@ class Register extends Component {
 
                                     </div>
 
-                                    <div className="form-group" style={{marginTop : "100px"}}>
+                                    <div className="form-group" style={{marginTop : "150px"}}>
                                         <div className="col-md-8 col-md-offset-4">
                                             <button onClick={this._onSubmit} className="btn btn-primary">
                                                 Register

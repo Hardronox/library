@@ -7,6 +7,9 @@ use App\Models\Category;
 
 class BookRepository
 {
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|static[]
+     */
     public function loadBooksForMainPage()
     {
         return Book::orderBy('created_at', 'desc')
@@ -15,6 +18,10 @@ class BookRepository
                     ->get();
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function loadBookForShow($id)
     {
         return Book::where('id', $id)
@@ -22,11 +29,16 @@ class BookRepository
             ->first();
     }
 
+    /**
+     * @param $request
+     * @return Book
+     */
     public function createBook($request)
     {
         $book=new Book();
         $book->title=$request->input('title');
         $book->description=$request->input('description');
+        $book->save();
 
         if ($request->hasFile('picture')){
 
@@ -34,20 +46,27 @@ class BookRepository
                 $request->file('picture')->getClientOriginalExtension();
 
             $request->file('picture')
-                ->move(base_path() . '/public/images/', $imageName
+                    ->move(base_path() . '/public/images/', $imageName
                 );
 
             $book->picture= $imageName;
         }
-
-        $category= Category::whereIn('name', $request->input('categories'))->get();
-        //var_dump('<pre>',$category);
-
         $book->save();
-        $book->categories()->attach($category); // associate($category);
+
+        if ($request->input('categories'))
+        {
+            $category= Category::whereIn('name', $request->input('categories'))->get();
+            $book->categories()->attach($category);
+        }
+
         return $book;
     }
 
+    /**
+     * @param $request
+     * @param $id
+     * @return mixed
+     */
     public function updateBook($request, $id)
     {
         $book= Book::where('id', $id)->first();
@@ -65,19 +84,25 @@ class BookRepository
                 );
 
             $book->picture= $imageName;
-
         }
         $book->save();
 
         return $book;
     }
 
+    /**
+     * @param $id
+     */
     public function deleteBook($id)
     {
         $book= Book::where('id', $id)->first();
         $book->delete();
     }
 
+    /**
+     * @param $request
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
     public function loadBooksForSearch($request)
     {
         return Book::where('title', 'like', '%' . $request->input('search') . '%')
@@ -86,6 +111,10 @@ class BookRepository
             ->get();
     }
 
+    /**
+     * @param $request
+     * @return array
+     */
     public function loadBooksForCategory($request)
     {
         $limit = 5;

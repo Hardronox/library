@@ -68,7 +68,7 @@ class BooksStore extends EventEmitter {
             case 'REGISTER_SUCCESS':
                 _formErrors=[];
                 _loading=false;
-                //window.location.href = "/";
+                window.location.href = "/";
                 break;
             case 'REGISTER_FAILED':
                 _formErrors=action.value;
@@ -76,9 +76,10 @@ class BooksStore extends EventEmitter {
                 break;
 
             case 'LOGIN_ATTEMPT':
-                this.createSingleBookAttempt(action.value);
+                this.loginAttempt(action.value);
                 break;
             case 'LOGIN_SUCCESS':
+                localStorage.setItem('jwt', action.value.token);
                 _formErrors=[];
                 _loading=false;
                 window.location.href = "/";

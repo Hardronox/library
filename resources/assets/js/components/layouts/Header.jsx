@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import AppActions from '../../actions/AppActions';
-import AppStore from '../../stores/BooksStore'
-import Book from "../books/MainPageBook";
 import { Link } from 'react-router-dom'
-
-
 
 class Header extends Component {
 
     constructor(props) {
         super(props);
+        this.jwt=localStorage.getItem('jwt')
+    }
+
+    _onLogOut(){
+        localStorage.removeItem('jwt');
+        this.props.history.push('/');
     }
 
     render() {
@@ -34,30 +35,38 @@ class Header extends Component {
                         <ul className="nav navbar-nav">
                             &nbsp;
                         </ul>
-
-                        <ul className="nav navbar-nav navbar-right">
-                            <li>
-                                <Link  to={{ pathname: '/create-category'}} >
-                                    Add Category
-                                </Link>
-                            </li>
-                            <li>
-                                <Link className="navbar-brand" to={{ pathname: '/add-book' }}>
-                                    Add Book
-                                </Link>
-                            </li>
-                            <li>
-                                <Link className="navbar-brand" to={{ pathname: '/login' }}>
-                                    Sign In
-                                </Link>
-                            </li>
-                            <li>
-                                <Link className="navbar-brand" to={{ pathname: '/register' }}>
-                                    Sign Up
-                                </Link>
-                            </li>
-
-                        </ul>
+                        {this.jwt ?
+                            <ul className="nav navbar-nav navbar-right">
+                                <li>
+                                    <Link  to={{ pathname: '/create-category'}} >
+                                        Add Category
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link className="navbar-brand" to={{ pathname: '/add-book' }}>
+                                        Add Book
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link onClick={this._onLogOut} className="navbar-brand" to={{ pathname: '/' }}>
+                                        Log out
+                                    </Link>
+                                </li>
+                            </ul>
+                            :
+                            <ul className="nav navbar-nav navbar-right">
+                                <li>
+                                    <Link className="navbar-brand" to={{ pathname: '/login' }}>
+                                        Sign In
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link className="navbar-brand" to={{ pathname: '/register' }}>
+                                        Sign Up
+                                    </Link>
+                                </li>
+                            </ul>
+                        }
                     </div>
                 </div>
             </nav>

@@ -6,16 +6,11 @@ import AuthStore from '../../stores/AuthStore';
 class Login extends Component {
 
     constructor(props) {
-
         super(props);
         this.state = this._getState();
         this._onChange = this._onChange.bind(this);
         this._onSubmit = this._onSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-    }
-
-    componentWillMount() {
-
     }
 
     componentWillUnmount() {
@@ -43,21 +38,18 @@ class Login extends Component {
     }
 
     handleChange(name, event) {
-
         let state = Object.assign({}, this.state);
         state[name] = event.target.value;
         this.setState(state);
-
     }
 
     _onSubmit () {
-
         let formData= new FormData();
 
         formData.append('email', this.state.email);
         formData.append('password', this.state.password);
 
-        AppActions.registerAttempt(formData);
+        AppActions.loginAttempt(formData);
     }
 
     render() {

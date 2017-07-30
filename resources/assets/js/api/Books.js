@@ -11,10 +11,8 @@ class BooksApi {
             dataType: 'json',
             cache: false,
             success: function(data) {
-
                 BooksStore._books= data;
                 AppActions.allBooksLoaded(BooksStore._books);
-
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(status, err);
@@ -30,10 +28,8 @@ class BooksApi {
             dataType: 'json',
             cache: false,
             success: function(data) {
-
                 BooksStore._books= data;
                 AppActions.singleBookLoaded(BooksStore._books);
-
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(status, err);
@@ -56,7 +52,6 @@ class BooksApi {
             }.bind(this),
             error: function(response) {
                 AppActions.singleBookNotCreated(response.responseJSON);
-
             }.bind(this)
         });
     }
@@ -75,7 +70,6 @@ class BooksApi {
                 AppActions.singleBookUpdated();
             }.bind(this),
             error: function(response) {
-
                 AppActions.singleBookNotUpdated(response.responseJSON);
 
             }.bind(this)
@@ -87,12 +81,9 @@ class BooksApi {
             url: `/books/${id}`,
             type: 'DELETE',
             dataType: 'json',
-
             cache: false,
             success: function() {
-
                 AppActions.singleBookDeleted();
-
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(status, err);
@@ -116,7 +107,6 @@ class BooksApi {
                     return data;
                 });
                 AppActions.booksByCategoryLoaded([BooksStore._books, response[1]]);
-
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(status, err);
@@ -136,7 +126,6 @@ class BooksApi {
             success: function(data) {
                 BooksStore._books= data;
                 AppActions.booksBySearchLoaded(BooksStore._books);
-
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(status, err);

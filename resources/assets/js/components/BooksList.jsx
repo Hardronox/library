@@ -10,7 +10,6 @@ import { Link } from 'react-router-dom'
 class Books extends Component {
 
     constructor(props) {
-
         super(props);
         this.state = this._getState();
         this._onChange = this._onChange.bind(this)

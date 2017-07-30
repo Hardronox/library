@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
@@ -30,9 +31,11 @@ class AuthController extends Controller
 
     public function register(Request $request, JWTAuth $auth)
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('name', 'email', 'password');
 
-        var_dump($request->all());
+
+        $credentials['password']= Hash::make($credentials['password']);
+
         try {
             $user = User::create($credentials);
         } catch (JWTException $e) {
@@ -41,7 +44,7 @@ class AuthController extends Controller
 
         $token = $auth->fromUser($user);
 
-        return response()->json(compact('token'));
+        return response()->json(['success' => 'User created'], 200);
     }
 
     public function login(Request $request, JWTAuth $auth)

@@ -7,14 +7,12 @@ import CategoryPageBook from "./books/CategoryPageBook";
 class Book extends Component {
 
     constructor(props) {
-
         super(props);
         this.state = {}
     }
 
     _displayByType() {
         switch (this.props.type) {
-
             case 'viewPage':
                 return <ViewPageBook props={this.props}/>;
                 break;

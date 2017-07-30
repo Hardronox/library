@@ -9,9 +9,7 @@ class CategoriesApi {
             dataType: 'json',
             cache: false,
             success: function(data) {
-
                 AppActions.categoriesLoaded(data);
-
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(status, err);

@@ -51,10 +51,9 @@ class Register extends Component {
 
     _onSubmit () {
         let formData= new FormData();
-
         formData.append('email', this.state.email);
         formData.append('password', this.state.password);
-
+        //console.log(formData.get('email'));
         AppActions.registerAttempt(formData);
     }
 

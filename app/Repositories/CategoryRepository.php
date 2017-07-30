@@ -13,11 +13,15 @@ class CategoryRepository
 
     public function createCategory($request)
     {
-        $post = $request->all();
+        $parentCategory= Category::where('name', $request->input('parentCategory'))->first();
 
-        $category=Category::create($post);
+        $newCategory= new Category();
 
-        return $category;
+        $newCategory->parent_id=$parentCategory->id;
+        $newCategory->name=$request->input('name');
+        $newCategory->save();
+
+        return $newCategory;
     }
 
     public function updateCategory($request, $name)

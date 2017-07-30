@@ -11,7 +11,7 @@ class AuthApi {
             data: data,
             cache: false,
             contentType : false,
-            enctype: 'multipart/form-data',
+            enctype: 'application/x-www-form-urlencoded',
             processData:false,
             success: function() {
                 AppActions.registerSuccess();
@@ -34,7 +34,7 @@ class AuthApi {
                 AppActions.loginSuccess();
             }.bind(this),
             error: function(response) {
-                AppActions.loginFailed(response.responseJSON);
+                AppActions.loginFailed(response.responseJSOghN);
             }.bind(this)
         });
     }

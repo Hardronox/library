@@ -43,8 +43,8 @@ class BooksStore extends EventEmitter {
         _loading = true;
     }
 
-    registerAttempt() {
-        AuthApi.registerAttempt();
+    registerAttempt(data) {
+        AuthApi.registerAttempt(data);
     }
 
     loginAttempt(data) {

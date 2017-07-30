@@ -7156,8 +7156,8 @@ var BooksStore = function (_EventEmitter) {
         }
     }, {
         key: 'registerAttempt',
-        value: function registerAttempt() {
-            __WEBPACK_IMPORTED_MODULE_3__api_Auth__["a" /* default */].registerAttempt();
+        value: function registerAttempt(data) {
+            __WEBPACK_IMPORTED_MODULE_3__api_Auth__["a" /* default */].registerAttempt(data);
         }
     }, {
         key: 'loginAttempt',
@@ -14045,7 +14045,7 @@ var AuthApi = function () {
                 data: data,
                 cache: false,
                 contentType: false,
-                enctype: 'multipart/form-data',
+                enctype: 'application/x-www-form-urlencoded',
                 processData: false,
                 success: function () {
                     __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].registerSuccess();
@@ -14068,7 +14068,7 @@ var AuthApi = function () {
                     __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].loginSuccess();
                 }.bind(this),
                 error: function (response) {
-                    __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].loginFailed(response.responseJSON);
+                    __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].loginFailed(response.responseJSOghN);
                 }.bind(this)
             });
         }
@@ -15911,10 +15911,9 @@ var Register = function (_Component) {
         key: '_onSubmit',
         value: function _onSubmit() {
             var formData = new FormData();
-
             formData.append('email', this.state.email);
             formData.append('password', this.state.password);
-
+            //console.log(formData.get('email'));
             __WEBPACK_IMPORTED_MODULE_2__actions_AppActions__["a" /* default */].registerAttempt(formData);
         }
     }, {

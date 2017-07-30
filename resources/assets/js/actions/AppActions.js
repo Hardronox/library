@@ -150,6 +150,13 @@ class AppActions {
             value: data
         });
     }
+
+    singleCategoryNotCreated(data) {
+        AppDispatcher.dispatch({
+            actionType: 'SINGLE_CATEGORY_NOT_CREATED',
+            value: data
+        });
+    }
     // --------------------------------------------------------
 
     updateSingleCategoryAttempt(data) {
@@ -162,6 +169,13 @@ class AppActions {
     singleCategoryUpdated(data) {
         AppDispatcher.dispatch({
             actionType: 'SINGLE_CATEGORY_UPDATED',
+            value: data
+        });
+    }
+
+    singleCategoryNotUpdated(data) {
+        AppDispatcher.dispatch({
+            actionType: 'SINGLE_CATEGORY_NOT_UPDATED',
             value: data
         });
     }
@@ -194,6 +208,13 @@ class AppActions {
             value: data
         });
     }
+
+    registerFailed(data) {
+        AppDispatcher.dispatch({
+            actionType: 'REGISTER_FAILED',
+            value: data
+        });
+    }
     // --------------------------------------------------------
 
     loginAttempt(data) {
@@ -206,6 +227,13 @@ class AppActions {
     loginSuccess(data) {
         AppDispatcher.dispatch({
             actionType: 'LOGIN_SUCCESS',
+            value: data
+        });
+    }
+
+    loginFailed(data) {
+        AppDispatcher.dispatch({
+            actionType: 'LOGIN_FAILED',
             value: data
         });
     }

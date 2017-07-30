@@ -27,6 +27,7 @@ class CategoriesController extends Controller
 
     public function store(CreateUpdateCategoryRequest $request)
     {
+
         $category = $this->repository->createCategory($request);
 
         return response()

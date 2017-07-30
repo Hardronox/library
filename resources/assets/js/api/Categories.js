@@ -19,22 +19,21 @@ class CategoriesApi {
         });
     }
 
-    createSingleCategoryAttempt(name) {
+    createSingleCategoryAttempt(data) {
         $.ajax({
             url: '/categories',
             type: 'POST',
             dataType: 'json',
-            data:{
-                name
-            },
+            data: data,
             cache: false,
+            contentType : false,
+            enctype: 'application/x-www-form-urlencoded',
+            processData:false,
             success: function() {
-
                 AppActions.singleCategoryCreated();
-
             }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(status, err);
+            error: function(response) {
+                AppActions.singleCategoryNotCreated(response.responseJSON);
             }.bind(this)
         });
     }
@@ -50,12 +49,10 @@ class CategoriesApi {
             enctype: 'application/x-www-form-urlencoded',
             processData:false,
             success: function() {
-
                 AppActions.singleCategoryUpdated();
-
             }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(status, err);
+            error: function(response) {
+                AppActions.singleCategoryNotUpdated(response.responseJSON);
             }.bind(this)
         });
     }

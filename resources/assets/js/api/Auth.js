@@ -10,6 +10,9 @@ class AuthApi {
             dataType: 'json',
             data: data,
             cache: false,
+            contentType : false,
+            enctype: 'multipart/form-data',
+            processData:false,
             success: function() {
                 AppActions.registerSuccess();
             }.bind(this),

@@ -5,6 +5,7 @@ import CategoriesApi from '../api/Categories';
 
 let _categories = [];
 let _loading=true;
+let _formErrors=[];
 
 class CategoriesStore extends EventEmitter {
 
@@ -25,6 +26,14 @@ class CategoriesStore extends EventEmitter {
         return _loading;
     }
 
+    getFormErrors() {
+        return _formErrors;
+    }
+
+    unsetFormErrors() {
+        _formErrors=[];
+    }
+
     getCategoriesAttempt() {
         CategoriesApi.getCategoriesAttempt();
     }
@@ -36,7 +45,6 @@ class CategoriesStore extends EventEmitter {
     updateSingleCategoryAttempt(data) {
         CategoriesApi.updateSingleCategoryAttempt(data);
     }
-
 
     addChangeListener(callback) {
         this.on('change', callback);
@@ -61,17 +69,29 @@ class CategoriesStore extends EventEmitter {
             case 'CREATE_SINGLE_CATEGORY_ATTEMPT':
                 this.createSingleCategoryAttempt(action.value);
                 break;
-            case 'CATEGORY_CREATED':
+            case 'SINGLE_CATEGORY_CREATED':
                 _categories = action.value;
+                console.log('category created');
+                window.location.href = "/";
+                break;
+            case 'SINGLE_CATEGORY_NOT_CREATED':
+                _formErrors=action.value;
+                _loading=false;
                 break;
 
 
             case 'UPDATE_SINGLE_CATEGORY_ATTEMPT':
                 this.updateSingleCategoryAttempt(action.value);
                 break;
-
+            case 'SINGLE_CATEGORY_UPDATED':
+                _categories = action.value;
+                window.location.href = "/";
+                break;
+            case 'SINGLE_CATEGORY_NOT_UPDATED':
+                _formErrors=action.value;
+                _loading=false;
+                break;
         }
-
         this.emitChange();
 
         return true;

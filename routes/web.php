@@ -19,8 +19,8 @@ Route::group(['middleware'=>'isAjax'], function() {
     Route::get('/get-books-by-category', 'BooksController@getBooksByCategory');
     Route::get('/get-books-by-search', 'BooksController@getBooksBySearch');
 
-    Route::post('/register', 'BooksController@getBooksBySearch');
-    Route::post('/login', 'BooksController@getBooksBySearch');
+    Route::post('/register', 'AuthController@register');
+    Route::post('/login', 'AuthController@login');
 
     Route::resource('categories', 'CategoriesController');
 

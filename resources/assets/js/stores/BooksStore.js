@@ -117,7 +117,6 @@ class BooksStore extends EventEmitter {
                 this.createSingleBookAttempt(action.value);
                 break;
             case 'SINGLE_BOOK_CREATED':
-                console.log('sdasd');
                 _formErrors=[];
                 _loading=false;
                 window.location.href = "/";

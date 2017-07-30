@@ -31,6 +31,7 @@ class CategoryCreateUpdate extends Component {
 
     componentWillUnmount() {
         CategoriesStore.removeChangeListener(this._onChange);
+        CategoriesStore.unsetFormErrors();
     }
 
 
@@ -38,13 +39,13 @@ class CategoryCreateUpdate extends Component {
         let categories=[];
         let options=CategoriesStore.getAll();
 
-        console.log(options);
         {_.times(options.length, i =>
             categories.push({label: options[i].name, value: options[i].name})
         )}
         this.setState({
             loading: CategoriesStore.getStatus(),
             parentCategories: categories,
+            formErrors: CategoriesStore.getFormErrors(),
         })
     }
 
@@ -52,38 +53,34 @@ class CategoryCreateUpdate extends Component {
         return {
             category: this.props.match.params.name,
             formErrors: [],
-            parentCategories: CategoriesStore.getAll()
+            parentCategories: CategoriesStore.getAll(),
+            selectedParentCategory: ''
         };
     }
 
     handleChange(event) {
-
         let state = Object.assign({}, this.state);
         state.category = event.target.value;
         this.setState(state);
     }
 
     _onSubmit () {
-
         let formData= new FormData();
 
-        if (this.props.match.params.name){
+        formData.append('name', this.state.category);
+        formData.append('parentCategory', this.state.selectedParentCategory.value);
 
+        if (this.props.match.params.name){
             formData.append('oldName', this.props.match.params.name);
-            formData.append('newName', this.state.category);
             formData.append('_method', 'PUT');
 
             AppActions.updateSingleCategoryAttempt(formData);
-        }
-        else
-            AppActions.createSingleCategoryAttempt(this.state.category);
-
-        this.props.history.push('/');
+        } else
+            AppActions.createSingleCategoryAttempt(formData);
     }
 
-    changeCategory(value) {
-        console.log('You have selected: ', value);
-        this.setState({ value });
+    changeCategory(selectedParentCategory) {
+        this.setState({ selectedParentCategory });
     }
 
     render() {
@@ -117,9 +114,7 @@ class CategoryCreateUpdate extends Component {
                                 <label htmlFor="parent" className="control-label">Select parent category(optional)</label>
                                 <Select
                                     id="parent"
-                                    multi
-                                    joinValues
-                                    value={this.state.value}
+                                    value={this.state.selectedParentCategory}
                                     placeholder="Parent category"
                                     options={this.state.parentCategories}
                                     onChange={this.changeCategory}

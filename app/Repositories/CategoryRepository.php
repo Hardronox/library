@@ -23,7 +23,7 @@ class CategoryRepository
     public function updateCategory($request, $name)
     {
         $category= Category::where('name', $name)->first();
-        $category->name=$request->input('newName');
+        $category->name=$request->input('name');
 
         $category->save();
 

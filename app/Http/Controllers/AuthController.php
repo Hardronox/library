@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
 use Tymon\JWTAuth\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
-class AuthenticateController extends Controller
+class AuthController extends Controller
 {
     public function __construct()
     {
@@ -28,7 +28,23 @@ class AuthenticateController extends Controller
         return $users;
     }
 
-    public function authenticate(Request $request, JWTAuth $auth)
+    public function register(Request $request, JWTAuth $auth)
+    {
+        $credentials = $request->only('email', 'password');
+
+        var_dump($credentials);
+        try {
+            $user = User::create($credentials);
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'User already exists.'], 422);
+        }
+
+        $token = $auth->fromUser($user);
+
+        return response()->json(compact('token'));
+    }
+
+    public function login(Request $request, JWTAuth $auth)
     {
         $credentials = $request->only('email', 'password');
 

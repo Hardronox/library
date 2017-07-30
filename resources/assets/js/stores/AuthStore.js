@@ -43,8 +43,8 @@ class BooksStore extends EventEmitter {
         _loading = true;
     }
 
-    registerAttempt(id) {
-        AuthApi.registerAttempt(id);
+    registerAttempt() {
+        AuthApi.registerAttempt();
     }
 
     loginAttempt(data) {
@@ -63,12 +63,12 @@ class BooksStore extends EventEmitter {
         switch (action.actionType) {
 
             case 'REGISTER_ATTEMPT':
-                this.createSingleBookAttempt(action.value);
+                this.registerAttempt(action.value);
                 break;
             case 'REGISTER_SUCCESS':
                 _formErrors=[];
                 _loading=false;
-                window.location.href = "/";
+                //window.location.href = "/";
                 break;
             case 'REGISTER_FAILED':
                 _formErrors=action.value;

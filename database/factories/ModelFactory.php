@@ -36,7 +36,7 @@ $factory->define(App\Models\Book::class, function (Faker\Generator $faker) {
 $factory->define(App\Models\BookCategory::class, function (Faker\Generator $faker) {
 
     return [
-        'book_id' => rand(1,100),
+        'book_id' => rand(1,50),
         'category_id' => rand(1,10),
     ];
 });

@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Http\Controllers\FilesController;
 use App\Models\Book;
 use App\Models\Category;
 
@@ -33,23 +34,17 @@ class BookRepository
      * @param $request
      * @return Book
      */
-    public function createBook($request)
+    public function createBook($request, $file)
     {
         $book=new Book();
         $book->title=$request->input('title');
         $book->description=$request->input('description');
         $book->save();
 
-        if ($request->hasFile('picture')){
+        if ($request->hasFile('image')){
 
-            $imageName = $book->id . '.' .
-                $request->file('picture')->getClientOriginalExtension();
+          $file->uploadImage($request, 'books', $book->id);
 
-            $request->file('picture')
-                    ->move(base_path() . '/public/images/', $imageName
-                );
-
-            $book->picture= $imageName;
         }
         $book->save();
 

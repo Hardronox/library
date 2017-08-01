@@ -66,7 +66,7 @@ class BookCreateUpdate extends Component {
     handleChange(name, event) {
 
         let state = Object.assign({}, this.state);
-        state.books[name] = (name==='picture') ? event.target.files[0] : event.target.value;
+        state.books[name] = (name==='image') ? event.target.files[0] : event.target.value;
         this.setState(state);
     }
 
@@ -76,7 +76,7 @@ class BookCreateUpdate extends Component {
         console.log(this.state.selectedCategories);
         formData.append('title', this.state.books.title);
         formData.append('description', this.state.books.description);
-        formData.append('picture', this.state.books.picture);
+        formData.append('image', this.state.books.image);
 
         this.state.selectedCategories.forEach(function(item) {
             formData.append('categories[]', item.value);
@@ -151,7 +151,7 @@ class BookCreateUpdate extends Component {
                                            accept=".png,.jpg,.jpeg"
                                            placeholder="Click here"
                                     //className="inputClass"
-                                           onChange={this.handleChange.bind(this, 'picture')}
+                                           onChange={this.handleChange.bind(this, 'image')}
                                 />
                             </div>
 

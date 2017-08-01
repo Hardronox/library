@@ -7,7 +7,7 @@ use App\Repositories\BookRepository;
 use Illuminate\Http\Request;
 
 
-class BooksController extends Controller
+class BookController extends Controller
 {
     /**
      * @var BookRepository
@@ -15,7 +15,7 @@ class BooksController extends Controller
     private $repository;
 
     /**
-     * BooksController constructor.
+     * BookController constructor.
      * @param BookRepository $repository
      */
     public function __construct(BookRepository $repository)
@@ -50,9 +50,9 @@ class BooksController extends Controller
      * @param CreateUpdateBookRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(CreateUpdateBookRequest $request)
+    public function store(CreateUpdateBookRequest $request, FilesController $file)
     {
-        $book = $this->repository->createBook($request);
+        $book = $this->repository->createBook($request, $file);
 
         return response()
                     ->json($book);

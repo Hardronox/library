@@ -14,15 +14,15 @@
 
 Route::group(['middleware'=>'isAjax'], function() {
 
-    Route::resource('books', 'BooksController');
+    Route::resource('books', 'BookController');
 
-    Route::get('/get-books-by-category', 'BooksController@getBooksByCategory');
-    Route::get('/get-books-by-search', 'BooksController@getBooksBySearch');
+    Route::get('/get-books-by-category', 'BookController@getBooksByCategory');
+    Route::get('/get-books-by-search', 'BookController@getBooksBySearch');
 
     Route::post('/register', 'AuthController@register');
     Route::post('/login', 'AuthController@login');
 
-    Route::resource('categories', 'CategoriesController');
+    Route::resource('categories', 'CategoryController');
 
 });
 

@@ -14,6 +14,7 @@ class BookRepository
     public function loadBooksForMainPage()
     {
         return Book::orderBy('created_at', 'desc')
+                    ->with('image')
                     ->orderBy('id', 'desc')
                     ->take(10)
                     ->get();
@@ -27,6 +28,7 @@ class BookRepository
     {
         return Book::where('id', $id)
             ->with('categories')
+            ->with('image')
             ->first();
     }
 
@@ -41,10 +43,8 @@ class BookRepository
         $book->description=$request->input('description');
         $book->save();
 
-        if ($request->hasFile('image')){
-
+        if ($request->hasFile('image')) {
           $file->uploadImage($request, 'books', $book->id);
-
         }
         $book->save();
 
@@ -103,6 +103,7 @@ class BookRepository
         return Book::where('title', 'like', '%' . $request->input('search') . '%')
             ->orWhere('description', 'like', '%' . $request->input('search') . '%')
             ->with('categories')
+            ->with('image')
             ->get();
     }
 
@@ -117,7 +118,7 @@ class BookRepository
 
         $category=Category::where('name', $request->input('name'))->first();
 
-        $books=$category->books()->offset($offset)->limit($limit)->get();
+        $books=$category->books()->offset($offset)->limit($limit)->with('image')->get();
         $count = $category->books()->count();
 
         return [$books, $count];

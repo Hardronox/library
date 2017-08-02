@@ -41,4 +41,9 @@ class Book extends Model
     {
         return $this->belongsToMany('App\Models\Category', 'book_category', 'book_id', 'category_id')->withPivot('category_id');
     }
+
+    public function image()
+    {
+      return $this->hasOne('App\Models\File', 'type_id', 'id');
+    }
 }

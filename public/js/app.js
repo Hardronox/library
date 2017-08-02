@@ -14881,7 +14881,7 @@ var AuthApi = function () {
                     __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].loginSuccess(response);
                 }.bind(this),
                 error: function (response) {
-                    __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].loginFailed(response.responseJSOghN);
+                    __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].loginFailed(response.responseJSON);
                 }.bind(this)
             });
         }
@@ -15399,7 +15399,6 @@ var BookCreateUpdate = function (_Component) {
     }, {
         key: 'changeCategory',
         value: function changeCategory(value) {
-            console.log('You have selected: ', value);
             this.setState({
                 selectedCategories: value });
         }
@@ -16556,18 +16555,7 @@ var Login = function (_Component) {
                                                 defaultValue: this.state.email,
                                                 onChange: this.handleChange.bind(this, 'email'),
                                                 name: 'title'
-                                            }),
-                                            this.state.formErrors.email ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                'div',
-                                                { className: 'alert alert-danger' },
-                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                    'strong',
-                                                    null,
-                                                    'Error!'
-                                                ),
-                                                ' ',
-                                                this.state.formErrors.email[0]
-                                            ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null)
+                                            })
                                         )
                                     ),
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -16588,7 +16576,7 @@ var Login = function (_Component) {
                                                 onChange: this.handleChange.bind(this, 'password'),
                                                 name: 'title'
                                             }),
-                                            this.state.formErrors.password ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                            this.state.formErrors.error ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                                 'div',
                                                 { className: 'alert alert-danger' },
                                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -16597,7 +16585,7 @@ var Login = function (_Component) {
                                                     'Error!'
                                                 ),
                                                 ' ',
-                                                this.state.formErrors.password[0]
+                                                this.state.formErrors.error
                                             ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null)
                                         )
                                     ),
@@ -16902,7 +16890,7 @@ var Book = function (_Component) {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'media-left media-top' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: "50px", height: "50px", className: 'media-object', src: '/images/' + this.props.props.book.picture })
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: "50px", height: "50px", className: 'media-object', src: this.props.props.book.image.url })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
@@ -16964,7 +16952,7 @@ var Book = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'media-left media-top' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { className: 'media-object', width: "100px", height: "100px", src: '/images/' + this.props.props.book.picture })
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { className: 'media-object', width: "100px", height: "100px", src: this.props.props.book.image.url })
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
@@ -17031,7 +17019,7 @@ var Book = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'media-left media-top' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: "100px", height: "100px", className: 'media-object', src: '/images/' + this.props.props.book.picture })
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: "100px", height: "100px", className: 'media-object', src: this.props.props.book.image.url })
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
@@ -17097,14 +17085,13 @@ var Book = function (_Component) {
         key: 'render',
         value: function render() {
             var categories = _.uniqBy(this.props.props.book.categories, 'id');
-
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'media' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'media-left media-top' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: "100px", height: "100px", className: 'media-object', src: '/images/' + this.props.props.book.picture })
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: "100px", height: "100px", className: 'media-object', src: this.props.props.book.image.url })
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',

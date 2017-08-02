@@ -16,7 +16,7 @@ class CreateFilesTable extends Migration
       if (!Schema::hasTable('files')) {
           Schema::create('files', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('url');
+            $table->string('url')->default('/images/1.png');
             $table->string('type');
             $table->integer('type_id');
             $table->timestamps();

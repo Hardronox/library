@@ -92,7 +92,6 @@ class BookCreateUpdate extends Component {
     }
 
     changeCategory(value) {
-        console.log('You have selected: ', value);
         this.setState({
             selectedCategories: value });
     }

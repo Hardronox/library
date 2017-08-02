@@ -35,7 +35,7 @@ class AuthApi {
                 AppActions.loginSuccess(response);
             }.bind(this),
             error: function(response) {
-                AppActions.loginFailed(response.responseJSOghN);
+                AppActions.loginFailed(response.responseJSON);
             }.bind(this)
         });
     }

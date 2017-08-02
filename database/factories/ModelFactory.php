@@ -28,8 +28,7 @@ $factory->define(App\Models\Book::class, function (Faker\Generator $faker) {
 
     return [
         'title' => $faker->sentence(3),
-        'description' => $faker->text(500),
-        'picture' => '1.png'
+        'description' => $faker->text(500)
     ];
 });
 
@@ -47,4 +46,15 @@ $factory->define(App\Models\Category::class, function (Faker\Generator $faker) {
         'name' => $faker->sentence(1),
         'parent_id' => null
     ];
+});
+
+$factory->define(App\Models\File::class, function (Faker\Generator $faker) {
+
+  static $i=1;
+
+  return [
+    'type' => 'books',
+    'type_id' => $i++,
+    'url' => '/images/1.png'
+  ];
 });

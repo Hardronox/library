@@ -9,11 +9,10 @@ class Book extends Component {
 
     render() {
         let categories=_.uniqBy(this.props.props.book.categories, 'id');
-
         return (
             <div className="media">
                 <div className="media-left media-top">
-                    <img width={"100px"} height={"100px"} className="media-object" src={'/images/'+ this.props.props.book.picture} />
+                    <img width={"100px"} height={"100px"} className="media-object" src={this.props.props.book.image.url} />
                 </div>
                 <div className="media-body">
                     <h3 className="media-heading">{this.props.props.book.title}</h3>

@@ -74,13 +74,6 @@ class Login extends Component {
                                                    onChange={this.handleChange.bind(this, 'email')}
                                                    name="title"
                                             />
-                                            { this.state.formErrors.email ?
-                                                <div className="alert alert-danger">
-                                                    <strong>Error!</strong> {this.state.formErrors.email[0]}
-                                                </div>
-                                                :
-                                                <div></div>
-                                            }
 
                                         </div>
                                     </div>
@@ -96,9 +89,9 @@ class Login extends Component {
                                                    onChange={this.handleChange.bind(this, 'password')}
                                                    name="title"
                                             />
-                                            { this.state.formErrors.password ?
+                                            { this.state.formErrors.error ?
                                                 <div className="alert alert-danger">
-                                                    <strong>Error!</strong> {this.state.formErrors.password[0]}
+                                                    <strong>Error!</strong> {this.state.formErrors.error}
                                                 </div>
                                                 :
                                                 <div></div>

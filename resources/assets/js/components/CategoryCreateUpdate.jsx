@@ -33,7 +33,7 @@ class CategoryCreateUpdate extends Component {
 
 
     _onChange () {
-        let categories=[];
+        let categories = [];
         let options=CategoriesStore.getAll();
 
         {_.times(options.length, i =>
@@ -62,7 +62,7 @@ class CategoryCreateUpdate extends Component {
     }
 
     _onSubmit () {
-        let formData= new FormData();
+        let formData = new FormData();
 
         formData.append('name', this.state.category);
         formData.append('parentCategory', this.state.selectedParentCategory.value);
@@ -104,7 +104,7 @@ class CategoryCreateUpdate extends Component {
                                     <strong>Error!</strong> {this.state.formErrors.name[0]}
                                 </div>
                                 :
-                                <div></div>
+                                <div/>
                             }
 
                             <div className="form-group">

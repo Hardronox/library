@@ -4,8 +4,8 @@ import CategoriesApi from '../api/Categories';
 
 
 let _categories = [];
-let _loading=true;
-let _formErrors=[];
+let _loading = true;
+let _formErrors = [];
 
 class CategoriesStore extends EventEmitter {
 
@@ -31,7 +31,7 @@ class CategoriesStore extends EventEmitter {
     }
 
     unsetFormErrors() {
-        _formErrors=[];
+        _formErrors = [];
     }
 
     getCategoriesAttempt() {
@@ -75,8 +75,8 @@ class CategoriesStore extends EventEmitter {
                 window.location.href = "/";
                 break;
             case 'SINGLE_CATEGORY_NOT_CREATED':
-                _formErrors=action.value;
-                _loading=false;
+                _formErrors = action.value;
+                _loading = false;
                 break;
 
 
@@ -88,8 +88,8 @@ class CategoriesStore extends EventEmitter {
                 window.location.href = "/";
                 break;
             case 'SINGLE_CATEGORY_NOT_UPDATED':
-                _formErrors=action.value;
-                _loading=false;
+                _formErrors = action.value;
+                _loading = false;
                 break;
         }
         this.emitChange();

@@ -20,7 +20,6 @@ class BooksApi {
         });
     }
 
-
     getSingleBookAttempt(id) {
         $.ajax({
             url: `/books/${id}`,
@@ -123,9 +122,8 @@ class BooksApi {
                 search
             },
             cache: false,
-            success: function(data) {
-                BooksStore._books = data;
-                AppActions.booksBySearchLoaded(BooksStore._books);
+            success: function(response) {
+                AppActions.booksBySearchLoaded(response);
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(status, err);

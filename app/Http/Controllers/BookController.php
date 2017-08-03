@@ -103,8 +103,8 @@ class BookController extends Controller
     {
         $data = $this->repository->loadBooksForCategory($request);
 
-        $books=$data[0];
-        $count=$data[1];
+        $books = $data[0];
+        $count = $data[1];
 
         return response()
             ->json([$books, $count]);

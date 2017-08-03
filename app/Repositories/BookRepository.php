@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Http\Controllers\FilesController;
 use App\Models\Book;
 use App\Models\Category;
 
@@ -38,19 +37,19 @@ class BookRepository
      */
     public function createBook($request, $file)
     {
-        $book=new Book();
-        $book->title=$request->input('title');
-        $book->description=$request->input('description');
+        $book = new Book();
+        $book->title = $request->input('title');
+        $book->description = $request->input('description');
         $book->save();
 
         if ($request->hasFile('image')) {
-          $file->uploadImage($request, 'books', $book->id);
+            $file->uploadImage($request, 'books', $book->id);
         }
         $book->save();
 
         if ($request->input('categories'))
         {
-            $category= Category::whereIn('name', $request->input('categories'))->get();
+            $category = Category::whereIn('name', $request->input('categories'))->get();
             $book->categories()->attach($category);
         }
 
@@ -64,10 +63,10 @@ class BookRepository
      */
     public function updateBook($request, $id)
     {
-        $book= Book::where('id', $id)->first();
+        $book = Book::where('id', $id)->first();
 
-        $book->title=$request->input('title');
-        $book->description=$request->input('description');
+        $book->title = $request->input('title');
+        $book->description = $request->input('description');
 
         if ($request->hasFile('picture')){
 
@@ -75,10 +74,10 @@ class BookRepository
                 $request->file('picture')->getClientOriginalExtension();
 
             $request->file('picture')
-                ->move(base_path() . '/public/images/', $imageName
+                    ->move(base_path() . '/public/images/', $imageName
                 );
 
-            $book->picture= $imageName;
+            $book->picture = $imageName;
         }
         $book->save();
 
@@ -90,7 +89,7 @@ class BookRepository
      */
     public function deleteBook($id)
     {
-        $book= Book::where('id', $id)->first();
+        $book = Book::where('id', $id)->first();
         $book->delete();
     }
 
@@ -116,9 +115,9 @@ class BookRepository
         $limit = 5;
         $offset = $request->input('page') * $limit;
 
-        $category=Category::where('name', $request->input('name'))->first();
+        $category = Category::where('name', $request->input('name'))->first();
 
-        $books=$category->books()->offset($offset)->limit($limit)->with('image')->get();
+        $books = $category->books()->offset($offset)->limit($limit)->with('image')->get();
         $count = $category->books()->count();
 
         return [$books, $count];

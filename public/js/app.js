@@ -13930,8 +13930,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_routes__ = __webpack_require__(116);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_router_dom__ = __webpack_require__(13);
-
 __webpack_require__(117);
+
 
 
 
@@ -14159,9 +14159,8 @@ var BooksApi = function () {
                     search: search
                 },
                 cache: false,
-                success: function (data) {
-                    __WEBPACK_IMPORTED_MODULE_1__stores_BooksStore__["a" /* default */]._books = data;
-                    __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].booksBySearchLoaded(__WEBPACK_IMPORTED_MODULE_1__stores_BooksStore__["a" /* default */]._books);
+                success: function (response) {
+                    __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].booksBySearchLoaded(response);
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(status, err);
@@ -14502,7 +14501,6 @@ var BookCreateUpdate = function (_Component) {
         value: function _onSubmit() {
             var formData = new FormData();
 
-            console.log(this.state.selectedCategories);
             formData.append('title', this.state.books.title);
             formData.append('description', this.state.books.description);
             formData.append('image', this.state.books.image);
@@ -14522,7 +14520,8 @@ var BookCreateUpdate = function (_Component) {
         key: 'changeCategory',
         value: function changeCategory(value) {
             this.setState({
-                selectedCategories: value });
+                selectedCategories: value
+            });
         }
     }, {
         key: 'render',
@@ -14602,9 +14601,8 @@ var BookCreateUpdate = function (_Component) {
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6_react_file_input___default.a, { name: 'myImage',
                                 id: 'image',
                                 accept: '.png,.jpg,.jpeg',
-                                placeholder: 'Click here'
-                                //className="inputClass"
-                                , onChange: this.handleChange.bind(this, 'image')
+                                placeholder: 'Click here',
+                                onChange: this.handleChange.bind(this, 'image')
                             })
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -16004,7 +16002,12 @@ var Book = function (_Component) {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'media-left media-top' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: "50px", height: "50px", className: 'media-object', src: this.props.props.book.image.url })
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', {
+                            width: "50px",
+                            height: "50px",
+                            className: 'media-object',
+                            src: this.props.props.book.image.url
+                        })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
@@ -16066,7 +16069,12 @@ var Book = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'media-left media-top' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { className: 'media-object', width: "100px", height: "100px", src: this.props.props.book.image.url })
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', {
+                        className: 'media-object',
+                        width: "100px",
+                        height: "100px",
+                        src: this.props.props.book.image.url
+                    })
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
@@ -16133,7 +16141,12 @@ var Book = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'media-left media-top' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: "100px", height: "100px", className: 'media-object', src: this.props.props.book.image.url })
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', {
+                        width: "100px",
+                        height: "100px",
+                        className: 'media-object',
+                        src: this.props.props.book.image.url
+                    })
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
@@ -16205,7 +16218,12 @@ var Book = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'media-left media-top' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: "100px", height: "100px", className: 'media-object', src: this.props.props.book.image.url })
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', {
+                        width: "100px",
+                        height: "100px",
+                        className: 'media-object',
+                        src: this.props.props.book.image.url
+                    })
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',

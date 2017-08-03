@@ -4,8 +4,8 @@ import AppActions from '../actions/AppActions';
 import AuthApi from '../api/Auth';
 
 let _user = [];
-let _loading=true;
-let _formErrors=[];
+let _loading = true;
+let _formErrors = [];
 
 class BooksStore extends EventEmitter {
 
@@ -22,7 +22,6 @@ class BooksStore extends EventEmitter {
         return _user;
     }
 
-
     getStatus() {
         return _loading;
     }
@@ -32,11 +31,11 @@ class BooksStore extends EventEmitter {
     }
 
     unsetFormErrors() {
-        _formErrors=[];
+        _formErrors = [];
     }
 
     unsetUser() {
-        _user=[];
+        _user = [];
     }
 
     enableLoading() {
@@ -66,13 +65,13 @@ class BooksStore extends EventEmitter {
                 this.registerAttempt(action.value);
                 break;
             case 'REGISTER_SUCCESS':
-                _formErrors=[];
-                _loading=false;
+                _formErrors = [];
+                _loading = false;
                 window.location.href = "/";
                 break;
             case 'REGISTER_FAILED':
-                _formErrors=action.value;
-                _loading=false;
+                _formErrors = action.value;
+                _loading = false;
                 break;
 
             case 'LOGIN_ATTEMPT':
@@ -80,13 +79,13 @@ class BooksStore extends EventEmitter {
                 break;
             case 'LOGIN_SUCCESS':
                 localStorage.setItem('jwt', action.value.token);
-                _formErrors=[];
-                _loading=false;
+                _formErrors = [];
+                _loading = false;
                 window.location.href = "/";
                 break;
             case 'LOGIN_FAILED':
-                _formErrors=action.value;
-                _loading=false;
+                _formErrors = action.value;
+                _loading = false;
                 break;
 
             case 'UNSET_FORM_ERRORS':

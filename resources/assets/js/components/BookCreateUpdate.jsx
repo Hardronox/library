@@ -38,7 +38,7 @@ class BookCreateUpdate extends Component {
     }
 
     _onChange () {
-        let categories=[];
+        let categories = [];
         let options=CategoriesStore.getAll();
 
         {_.times(options.length, i =>
@@ -66,14 +66,13 @@ class BookCreateUpdate extends Component {
     handleChange(name, event) {
 
         let state = Object.assign({}, this.state);
-        state.books[name] = (name==='image') ? event.target.files[0] : event.target.value;
+        state.books[name] = (name === 'image') ? event.target.files[0] : event.target.value;
         this.setState(state);
     }
 
     _onSubmit () {
-        let formData= new FormData();
+        let formData = new FormData();
 
-        console.log(this.state.selectedCategories);
         formData.append('title', this.state.books.title);
         formData.append('description', this.state.books.description);
         formData.append('image', this.state.books.image);
@@ -93,7 +92,8 @@ class BookCreateUpdate extends Component {
 
     changeCategory(value) {
         this.setState({
-            selectedCategories: value });
+            selectedCategories: value
+        });
     }
 
     render() {
@@ -119,7 +119,7 @@ class BookCreateUpdate extends Component {
                                         <strong>Error!</strong> {this.state.formErrors.title[0]}
                                     </div>
                                     :
-                                    <div></div>
+                                    <div/>
                                 }
                             </div>
 
@@ -138,7 +138,7 @@ class BookCreateUpdate extends Component {
                                         <strong>Error!</strong> {this.state.formErrors.description[0]}
                                     </div>
                                     :
-                                    <div></div>
+                                    <div/>
                                 }
                             </div>
 
@@ -149,7 +149,6 @@ class BookCreateUpdate extends Component {
                                            id="image"
                                            accept=".png,.jpg,.jpeg"
                                            placeholder="Click here"
-                                    //className="inputClass"
                                            onChange={this.handleChange.bind(this, 'image')}
                                 />
                             </div>
@@ -174,7 +173,6 @@ class BookCreateUpdate extends Component {
                 </div>
             );
         }
-
 }
 
 export default BookCreateUpdate;

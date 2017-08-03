@@ -4,9 +4,9 @@ import AppActions from '../actions/AppActions';
 import BooksApi from '../api/Books';
 
 let _books = [];
-let _booksCount=0;
-let _loading=true;
-let _formErrors=[];
+let _booksCount = 0;
+let _loading = true;
+let _formErrors = [];
 
 class BooksStore extends EventEmitter {
 
@@ -36,11 +36,11 @@ class BooksStore extends EventEmitter {
     }
 
     unsetFormErrors() {
-         _formErrors=[];
+         _formErrors = [];
     }
 
     unsetBooks() {
-        _books=[];
+        _books = [];
     }
 
     enableLoading() {
@@ -109,7 +109,7 @@ class BooksStore extends EventEmitter {
                 break;
             case 'SINGLE_BOOK_LOADED':
                 _books = action.value;
-                _loading=false;
+                _loading = false;
                 break;
 
 
@@ -117,13 +117,13 @@ class BooksStore extends EventEmitter {
                 this.createSingleBookAttempt(action.value);
                 break;
             case 'SINGLE_BOOK_CREATED':
-                _formErrors=[];
-                _loading=false;
+                _formErrors = [];
+                _loading = false;
                 window.location.href = "/";
                 break;
             case 'SINGLE_BOOK_NOT_CREATED':
-                _formErrors=action.value;
-                _loading=false;
+                _formErrors = action.value;
+                _loading = false;
                 break;
 
 
@@ -131,7 +131,7 @@ class BooksStore extends EventEmitter {
                 this.updateSingleBookAttempt(action.value);
                 break;
             case 'SINGLE_BOOK_UPDATED':
-                _loading=false;
+                _loading = false;
                 window.location.href = "/";
                 break;
             case 'SINGLE_BOOK_NOT_UPDATED':

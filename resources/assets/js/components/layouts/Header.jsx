@@ -5,7 +5,7 @@ class Header extends Component {
 
     constructor(props) {
         super(props);
-        this.jwt=localStorage.getItem('jwt')
+        this.jwt = localStorage.getItem('jwt')
     }
 
     _onLogOut(){
@@ -21,9 +21,9 @@ class Header extends Component {
 
                         <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
                             <span className="sr-only">Toggle Navigation</span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
+                            <span className="icon-bar"/>
+                            <span className="icon-bar"/>
+                            <span className="icon-bar"/>
                         </button>
 
                         <Link className="navbar-brand" to={{ pathname: '/' }}>

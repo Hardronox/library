@@ -45,7 +45,7 @@ class Register extends Component {
     }
 
     _onSubmit () {
-        let formData= new FormData();
+        let formData = new FormData();
         formData.append('email', this.state.email);
         formData.append('name', this.state.name);
         formData.append('password', this.state.password);
@@ -80,7 +80,7 @@ class Register extends Component {
                                                     <strong>Error!</strong> {this.state.formErrors.name[0]}
                                                 </div>
                                                 :
-                                                <div></div>
+                                                <div/>
                                             }
                                         </div>
                                     </div>
@@ -101,7 +101,7 @@ class Register extends Component {
                                                     <strong>Error!</strong> {this.state.formErrors.email[0]}
                                                 </div>
                                                 :
-                                                <div></div>
+                                                <div/>
                                             }
                                         </div>
                                     </div>
@@ -122,7 +122,7 @@ class Register extends Component {
                                                     <strong>Error!</strong> {this.state.formErrors.password[0]}
                                                 </div>
                                                 :
-                                                <div></div>
+                                                <div/>
                                             }
                                         </div>
 

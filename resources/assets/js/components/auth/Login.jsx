@@ -44,7 +44,7 @@ class Login extends Component {
     }
 
     _onSubmit () {
-        let formData= new FormData();
+        let formData = new FormData();
 
         formData.append('email', this.state.email);
         formData.append('password', this.state.password);
@@ -74,7 +74,6 @@ class Login extends Component {
                                                    onChange={this.handleChange.bind(this, 'email')}
                                                    name="title"
                                             />
-
                                         </div>
                                     </div>
 
@@ -94,7 +93,7 @@ class Login extends Component {
                                                     <strong>Error!</strong> {this.state.formErrors.error}
                                                 </div>
                                                 :
-                                                <div></div>
+                                                <div/>
                                             }
                                         </div>
 

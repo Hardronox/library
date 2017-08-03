@@ -52,42 +52,42 @@ class Search extends Component {
 
     render() {
         return (
-        <div className="container">
-            <div className="row">
-                <div className="col-md-8">
-                    <h3>Search by: "{this.props.match.params.query}" </h3>
-                    {_.times(this.state.books.length, i =>
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-8">
+                        <h3>Search by: "{this.props.match.params.query}" </h3>
+                        {_.times(this.state.books.length, i =>
 
-                        <Book book={this.state.books[i]}
-                              type="searchPage"
-                              key={i}
-                        />
-                    )}
-                </div>
-
-                <div className="col-md-4">
-                    <form className="form-inline">
-                        <div className="form-group">
-                            <label htmlFor="email">Search: </label>
-                            <input type="text"
-                                   className="form-control"
-                                   id="email"
-                                   defaultValue={this.props.match.params.query}
-                                   onChange={this.handleChange}
+                            <Book book={this.state.books[i]}
+                                  type="searchPage"
+                                  key={i}
                             />
-                        </div>
-                        <Link to={{ pathname: '/search/'+this.state.searchValue }}>
-                            <button type="submit"
-                                    className="btn btn-primary"
-                                    disabled={!this.state.searchValue}
-                                    onClick={this.search}>
-                                Search
-                            </button>
-                        </Link>
-                    </form>
+                        )}
+                    </div>
+
+                    <div className="col-md-4">
+                        <form className="form-inline">
+                            <div className="form-group">
+                                <label htmlFor="email">Search: </label>
+                                <input type="text"
+                                       className="form-control"
+                                       id="email"
+                                       defaultValue={this.props.match.params.query}
+                                       onChange={this.handleChange}
+                                />
+                            </div>
+                            <Link to={{ pathname: '/search/'+this.state.searchValue }}>
+                                <button type="submit"
+                                        className="btn btn-primary"
+                                        disabled={!this.state.searchValue}
+                                        onClick={this.search}>
+                                    Search
+                                </button>
+                            </Link>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
         );
     }
 }

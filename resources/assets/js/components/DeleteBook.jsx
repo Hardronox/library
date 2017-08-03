@@ -30,9 +30,7 @@ class DeleteBook extends Component {
     }
 
     render() {
-        return (
-            <div></div>
-        );
+        return null;
     }
 }
 

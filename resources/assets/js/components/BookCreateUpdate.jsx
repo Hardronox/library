@@ -97,10 +97,10 @@ class BookCreateUpdate extends Component {
     }
 
     render() {
-        if (this.state.loading){
-            return <div></div>;
-        } else {
-            return (
+        if (this.state.loading)
+            return null;
+
+        return (
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12 ">
@@ -175,8 +175,6 @@ class BookCreateUpdate extends Component {
             );
         }
 
-
-    }
 }
 
 export default BookCreateUpdate;

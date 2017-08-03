@@ -102,8 +102,8 @@ class BooksApi {
             },
             cache: false,
             success: function(response) {
-                BooksStore._books= response[0].map(function(data) {
-                    data.description= data.description.substring(0, 60)+'...';
+                BooksStore._books = response[0].map(function(data) {
+                    data.description = data.description.substring(0, 60)+'...';
                     return data;
                 });
                 AppActions.booksByCategoryLoaded([BooksStore._books, response[1]]);
@@ -124,7 +124,7 @@ class BooksApi {
             },
             cache: false,
             success: function(data) {
-                BooksStore._books= data;
+                BooksStore._books = data;
                 AppActions.booksBySearchLoaded(BooksStore._books);
             }.bind(this),
             error: function(xhr, status, err) {

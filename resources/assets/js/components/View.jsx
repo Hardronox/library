@@ -41,9 +41,9 @@ class View extends Component {
     }
 
     render() {
-        if (this.state.loading){
-            return <div></div>;
-        } else
+        if (this.state.loading)
+            return null;
+
         return (
             <div className="container">
                 <div className="row">

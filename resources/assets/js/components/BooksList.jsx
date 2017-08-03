@@ -57,10 +57,10 @@ class Books extends Component {
     }
 
     render() {
-        if (this.state.loading){
-            return <div></div>;
-        } else {
-            return (
+        if (this.state.loading)
+            return null;
+
+        return (
                 <div className="container">
                     <div className="row">
                         <div className="col-md-8">
@@ -104,8 +104,6 @@ class Books extends Component {
                 </div>
             );
         }
-
-    }
 }
 
 export default Books;

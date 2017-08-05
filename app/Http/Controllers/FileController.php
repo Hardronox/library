@@ -17,12 +17,12 @@ class FilesController extends Controller
 
 
     // update if row exists, create if none
-      File::updateOrCreate([
+      $file=File::updateOrCreate([
         'type' => $type,
         'type_id' => $type_id,
         'url' => Storage::url($path),
       ]);
 
-    return 'ok';
+    return $file;
   }
 }

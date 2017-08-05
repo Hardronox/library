@@ -9,9 +9,6 @@ class CategoryCreateUpdate extends Component {
     constructor(props) {
         super(props);
         this.state = this._getState();
-        this._onChange = this._onChange.bind(this);
-        this._onSubmit = this._onSubmit.bind(this);
-        this.changeCategory = this.changeCategory.bind(this);
         this.jwt=localStorage.getItem('jwt');
     }
 
@@ -32,7 +29,7 @@ class CategoryCreateUpdate extends Component {
     }
 
 
-    _onChange () {
+    _onChange = () => {
         let categories = [];
         let options=CategoriesStore.getAll();
 
@@ -55,13 +52,13 @@ class CategoryCreateUpdate extends Component {
         };
     }
 
-    handleChange(event) {
+    handleChange = (event) => {
         let state = Object.assign({}, this.state);
         state.category = event.target.value;
         this.setState(state);
     }
 
-    _onSubmit () {
+    _onSubmit = () => {
         let formData = new FormData();
 
         formData.append('name', this.state.category);

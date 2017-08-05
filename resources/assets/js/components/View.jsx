@@ -10,7 +10,6 @@ class View extends Component {
     constructor(props) {
         super(props);
         this.state = this._getState();
-        this._onChange = this._onChange.bind(this)
     }
 
     componentWillMount() {
@@ -26,7 +25,7 @@ class View extends Component {
         BooksStore.addChangeListener(this._onChange);
     }
 
-    _onChange () {
+    _onChange = () => {
         this.setState({
             books: BooksStore.getAll(),
             loading: BooksStore.getStatus()

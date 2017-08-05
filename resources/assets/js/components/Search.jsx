@@ -10,9 +10,6 @@ class Search extends Component {
     constructor(props) {
         super(props);
         this.state = this._getState();
-        this._onChange = this._onChange.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-        this.search = this.search.bind(this);
     }
 
     componentWillMount() {
@@ -27,7 +24,7 @@ class Search extends Component {
         BooksStore.addChangeListener(this._onChange);
     }
 
-    _onChange () {
+    _onChange = () => {
         this.setState({
             books: BooksStore.getAll(),
         })
@@ -40,13 +37,13 @@ class Search extends Component {
         };
     }
 
-    handleChange(event) {
+    handleChange = (event) => {
         this.setState(
             {searchValue: event.target.value}
         );
     }
 
-    search() {
+    search = () => {
         AppActions.getBooksBySearchAttempt(this.state.searchValue);
     }
 

@@ -7,7 +7,6 @@ class DeleteBook extends Component {
 
     constructor(props) {
         super(props);
-        this._onChange = this._onChange.bind(this);
         this.jwt=localStorage.getItem('jwt')
     }
 
@@ -23,7 +22,7 @@ class DeleteBook extends Component {
         BooksStore.removeChangeListener(this._onChange);
     }
 
-    _onChange () {
+    _onChange = () => {
         this.setState({
             loading: BooksStore.getStatus()
         })

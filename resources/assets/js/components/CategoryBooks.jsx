@@ -11,8 +11,6 @@ class CategoryBooks extends Component {
     constructor(props) {
         super(props);
         this.state = this._getState();
-        this._onChange = this._onChange.bind(this);
-        this.handlePageChange = this.handlePageChange.bind(this);
     }
 
     componentWillMount() {
@@ -29,7 +27,7 @@ class CategoryBooks extends Component {
         BooksStore.addChangeListener(this._onChange);
     }
 
-    _onChange () {
+    _onChange = () => {
         this.setState({
             books: BooksStore.getAll(),
             booksCount: BooksStore.getCount(),
@@ -44,7 +42,7 @@ class CategoryBooks extends Component {
         };
     }
 
-    handlePageChange(pageNumber) {
+    handlePageChange = (pageNumber) => {
         this.setState({activePage: pageNumber});
 
         AppActions.getBooksByCategoryAttempt([this.props.match.params.name, pageNumber]);

@@ -3,3 +3,4 @@
 3) переименовать _.env в .env
 4) создать базу: test
 5) php artisan migrate:refresh --seed
+6) php artisan storage:link

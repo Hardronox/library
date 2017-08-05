@@ -11,9 +11,6 @@ class BookCreateUpdate extends Component {
     constructor(props) {
         super(props);
         this.state = this._getState();
-        this._onChange = this._onChange.bind(this);
-        this._onSubmit = this._onSubmit.bind(this);
-        this.changeCategory = this.changeCategory.bind(this);
         this.jwt=localStorage.getItem('jwt')
     }
 
@@ -37,7 +34,7 @@ class BookCreateUpdate extends Component {
         CategoriesStore.addChangeListener(this._onChange);
     }
 
-    _onChange () {
+    _onChange = () => {
         let categories = [];
         let options=CategoriesStore.getAll();
 
@@ -70,7 +67,7 @@ class BookCreateUpdate extends Component {
         this.setState(state);
     }
 
-    _onSubmit () {
+    _onSubmit = () => {
         let formData = new FormData();
 
         formData.append('title', this.state.books.title);
@@ -90,13 +87,14 @@ class BookCreateUpdate extends Component {
             AppActions.createSingleBookAttempt(formData);                                                                                                                                                                                                                       
     }
 
-    changeCategory(value) {
+    changeCategory = (value) =>  {
         this.setState({
             selectedCategories: value
         });
     }
 
     render() {
+
         if (this.state.loading)
             return null;
 

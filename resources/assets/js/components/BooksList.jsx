@@ -12,8 +12,6 @@ class Books extends Component {
     constructor(props) {
         super(props);
         this.state = this._getState();
-        this._onChange = this._onChange.bind(this);
-        this.handleChange = this.handleChange.bind(this);
     }
 
     componentWillMount() {
@@ -33,7 +31,7 @@ class Books extends Component {
         CategoriesStore.addChangeListener(this._onChange);
     }
 
-    _onChange () {
+    _onChange = () => {
         this.setState({
             books: BooksStore.getAll(),
             categories: CategoriesStore.getAll(),
@@ -41,7 +39,7 @@ class Books extends Component {
         })
     }
 
-    _getState () {
+    _getState = () => {
         return {
             books: BooksStore.getAll(),
             categories: CategoriesStore.getAll(),
@@ -50,11 +48,11 @@ class Books extends Component {
         };
     }
 
-    handleChange(event) {
+    handleChange = (event) => {
         this.setState(
                 {searchValue: event.target.value}
             );
-    }
+    };
 
     render() {
         if (this.state.loading)

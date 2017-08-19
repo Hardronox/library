@@ -7,7 +7,7 @@ use App\Repositories\BookRepository;
 use Illuminate\Http\Request;
 
 
-class BookController extends Controller
+class BooksController extends Controller
 {
     /**
      * @var BookRepository
@@ -50,9 +50,9 @@ class BookController extends Controller
      * @param CreateUpdateBookRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(CreateUpdateBookRequest $request, FilesController $file)
+    public function store(CreateUpdateBookRequest $customRequest, FilesController $file)
     {
-        $book = $this->repository->createBook($request, $file);
+        $book = $this->repository->createBook($customRequest, $file);
 
         return response()
                     ->json($book);
@@ -63,9 +63,9 @@ class BookController extends Controller
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(CreateUpdateBookRequest $request, $id)
+    public function update(CreateUpdateBookRequest $customRequest, $id)
     {
-        $book = $this->repository->updateBook($request, $id);
+        $book = $this->repository->updateBook($customRequest, $id);
 
         return response()
                     ->json($book);
@@ -101,7 +101,7 @@ class BookController extends Controller
      */
     public function getBooksByCategory(Request $request)
     {
-        $data = $this->repository->loadBooksForCategory($request);
+        $data = $this->repository->loadBooksForCategory($request->only(['name', 'page']));
 
         $books = $data[0];
         $count = $data[1];

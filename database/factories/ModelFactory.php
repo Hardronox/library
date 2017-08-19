@@ -13,7 +13,6 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
-    static $password;
 
     return [
         'name' => $faker->name,
@@ -23,20 +22,11 @@ $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-
 $factory->define(App\Models\Book::class, function (Faker\Generator $faker) {
 
     return [
         'title' => $faker->sentence(3),
         'description' => $faker->text(500)
-    ];
-});
-
-$factory->define(App\Models\BookCategory::class, function (Faker\Generator $faker) {
-
-    return [
-        'book_id' => rand(1,50),
-        'category_id' => rand(1,10),
     ];
 });
 
@@ -48,7 +38,7 @@ $factory->define(App\Models\Category::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Models\File::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\File::class, function () {
 
   static $i=1;
 

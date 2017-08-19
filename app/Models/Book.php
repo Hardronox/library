@@ -39,7 +39,7 @@ class Book extends Model
 
     public function categories()
     {
-        return $this->belongsToMany('App\Models\Category', 'book_category', 'book_id', 'category_id')->withPivot('category_id');
+        return $this->belongsToMany('App\Models\Category');
     }
 
     public function image()

@@ -9,9 +9,9 @@ class CategoryRepository
     /**
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function loadCategoriesForMainPage()
+    public function loadCategories()
     {
-        return Category::all();
+        return Category::limit(30)->get();
     }
 
     /**

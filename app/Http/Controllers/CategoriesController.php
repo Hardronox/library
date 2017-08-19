@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateUpdateCategoryRequest;
 use App\Repositories\CategoryRepository;
 
-class CategoryController extends Controller
+class CategoriesController extends Controller
 {
 
     /**
@@ -27,7 +27,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = $this->repository->loadCategoriesForMainPage();
+        $categories = $this->repository->loadCategories();
 
         return response()
             ->json($categories);
@@ -38,9 +38,9 @@ class CategoryController extends Controller
      * @param CreateUpdateCategoryRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(CreateUpdateCategoryRequest $request)
+    public function store(CreateUpdateCategoryRequest $customRequest)
     {
-        $category = $this->repository->createCategory($request);
+        $category = $this->repository->createCategory($customRequest);
 
         return response()
                     ->json($category);
@@ -52,9 +52,9 @@ class CategoryController extends Controller
      * @param $name
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(CreateUpdateCategoryRequest $request, $name)
+    public function update(CreateUpdateCategoryRequest $customRequest, $name)
     {
-        $category = $this->repository->updateCategory($request, $name);
+        $category = $this->repository->updateCategory($customRequest, $name);
 
         return response()
                     ->json($category);

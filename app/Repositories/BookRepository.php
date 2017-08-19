@@ -89,8 +89,7 @@ class BookRepository
      */
     public function deleteBook($id)
     {
-        $book = Book::where('id', $id)->first();
-        $book->delete();
+      Book::destroy($id);
     }
 
     /**
@@ -113,9 +112,9 @@ class BookRepository
     public function loadBooksForCategory($request)
     {
         $limit = 5;
-        $offset = $request->input('page') * $limit;
+        $offset = $request['page'] * $limit;
 
-        $category = Category::where('name', $request->input('name'))->first();
+        $category = Category::where('name', $request['name'])->first();
 
         $books = $category->books()->offset($offset)->limit($limit)->with('image')->get();
         $count = $category->books()->count();

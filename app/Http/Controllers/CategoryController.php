@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateUpdateCategoryRequest;
 use App\Repositories\CategoryRepository;
 
-class CategoriesController extends Controller
+class CategoryController extends Controller
 {
 
     /**

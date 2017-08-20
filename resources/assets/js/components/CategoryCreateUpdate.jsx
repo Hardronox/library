@@ -53,9 +53,11 @@ class CategoryCreateUpdate extends Component {
     }
 
     handleChange = (event) => {
-        let state = Object.assign({}, this.state);
-        state.category = event.target.value;
-        this.setState(state);
+        let newState = {
+            ...this.state,
+            category: event.target.value};
+        // state.category = event.target.value;
+        this.setState(newState);
     }
 
     _onSubmit = () => {
@@ -73,7 +75,7 @@ class CategoryCreateUpdate extends Component {
             AppActions.createSingleCategoryAttempt(formData);
     }
 
-    changeCategory(selectedParentCategory) {
+    changeCategory = (selectedParentCategory) => {
         this.setState({ selectedParentCategory });
     }
 

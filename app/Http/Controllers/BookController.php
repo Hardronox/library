@@ -7,7 +7,7 @@ use App\Repositories\BookRepository;
 use Illuminate\Http\Request;
 
 
-class BooksController extends Controller
+class BookController extends Controller
 {
     /**
      * @var BookRepository

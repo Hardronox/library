@@ -36,9 +36,12 @@ class Register extends Component {
     }
 
     handleChange = (name, event) => {
-        let state = Object.assign({}, this.state);
-        state[name] = event.target.value;
-        this.setState(state);
+        let newState = {
+            ...this.state,
+            [name]: event.target.value
+        };
+        // state[name] = event.target.value;
+        this.setState(newState);
     }
 
     _onSubmit = () => {

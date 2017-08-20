@@ -62,9 +62,22 @@ class BookCreateUpdate extends Component {
 
     handleChange(name, event) {
 
-        let state = Object.assign({}, this.state);
-        state.books[name] = (name === 'image') ? event.target.files[0] : event.target.value;
-        this.setState(state);
+        // const newState = {
+        //     ...this.state,
+        //     [name]: value,
+        //     validation: {
+        //         ...this.state.validation,
+        //         [name]: this.validateField(name, value)
+        //     }
+        // };
+
+        let newState = {
+            ...this.state,
+            books: {
+                [name]: (name === 'image') ? event.target.files[0] : event.target.value
+            }};
+        // state.books[name] = (name === 'image') ? event.target.files[0] : event.target.value;
+        this.setState(newState);
     }
 
     _onSubmit = () => {

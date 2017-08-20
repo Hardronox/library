@@ -14184,6 +14184,8 @@ $.ajaxSetup({
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__actions_AppActions__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_file_input__ = __webpack_require__(231);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_file_input___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react_file_input__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 
 
 
@@ -14272,9 +14274,21 @@ class BookCreateUpdate extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] 
 
     handleChange(name, event) {
 
-        let state = Object.assign({}, this.state);
-        state.books[name] = name === 'image' ? event.target.files[0] : event.target.value;
-        this.setState(state);
+        // const newState = {
+        //     ...this.state,
+        //     [name]: value,
+        //     validation: {
+        //         ...this.state.validation,
+        //         [name]: this.validateField(name, value)
+        //     }
+        // };
+
+        let newState = _extends({}, this.state, {
+            books: {
+                [name]: name === 'image' ? event.target.files[0] : event.target.value
+            } });
+        // state.books[name] = (name === 'image') ? event.target.files[0] : event.target.value;
+        this.setState(newState);
     }
 
     render() {
@@ -14693,6 +14707,8 @@ class CategoryBooks extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_select_dist_react_select_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_select_dist_react_select_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_CategoriesStore__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actions_AppActions__ = __webpack_require__(8);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 
 
 
@@ -14719,9 +14735,10 @@ class CategoryCreateUpdate extends __WEBPACK_IMPORTED_MODULE_0_react__["Componen
         };
 
         this.handleChange = event => {
-            let state = Object.assign({}, this.state);
-            state.category = event.target.value;
-            this.setState(state);
+            let newState = _extends({}, this.state, {
+                category: event.target.value });
+            // state.category = event.target.value;
+            this.setState(newState);
         };
 
         this._onSubmit = () => {
@@ -14736,6 +14753,10 @@ class CategoryCreateUpdate extends __WEBPACK_IMPORTED_MODULE_0_react__["Componen
 
                 __WEBPACK_IMPORTED_MODULE_4__actions_AppActions__["a" /* default */].updateSingleCategoryAttempt(formData);
             } else __WEBPACK_IMPORTED_MODULE_4__actions_AppActions__["a" /* default */].createSingleCategoryAttempt(formData);
+        };
+
+        this.changeCategory = selectedParentCategory => {
+            this.setState({ selectedParentCategory });
         };
 
         this.state = this._getState();
@@ -14764,10 +14785,6 @@ class CategoryCreateUpdate extends __WEBPACK_IMPORTED_MODULE_0_react__["Componen
             parentCategories: __WEBPACK_IMPORTED_MODULE_3__stores_CategoriesStore__["a" /* default */].getAll(),
             selectedParentCategory: ''
         };
-    }
-
-    changeCategory(selectedParentCategory) {
-        this.setState({ selectedParentCategory });
     }
 
     render() {
@@ -15122,6 +15139,8 @@ class View extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_select_dist_react_select_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_select_dist_react_select_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_AppActions__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_AuthStore__ = __webpack_require__(70);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 
 
 
@@ -15140,9 +15159,10 @@ class Login extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
         };
 
         this.handleChange = (name, event) => {
-            let state = Object.assign({}, this.state);
-            state[name] = event.target.value;
-            this.setState(state);
+            let newState = _extends({}, this.state, {
+                [name]: event.target.value });
+            // state[name] = event.target.value;
+            this.setState(newState);
         };
 
         this._onSubmit = () => {
@@ -15282,6 +15302,8 @@ class Login extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_select_dist_react_select_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_select_dist_react_select_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_AppActions__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_AuthStore__ = __webpack_require__(70);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 
 
 
@@ -15300,9 +15322,11 @@ class Register extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
         };
 
         this.handleChange = (name, event) => {
-            let state = Object.assign({}, this.state);
-            state[name] = event.target.value;
-            this.setState(state);
+            let newState = _extends({}, this.state, {
+                [name]: event.target.value
+            });
+            // state[name] = event.target.value;
+            this.setState(newState);
         };
 
         this._onSubmit = () => {

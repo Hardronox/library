@@ -96,8 +96,10 @@ class BookRepository
      */
     public function loadBooksForSearch($query)
     {
-        return Book::where('title', 'like', '%' . $query . '%')
-            ->orWhere('description', 'like', '%' . $query . '%')
+        $search=array_get($query, 'search');
+
+        return Book::where('title', 'like', '%' . $search . '%')
+            ->orWhere('description', 'like', '%' . $search . '%')
             ->with('categories')
             ->with('image')
             ->limit(20)

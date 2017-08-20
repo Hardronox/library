@@ -40,7 +40,7 @@ class CategoriesController extends Controller
      */
     public function store(CreateUpdateCategoryRequest $customRequest)
     {
-        $category = $this->repository->createCategory($customRequest);
+        $category = $this->repository->createCategory($customRequest->only(['name', 'parentCategory']));
 
         return response()
                     ->json($category);

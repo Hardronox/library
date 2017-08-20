@@ -38,8 +38,8 @@ class BookRepository
     public function createBook($request, $file)
     {
         $book = new Book();
-        $book->title = $request->input('title');
-        $book->description = $request->input('description');
+        $book->title = array_get($request->all(), 'title');
+        $book->description = array_get($request->all(), 'description');
         $book->save();
 
         if ($request->hasFile('image')) {
@@ -61,25 +61,23 @@ class BookRepository
      * @param $id
      * @return mixed
      */
-    public function updateBook($request, $id)
+    public function updateBook($request, $id, $file)
     {
         $book = Book::where('id', $id)->first();
 
-        $book->title = $request->input('title');
-        $book->description = $request->input('description');
+        $book->title = array_get($request->all(), 'title');
+        $book->description = array_get($request->all(), 'description');
 
-        if ($request->hasFile('picture')){
-
-            $imageName = $book->id . '.' .
-                $request->file('picture')->getClientOriginalExtension();
-
-            $request->file('picture')
-                    ->move(base_path() . '/public/images/', $imageName
-                );
-
-            $book->picture = $imageName;
+        if ($request->hasFile('image')) {
+            $file->uploadImage($request, 'books', $book->id);
         }
         $book->save();
+
+        if ($request->input('categories'))
+        {
+            $category = Category::whereIn('name', $request->input('categories'))->get();
+            $book->categories()->attach($category);
+        }
 
         return $book;
     }
@@ -96,12 +94,13 @@ class BookRepository
      * @param $request
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function loadBooksForSearch($request)
+    public function loadBooksForSearch($query)
     {
-        return Book::where('title', 'like', '%' . $request->input('search') . '%')
-            ->orWhere('description', 'like', '%' . $request->input('search') . '%')
+        return Book::where('title', 'like', '%' . $query . '%')
+            ->orWhere('description', 'like', '%' . $query . '%')
             ->with('categories')
             ->with('image')
+            ->limit(20)
             ->get();
     }
 

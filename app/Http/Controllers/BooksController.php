@@ -63,9 +63,9 @@ class BooksController extends Controller
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(CreateUpdateBookRequest $customRequest, $id)
+    public function update(CreateUpdateBookRequest $customRequest, $id, FilesController $file)
     {
-        $book = $this->repository->updateBook($customRequest, $id);
+        $book = $this->repository->updateBook($customRequest, $id, $file);
 
         return response()
                     ->json($book);
@@ -89,7 +89,8 @@ class BooksController extends Controller
      */
     public function getBooksBySearch(Request $request)
     {
-        $books = $this->repository->loadBooksForSearch($request);
+        $searchQuery=$request->only('search');
+        $books = $this->repository->loadBooksForSearch($searchQuery);
 
         return response()
             ->json($books);

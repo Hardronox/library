@@ -20,12 +20,12 @@ class CategoryRepository
      */
     public function createCategory($request)
     {
-        $parentCategory = Category::where('name', $request->input('parentCategory'))->first();
+        $parentCategory = Category::where('name', array_get($request, 'parentCategory'))->first();
 
         $newCategory = new Category();
 
         $newCategory->parent_id = $parentCategory->id;
-        $newCategory->name = $request->input('name');
+        $newCategory->name = array_get($request, 'name');
         $newCategory->save();
 
         return $newCategory;

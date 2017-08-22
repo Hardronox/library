@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class checkAjax
+class isAjax
 {
     /**
      * Handle an incoming request.

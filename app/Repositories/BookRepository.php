@@ -23,12 +23,12 @@ class BookRepository
      * @param $id
      * @return mixed
      */
-    public function loadBookForShow($id)
+    public function loadSingleBook($id)
     {
         return Book::where('id', $id)
-            ->with('categories')
-            ->with('image')
-            ->first();
+                    ->with('categories')
+                    ->with('image')
+                    ->first();
     }
 
     /**
@@ -96,8 +96,8 @@ class BookRepository
      */
     public function loadBooksForSearch($query)
     {
-        return Book::where('title', 'like', '%' . $query . '%')
-            ->orWhere('description', 'like', '%' . $query . '%')
+        return Book::where('title', 'like', '%' . array_get($query, 'search') . '%')
+            ->orWhere('description', 'like', '%' . array_get($query, 'search') . '%')
             ->with('categories')
             ->with('image')
             ->limit(20)

@@ -165,9 +165,11 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
-        /*
-         * Package Service Providers...
-         */
+        Spatie\Tail\TailServiceProvider::class,
+
+      /*
+       * Package Service Providers...
+       */
         Laravel\Tinker\TinkerServiceProvider::class,
 
         /*

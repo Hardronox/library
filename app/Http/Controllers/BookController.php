@@ -40,7 +40,7 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        $book = $this->repository->loadBookForShow($id);
+        $book = $this->repository->loadSingleBook($id);
 
         return response()
                     ->json($book);
@@ -52,6 +52,7 @@ class BookController extends Controller
      */
     public function store(CreateUpdateBookRequest $customRequest, FilesController $file)
     {
+        //тут и ниже в апдейте нужен весь реквест)
         $book = $this->repository->createBook($customRequest, $file);
 
         return response()
@@ -93,7 +94,7 @@ class BookController extends Controller
         $books = $this->repository->loadBooksForSearch($searchQuery);
 
         return response()
-            ->json($books);
+                    ->json($books);
     }
 
     /**
@@ -108,6 +109,6 @@ class BookController extends Controller
         $count = $data[1];
 
         return response()
-            ->json([$books, $count]);
+                    ->json([$books, $count]);
     }
 }

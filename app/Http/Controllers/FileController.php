@@ -8,21 +8,20 @@ use Illuminate\Support\Facades\Storage;
 
 class FilesController extends Controller
 {
-  public function uploadImage(Request $request, $type, $type_id)
-  {
-    $imageName = $type_id . '.' .
-      $request->file('image')->guessClientExtension();
+    public function uploadImage(Request $request, $type, $type_id)
+    {
+        $imageName = $type_id . '.' .
+          $request->file('image')->guessClientExtension();
 
-    $path=$request->file('image')->storeAs("public/images/$type", $imageName);
+        $path=$request->file('image')->storeAs("public/images/$type", $imageName);
 
+        $file=File::updateOrCreate([
+          'type' => $type,
+          'type_id' => $type_id
+        ]);
+        $file->url = Storage::url($path);
+        $file->save();
 
-    // update if row exists, create if none
-      $file=File::updateOrCreate([
-        'type' => $type,
-        'type_id' => $type_id,
-        'url' => Storage::url($path),
-      ]);
-
-    return $file;
-  }
+        return $file;
+    }
 }

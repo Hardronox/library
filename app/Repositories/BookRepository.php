@@ -23,12 +23,12 @@ class BookRepository
      * @param $id
      * @return mixed
      */
-    public function loadBookForShow($id)
+    public function loadSingleBook($id)
     {
         return Book::where('id', $id)
-            ->with('categories')
-            ->with('image')
-            ->first();
+                    ->with('categories')
+                    ->with('image')
+                    ->first();
     }
 
     /**

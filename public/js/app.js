@@ -15152,20 +15152,10 @@ class BookCreateUpdate extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] 
 
     handleChange(name, event) {
 
-        // const newState = {
-        //     ...this.state,
-        //     [name]: value,
-        //     validation: {
-        //         ...this.state.validation,
-        //         [name]: this.validateField(name, value)
-        //     }
-        // };
-
-        let newState = _extends({}, this.state, {
-            books: {
+        let newState = {
+            books: _extends({}, this.state.books, {
                 [name]: name === 'image' ? event.target.files[0] : event.target.value
-            } });
-        // state.books[name] = (name === 'image') ? event.target.files[0] : event.target.value;
+            }) };
         this.setState(newState);
     }
 

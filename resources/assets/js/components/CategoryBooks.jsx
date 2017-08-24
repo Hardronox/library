@@ -32,7 +32,7 @@ class CategoryBooks extends Component {
             books: BooksStore.getAll(),
             booksCount: BooksStore.getCount(),
         })
-    }
+    };
 
     _getState () {
         return {
@@ -47,21 +47,28 @@ class CategoryBooks extends Component {
 
         AppActions.getBooksByCategoryAttempt([this.props.match.params.name, pageNumber]);
         this.props.history.push('/category/'+this.props.match.params.name+'/page/'+pageNumber);
-    }
+    };
+
+    renderBooks = () => {
+        return (
+            _.times(this.state.books.length, i =>
+
+                <Book book={this.state.books[i]}
+                      type="categoryPage"
+                      key={i}
+                />
+            ));
+    };
 
     render() {
+        const books= this.renderBooks();
+
         return (
             <div className="container">
                 <div className="row">
                     <div className="col-md-7">
                         <h3>Books in "{this.props.match.params.name}" category:</h3>
-                        {_.times(this.state.books.length, i =>
-
-                            <Book book={this.state.books[i]}
-                                  type="categoryPage"
-                                  key={i}
-                            />
-                        )}
+                        {books}
                     </div>
 
                     <div className="col-md-4">

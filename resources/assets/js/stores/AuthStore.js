@@ -1,6 +1,5 @@
 import AppDispatcher from '../dispatchers/AppDispatcher';
 import { EventEmitter } from 'events';
-import AppActions from '../actions/AppActions';
 import AuthApi from '../api/Auth';
 
 let _user = [];

@@ -165,8 +165,6 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
-        Spatie\Tail\TailServiceProvider::class,
-
       /*
        * Package Service Providers...
        */

@@ -41,7 +41,7 @@ class CategoryCreateUpdate extends Component {
             parentCategories: categories,
             formErrors: CategoriesStore.getFormErrors(),
         })
-    }
+    };
 
     _getState () {
         return {
@@ -56,9 +56,9 @@ class CategoryCreateUpdate extends Component {
         let newState = {
             ...this.state,
             category: event.target.value};
-        // state.category = event.target.value;
+
         this.setState(newState);
-    }
+    };
 
     _onSubmit = () => {
         let formData = new FormData();
@@ -73,61 +73,61 @@ class CategoryCreateUpdate extends Component {
             AppActions.updateSingleCategoryAttempt(formData);
         } else
             AppActions.createSingleCategoryAttempt(formData);
-    }
+    };
 
     changeCategory = (selectedParentCategory) => {
         this.setState({ selectedParentCategory });
-    }
+    };
 
     render() {
         if (this.state.loading)
             return null;
 
         return (
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-6 ">
-                            <div className="form-group">
-                                <label htmlFor="name" className="control-label">Name</label>
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-6 ">
+                        <div className="form-group">
+                            <label htmlFor="name" className="control-label">Name</label>
 
-                                <input id="name"
-                                       type="text"
-                                       className="form-control"
-                                       defaultValue={this.props.match.params.name}
-                                       onChange={this.handleChange.bind(this)}
-                                       name="name"
-                                />
+                            <input id="name"
+                                   type="text"
+                                   className="form-control"
+                                   defaultValue={this.props.match.params.name}
+                                   onChange={this.handleChange.bind(this)}
+                                   name="name"
+                            />
+                        </div>
+                        { this.state.formErrors.name ?
+                            <div className="alert alert-danger">
+                                <strong>Error!</strong> {this.state.formErrors.name[0]}
                             </div>
-                            { this.state.formErrors.name ?
-                                <div className="alert alert-danger">
-                                    <strong>Error!</strong> {this.state.formErrors.name[0]}
-                                </div>
-                                :
-                                <div/>
-                            }
+                            :
+                            <div/>
+                        }
 
-                            <div className="form-group">
-                                <label htmlFor="parent" className="control-label">Select parent category(optional)</label>
-                                <Select
-                                    id="parent"
-                                    value={this.state.selectedParentCategory}
-                                    placeholder="Parent category"
-                                    options={this.state.parentCategories}
-                                    onChange={this.changeCategory}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <button onClick={this._onSubmit}
-                                        className="btn btn-success"
-                                        disabled={!this.state.category}
-                                >
-                                    Submit
-                                </button>
-                            </div>
+                        <div className="form-group">
+                            <label htmlFor="parent" className="control-label">Select parent category(optional)</label>
+                            <Select
+                                id="parent"
+                                value={this.state.selectedParentCategory}
+                                placeholder="Parent category"
+                                options={this.state.parentCategories}
+                                onChange={this.changeCategory}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <button onClick={this._onSubmit}
+                                    className="btn btn-success"
+                                    disabled={!this.state.category}
+                            >
+                                Submit
+                            </button>
                         </div>
                     </div>
                 </div>
-            );
+            </div>
+        );
     }
 }
 

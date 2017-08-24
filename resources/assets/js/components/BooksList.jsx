@@ -37,7 +37,7 @@ class Books extends Component {
             categories: CategoriesStore.getAll(),
             loading: CategoriesStore.getStatus(),
         })
-    }
+    };
 
     _getState = () => {
         return {
@@ -46,7 +46,27 @@ class Books extends Component {
             loading: CategoriesStore.getStatus(),
             searchValue: '',
         };
-    }
+    };
+
+    renderBooks = () => {
+        return (
+            _.times(this.state.books.length, i =>
+
+            <Book book={this.state.books[i]}
+                  type="mainPage"
+                  key={i}
+            />
+        ));
+    };
+
+    renderCategories = () => {
+        return (
+            _.times(this.state.categories.length, i =>
+                <Category category={this.state.categories[i]}
+                          key={i}
+                />
+            ));
+    };
 
     handleChange = (event) => {
         this.setState(
@@ -55,6 +75,10 @@ class Books extends Component {
     };
 
     render() {
+
+        const books= this.renderBooks();
+        const categories= this.renderCategories();
+
         if (this.state.loading)
             return null;
 
@@ -63,13 +87,7 @@ class Books extends Component {
                     <div className="row">
                         <div className="col-md-8">
                             <h4>Books</h4>
-                            {_.times(this.state.books.length, i =>
-
-                                <Book book={this.state.books[i]}
-                                      type="mainPage"
-                                      key={i}
-                                />
-                            )}
+                            {books}
                         </div>
                         <div className="col-md-4">
                             <form className="form-inline">
@@ -92,11 +110,7 @@ class Books extends Component {
                                 </Link>
                             </form>
                             <h4>Categories</h4>
-                            {_.times(this.state.categories.length, i =>
-                                <Category category={this.state.categories[i]}
-                                          key={i}
-                                />
-                            )}
+                            {categories}
                         </div>
                     </div>
                 </div>

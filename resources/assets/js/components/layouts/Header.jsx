@@ -13,7 +13,44 @@ class Header extends Component {
         this.props.history.push('/');
     }
 
+    renderAuthNavbar() {
+        return (this.jwt ?
+                <ul className="nav navbar-nav navbar-right">
+                    <li>
+                        <Link style={{fontSize:"16px"}} to={{ pathname: '/create-category'}} >
+                            Add Category
+                        </Link>
+                    </li>
+                    <li>
+                        <Link className="navbar-brand" to={{ pathname: '/add-book' }}>
+                            Add Book
+                        </Link>
+                    </li>
+                    <li>
+                        <Link onClick={this._onLogOut} className="navbar-brand" to={{ pathname: '/' }}>
+                            Log out
+                        </Link>
+                    </li>
+                </ul>
+                :
+                <ul className="nav navbar-nav navbar-right">
+                    <li>
+                        <Link className="navbar-brand" to={{ pathname: '/login' }}>
+                            Sign In
+                        </Link>
+                    </li>
+                    <li>
+                        <Link className="navbar-brand" to={{ pathname: '/register' }}>
+                            Sign Up
+                        </Link>
+                    </li>
+                </ul>
+        );
+    }
+
     render() {
+        const authNavbar=this.renderAuthNavbar();
+
         return (
             <nav className="navbar navbar-default navbar-static-top">
                 <div className="container">
@@ -27,7 +64,7 @@ class Header extends Component {
                         </button>
 
                         <Link className="navbar-brand" to={{ pathname: '/' }}>
-                            Laravel
+                            Library
                         </Link>
                     </div>
 
@@ -35,38 +72,7 @@ class Header extends Component {
                         <ul className="nav navbar-nav">
                             &nbsp;
                         </ul>
-                        {this.jwt ?
-                            <ul className="nav navbar-nav navbar-right">
-                                <li>
-                                    <Link  to={{ pathname: '/create-category'}} >
-                                        Add Category
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link className="navbar-brand" to={{ pathname: '/add-book' }}>
-                                        Add Book
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link onClick={this._onLogOut} className="navbar-brand" to={{ pathname: '/' }}>
-                                        Log out
-                                    </Link>
-                                </li>
-                            </ul>
-                            :
-                            <ul className="nav navbar-nav navbar-right">
-                                <li>
-                                    <Link className="navbar-brand" to={{ pathname: '/login' }}>
-                                        Sign In
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link className="navbar-brand" to={{ pathname: '/register' }}>
-                                        Sign Up
-                                    </Link>
-                                </li>
-                            </ul>
-                        }
+                        {authNavbar}
                     </div>
                 </div>
             </nav>

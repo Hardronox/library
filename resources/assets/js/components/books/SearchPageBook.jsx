@@ -8,8 +8,18 @@ class Book extends Component {
         this.state = {}
     }
 
-    render() {
+    renderCategories = () => {
         let categories=_.uniqBy(this.props.props.book.categories, 'id');
+
+        return (
+            _.times(categories.length, i =>
+                <span className="badge" key={i}>{categories[i].name}</span>
+            ));
+    };
+
+    render() {
+        const categories= this.renderCategories();
+
         return (
             <div className="media">
                 <div className="media-left media-top">
@@ -26,9 +36,7 @@ class Book extends Component {
                     </Link>
                     {this.props.props.book.description}
                 </div>
-                {_.times(categories.length, i =>
-                    <span className="badge" key={i}>{categories[i].name}</span>
-                )}
+                {categories}
                 <hr/>
             </div>
 

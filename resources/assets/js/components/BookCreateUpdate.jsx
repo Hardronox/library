@@ -5,6 +5,7 @@ import BooksStore from '../stores/BooksStore';
 import CategoriesStore from '../stores/CategoriesStore';
 import AppActions from '../actions/AppActions';
 import FileInput from 'react-file-input';
+import {Editor, EditorState} from 'draft-js';
 
 class BookCreateUpdate extends Component {
 
@@ -12,6 +13,7 @@ class BookCreateUpdate extends Component {
         super(props);
         this.state = this._getState();
         this.jwt=localStorage.getItem('jwt')
+        this.onChange = (editorState) => this.setState({editorState});
     }
 
     componentWillMount() {
@@ -56,7 +58,8 @@ class BookCreateUpdate extends Component {
             loading: BooksStore.getStatus(),
             categories: CategoriesStore.getAll(),
             formErrors: [],
-            selectedCategories: []
+            selectedCategories: [],
+            editorState: EditorState.createEmpty()
         };
     }
 
@@ -127,12 +130,15 @@ class BookCreateUpdate extends Component {
                             <div className="form-group">
                                 <label htmlFor="description"  className="control-label">Description:</label>
 
-                                <textarea id="description"
-                                          className="form-control"
-                                          rows="5"
-                                          value={this.state.books.description}
-                                          onChange={this.handleChange.bind(this, 'description')}
-                                />
+                                <Editor editorState={this.state.editorState} onChange={this.handleChange.bind(this, 'description')} />
+
+
+                                {/*<textarea id="description"*/}
+                                          {/*className="form-control"*/}
+                                          {/*rows="5"*/}
+                                          {/*value={this.state.books.description}*/}
+                                          {/*onChange={this.handleChange.bind(this, 'description')}*/}
+                                {/*/>*/}
 
                                 { this.state.formErrors.description ?
                                     <div className="alert alert-danger">

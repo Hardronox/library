@@ -28,7 +28,7 @@ class Search extends Component {
         this.setState({
             books: BooksStore.getAll(),
         })
-    }
+    };
 
     _getState () {
         return {
@@ -41,25 +41,32 @@ class Search extends Component {
         this.setState(
             {searchValue: event.target.value}
         );
-    }
+    };
 
     search = () => {
         AppActions.getBooksBySearchAttempt(this.state.searchValue);
-    }
+    };
+
+    renderBooks = () => {
+        return (
+            _.times(this.state.books.length, i =>
+
+                <Book book={this.state.books[i]}
+                      type="searchPage"
+                      key={i}
+                />
+            ));
+    };
 
     render() {
+        const books= this.renderBooks();
+
         return (
             <div className="container">
                 <div className="row">
                     <div className="col-md-8">
                         <h3>Search by: "{this.props.match.params.query}" </h3>
-                        {_.times(this.state.books.length, i =>
-
-                            <Book book={this.state.books[i]}
-                                  type="searchPage"
-                                  key={i}
-                            />
-                        )}
+                        {books}
                     </div>
 
                     <div className="col-md-4">

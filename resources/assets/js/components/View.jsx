@@ -30,7 +30,7 @@ class View extends Component {
             books: BooksStore.getAll(),
             loading: BooksStore.getStatus()
         })
-    }
+    };
 
     _getState () {
         return {

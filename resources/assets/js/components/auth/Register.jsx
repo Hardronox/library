@@ -33,7 +33,7 @@ class Register extends Component {
             loading: false,
             formErrors: AuthStore.getFormErrors(),
         });
-    }
+    };
 
     handleChange = (name, event) => {
         let newState = {
@@ -42,7 +42,7 @@ class Register extends Component {
         };
         // state[name] = event.target.value;
         this.setState(newState);
-    }
+    };
 
     _onSubmit = () => {
         let formData = new FormData();
@@ -51,7 +51,7 @@ class Register extends Component {
         formData.append('password', this.state.password);
 
         AppActions.registerAttempt(formData);
-    }
+    };
 
     render() {
         if (this.state.loading)

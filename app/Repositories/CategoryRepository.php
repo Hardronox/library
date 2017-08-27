@@ -15,6 +15,14 @@ class CategoryRepository
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function loadSingleCategory($id)
+    {
+        return Category::find($id)->get();
+    }
+
+    /**
      * @param $request
      * @return Category
      */

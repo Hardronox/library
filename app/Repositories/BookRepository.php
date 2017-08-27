@@ -113,9 +113,8 @@ class BookRepository
     public function loadBooksForCategory($request)
     {
         $limit = 5;
-        $offset = $request['page'] * $limit;
-
-        $category = Category::where('name', $request['name'])->first();
+        $offset = array_get($request, 'page') * $limit;
+        $category = Category::where('id', array_get($request, 'id'))->first();
 
         $books = $category->books()->offset($offset)->limit($limit)->with('image')->get();
         $count = $category->books()->count();

@@ -92,10 +92,9 @@ class BooksStore extends EventEmitter {
                 this.getUserAttempt(action.value);
                 break;
             case 'GET_USER_SUCCESS':
-                localStorage.setItem('jwt', action.value.token);
-                localStorage.setItem('email', action.value.email);
                 _formErrors = [];
                 _loading = false;
+                _user=action.value;
                 break;
 
             case 'LOGIN_FAILED':

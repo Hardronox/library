@@ -7322,10 +7322,9 @@ class BooksStore extends __WEBPACK_IMPORTED_MODULE_1_events__["EventEmitter"] {
                 this.getUserAttempt(action.value);
                 break;
             case 'GET_USER_SUCCESS':
-                localStorage.setItem('jwt', action.value.token);
-                localStorage.setItem('email', action.value.email);
                 _formErrors = [];
                 _loading = false;
+                _user = action.value;
                 break;
 
             case 'LOGIN_FAILED':
@@ -7398,6 +7397,10 @@ class CategoriesStore extends __WEBPACK_IMPORTED_MODULE_1_events__["EventEmitter
         __WEBPACK_IMPORTED_MODULE_2__api_Categories__["a" /* default */].getCategoriesAttempt();
     }
 
+    getSingleCategoryAttempt(id) {
+        __WEBPACK_IMPORTED_MODULE_2__api_Categories__["a" /* default */].getSingleCategoryAttempt(id);
+    }
+
     createSingleCategoryAttempt(name) {
         __WEBPACK_IMPORTED_MODULE_2__api_Categories__["a" /* default */].createSingleCategoryAttempt(name);
     }
@@ -7421,6 +7424,14 @@ class CategoriesStore extends __WEBPACK_IMPORTED_MODULE_1_events__["EventEmitter
                 this.getCategoriesAttempt(action.value);
                 break;
             case 'CATEGORIES_LOADED':
+                _categories = action.value;
+                _loading = false;
+                break;
+
+            case 'GET_SINGLE_CATEGORY_ATTEMPT':
+                this.getSingleCategoryAttempt(action.value);
+                break;
+            case 'SINGLE_CATEGORY_LOADED':
                 _categories = action.value;
                 _loading = false;
                 break;
@@ -15316,7 +15327,6 @@ class AuthApi {
             enctype: 'application/x-www-form-urlencoded',
             processData: false,
             success: function (response) {
-                console.log(response);
                 __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].loginSuccess(response);
             }.bind(this),
             error: function (response) {
@@ -15330,11 +15340,13 @@ class AuthApi {
             url: `/user/get`,
             type: 'POST',
             dataType: 'json',
-            data: data,
+            data: {
+                email: data.email
+            },
             cache: false,
-            contentType: false,
-            enctype: 'application/x-www-form-urlencoded',
-            processData: false,
+            headers: {
+                "Authorization": 'Bearer ' + data.jwt
+            },
             success: function (response) {
                 __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].getUserSuccess(response);
             }.bind(this),
@@ -15451,7 +15463,7 @@ class BooksApi {
             type: 'GET',
             dataType: 'json',
             data: {
-                name: data[0],
+                id: data[0],
                 page: data[1]
             },
             cache: false,
@@ -15514,6 +15526,21 @@ class CategoriesApi {
         });
     }
 
+    getSingleCategoryAttempt(id) {
+        $.ajax({
+            url: `/categories/${id}`,
+            type: 'GET',
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+                __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].categoriesLoaded(data);
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(status, err);
+            }.bind(this)
+        });
+    }
+
     createSingleCategoryAttempt(data) {
         $.ajax({
             url: '/categories',
@@ -15535,7 +15562,7 @@ class CategoriesApi {
 
     updateSingleCategoryAttempt(data) {
         $.ajax({
-            url: `/categories/${data.get('oldName')}`,
+            url: `/categories/${data.get('id')}`,
             type: 'POST',
             dataType: 'json',
             data: data,
@@ -15607,7 +15634,7 @@ const AppRoutes = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/delete-book/:id', render: props => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11__components_DeleteBook__["a" /* default */], props) }),
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/search/:query', render: props => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__components_Search__["a" /* default */], props) }),
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/book/:id', render: props => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_10__components_View__["a" /* default */], props) }),
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/category/:name/page/:page', render: props => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__components_CategoryBooks__["a" /* default */], props) }),
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/category/:id/page/:page', render: props => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__components_CategoryBooks__["a" /* default */], props) }),
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/create-category', component: __WEBPACK_IMPORTED_MODULE_7__components_CategoryCreateUpdate__["a" /* default */] }),
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/update-category/:name', render: props => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__components_CategoryCreateUpdate__["a" /* default */], props) })
 );
@@ -16101,7 +16128,7 @@ class Category extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
             null,
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Link */],
-                { to: { pathname: '/category/' + this.props.category.name + '/page/1' } },
+                { to: { pathname: '/category/' + this.props.category.id + '/page/1' } },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'span',
                     { className: 'badge' },
@@ -16164,7 +16191,7 @@ class CategoryBooks extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
     }
 
     componentWillMount() {
-        __WEBPACK_IMPORTED_MODULE_1__actions_AppActions__["a" /* default */].getBooksByCategoryAttempt([this.props.match.params.name, this.props.match.params.page]);
+        __WEBPACK_IMPORTED_MODULE_1__actions_AppActions__["a" /* default */].getBooksByCategoryAttempt([this.props.match.params.id, this.props.match.params.page]);
     }
 
     componentWillUnmount() {
@@ -16286,8 +16313,8 @@ class CategoryCreateUpdate extends __WEBPACK_IMPORTED_MODULE_0_react__["Componen
             formData.append('name', this.state.category);
             formData.append('parentCategory', this.state.selectedParentCategory.value);
 
-            if (this.props.match.params.name) {
-                formData.append('oldName', this.props.match.params.name);
+            if (this.props.match.params.id) {
+                formData.append('id', this.props.match.params.id);
                 formData.append('_method', 'PUT');
 
                 __WEBPACK_IMPORTED_MODULE_4__actions_AppActions__["a" /* default */].updateSingleCategoryAttempt(formData);
@@ -16306,6 +16333,10 @@ class CategoryCreateUpdate extends __WEBPACK_IMPORTED_MODULE_0_react__["Componen
         if (!this.jwt) this.props.history.push('/login');
 
         __WEBPACK_IMPORTED_MODULE_4__actions_AppActions__["a" /* default */].getCategoriesAttempt();
+
+        if (this.props.match.params.id) {
+            __WEBPACK_IMPORTED_MODULE_4__actions_AppActions__["a" /* default */].getSingleCategoryAttempt(this.props.match.params.id);
+        }
     }
 
     componentDidMount() {
@@ -17305,7 +17336,10 @@ class Header extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
     }
 
     componentWillMount() {
-        if (this.jwt && this.email) __WEBPACK_IMPORTED_MODULE_3__actions_AppActions__["a" /* default */].getUserAttempt(this.email);
+
+        if (this.email !== null) {
+            __WEBPACK_IMPORTED_MODULE_3__actions_AppActions__["a" /* default */].getUserAttempt({ 'email': this.email, 'jwt': this.jwt });
+        }
     }
 
     componentDidMount() {

@@ -14,7 +14,7 @@ class CategoryBooks extends Component {
     }
 
     componentWillMount() {
-        AppActions.getBooksByCategoryAttempt([this.props.match.params.name, this.props.match.params.page]);
+        AppActions.getBooksByCategoryAttempt([this.props.match.params.id, this.props.match.params.page]);
     }
 
     componentWillUnmount() {

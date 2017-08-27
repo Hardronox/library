@@ -17,6 +17,10 @@ class CategoryCreateUpdate extends Component {
             this.props.history.push('/login');
 
         AppActions.getCategoriesAttempt();
+
+        if (this.props.match.params.id) {
+            AppActions.getSingleCategoryAttempt(this.props.match.params.id);
+        }
     }
 
     componentDidMount() {
@@ -66,8 +70,8 @@ class CategoryCreateUpdate extends Component {
         formData.append('name', this.state.category);
         formData.append('parentCategory', this.state.selectedParentCategory.value);
 
-        if (this.props.match.params.name){
-            formData.append('oldName', this.props.match.params.name);
+        if (this.props.match.params.id){
+            formData.append('id', this.props.match.params.id);
             formData.append('_method', 'PUT');
 
             AppActions.updateSingleCategoryAttempt(formData);

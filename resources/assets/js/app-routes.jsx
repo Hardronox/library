@@ -45,7 +45,7 @@ const AppRoutes = (
         <Route path="/book/:id"  render={(props)=><View {...props}/>}  />
 
         {/* Category Routes*/}
-        <Route path="/category/:name/page/:page"  render={(props)=><CategoryBooks {...props}/>}  />
+        <Route path="/category/:id/page/:page"  render={(props)=><CategoryBooks {...props}/>}  />
 
         <Route path="/create-category" component={CategoryCreateUpdate}/>
 

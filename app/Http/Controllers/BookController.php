@@ -103,7 +103,7 @@ class BookController extends Controller
      */
     public function getBooksByCategory(Request $request)
     {
-        $data = $this->repository->loadBooksForCategory($request->only(['name', 'page']));
+        $data = $this->repository->loadBooksForCategory($request->only(['id', 'page']));
 
         $books = $data[0];
         $count = $data[1];

@@ -38,6 +38,10 @@ class CategoriesStore extends EventEmitter {
         CategoriesApi.getCategoriesAttempt();
     }
 
+    getSingleCategoryAttempt(id) {
+        CategoriesApi.getSingleCategoryAttempt(id);
+    }
+
     createSingleCategoryAttempt(name) {
         CategoriesApi.createSingleCategoryAttempt(name);
     }
@@ -61,6 +65,14 @@ class CategoriesStore extends EventEmitter {
                 this.getCategoriesAttempt(action.value);
                 break;
             case 'CATEGORIES_LOADED':
+                _categories = action.value;
+                _loading = false;
+                break;
+
+            case 'GET_SINGLE_CATEGORY_ATTEMPT':
+                this.getSingleCategoryAttempt(action.value);
+                break;
+            case 'SINGLE_CATEGORY_LOADED':
                 _categories = action.value;
                 _loading = false;
                 break;

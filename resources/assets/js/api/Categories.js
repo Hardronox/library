@@ -17,6 +17,21 @@ class CategoriesApi {
         });
     }
 
+    getSingleCategoryAttempt(id) {
+        $.ajax({
+            url: `/categories/${id}`,
+            type: 'GET',
+            dataType: 'json',
+            cache: false,
+            success: function(data) {
+                AppActions.categoriesLoaded(data);
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(status, err);
+            }.bind(this)
+        });
+    }
+
     createSingleCategoryAttempt(data) {
         $.ajax({
             url: '/categories',
@@ -38,7 +53,7 @@ class CategoriesApi {
 
     updateSingleCategoryAttempt(data) {
         $.ajax({
-            url: `/categories/${data.get('oldName')}`,
+            url: `/categories/${data.get('id')}`,
             type: 'POST',
             dataType: 'json',
             data: data,

@@ -33,7 +33,17 @@ class CategoryController extends Controller
             ->json($categories);
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show($id)
+    {
+        $category = $this->repository->loadSingleCategory($id);
 
+        return response()
+                    ->json($category);
+    }
     /**
      * @param CreateUpdateCategoryRequest $request
      * @return \Illuminate\Http\JsonResponse
@@ -52,9 +62,9 @@ class CategoryController extends Controller
      * @param $name
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(CreateUpdateCategoryRequest $customRequest, $name)
+    public function update(CreateUpdateCategoryRequest $customRequest, $id)
     {
-        $category = $this->repository->updateCategory($customRequest, $name);
+        $category = $this->repository->updateCategory($customRequest, $id);
 
         return response()
                     ->json($category);

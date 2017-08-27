@@ -18,8 +18,10 @@ class Header extends Component {
     }
 
     componentWillMount() {
-        if (this.jwt && this.email)
-            AppActions.getUserAttempt(this.email);
+
+        if (this.email !== null) {
+            AppActions.getUserAttempt({'email': this.email, 'jwt': this.jwt});
+        }
     }
 
     _onChange = () => {

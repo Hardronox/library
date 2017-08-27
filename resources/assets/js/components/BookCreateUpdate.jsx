@@ -5,15 +5,14 @@ import BooksStore from '../stores/BooksStore';
 import CategoriesStore from '../stores/CategoriesStore';
 import AppActions from '../actions/AppActions';
 import FileInput from 'react-file-input';
-import {Editor, EditorState} from 'draft-js';
+import TinyMCE from 'react-tinymce';
 
 class BookCreateUpdate extends Component {
 
     constructor(props) {
         super(props);
         this.state = this._getState();
-        this.jwt=localStorage.getItem('jwt')
-        this.onChange = (editorState) => this.setState({editorState});
+        this.jwt=localStorage.getItem('jwt');
     }
 
     componentWillMount() {
@@ -58,8 +57,7 @@ class BookCreateUpdate extends Component {
             loading: BooksStore.getStatus(),
             categories: CategoriesStore.getAll(),
             formErrors: [],
-            selectedCategories: [],
-            editorState: EditorState.createEmpty()
+            selectedCategories: []
         };
     }
 
@@ -74,6 +72,7 @@ class BookCreateUpdate extends Component {
     }
 
     _onSubmit = () => {
+        console.log(this.state.books);
         let formData = new FormData();
 
         formData.append('title', this.state.books.title);
@@ -91,13 +90,23 @@ class BookCreateUpdate extends Component {
             AppActions.updateSingleBookAttempt(formData);
         } else
             AppActions.createSingleBookAttempt(formData);                                                                                                                                                                                                                       
-    }
+    };
 
     changeCategory = (value) =>  {
         this.setState({
             selectedCategories: value
         });
-    }
+    };
+
+    handleEditorChange = (e) => {
+        console.log(this.state.books);
+        let newState = {
+            books: {
+                ...this.state.books,
+                description: e.target.getContent()
+            }};
+        this.setState(newState);
+    };
 
     render() {
 
@@ -130,8 +139,31 @@ class BookCreateUpdate extends Component {
                             <div className="form-group">
                                 <label htmlFor="description"  className="control-label">Description:</label>
 
-                                <Editor editorState={this.state.editorState} onChange={this.handleChange.bind(this, 'description')} />
-
+                                <TinyMCE
+                                    content={this.state.books.description}
+                                    config={{
+                                        height: 500,
+                                        theme: 'modern',
+                                        plugins: [
+                                            'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                                            'searchreplace wordcount visualblocks visualchars code fullscreen',
+                                            'insertdatetime media nonbreaking save table contextmenu directionality',
+                                            'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc help'
+                                        ],
+                                        toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+                                        toolbar2: 'print preview media | forecolor backcolor emoticons | codesample help',
+                                        image_advtab: true,
+                                        templates: [
+                                            { title: 'Test template 1', content: 'Test 1' },
+                                            { title: 'Test template 2', content: 'Test 2' }
+                                        ],
+                                        content_css: [
+                                            '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+                                            '//www.tinymce.com/css/codepen.min.css'
+                                        ]
+                                    }}
+                                    onChange={this.handleEditorChange}
+                                />
 
                                 {/*<textarea id="description"*/}
                                           {/*className="form-control"*/}

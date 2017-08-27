@@ -25,7 +25,7 @@ use Illuminate\Database\Eloquent\Model;
 class Book extends Model
 {
     protected $fillable = [
-        'title', 'description','picture'
+        'writer_id', 'title', 'description', 'picture'
     ];
 
     /**
@@ -36,6 +36,11 @@ class Book extends Model
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function writer()
+    {
+        return $this->belongsTo('App\Models\User','id', 'writer_id');
+    }
 
     public function categories()
     {

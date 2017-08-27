@@ -10,6 +10,7 @@ Route::group(['middleware'=>'isAjax'], function() {
 
     Route::post('/register', 'AuthController@register');
     Route::post('/login', 'AuthController@login');
+    Route::post('/user/get', 'AuthController@getUser');
 });
 
 Route::get( '/{path?}', function(){

@@ -32,7 +32,8 @@ class AuthApi {
             enctype: 'application/x-www-form-urlencoded',
             processData:false,
             success: function(response) {
-                AppActions.loginSuccess(response);
+                console.log(response);
+                // AppActions.loginSuccess(response);
             }.bind(this),
             error: function(response) {
                 AppActions.loginFailed(response.responseJSON);
@@ -40,7 +41,24 @@ class AuthApi {
         });
     }
 
-
+    getUserAttempt(data) {
+        $.ajax({
+            url: `/user/get`,
+            type: 'POST',
+            dataType: 'json',
+            data: data,
+            cache: false,
+            contentType : false,
+            enctype: 'application/x-www-form-urlencoded',
+            processData:false,
+            success: function(response) {
+                AppActions.getUserSuccess(response);
+            }.bind(this),
+            error: function(response) {
+                AppActions.loginFailed(response.responseJSON);
+            }.bind(this)
+        });
+    }
 }
 
 export default new AuthApi();

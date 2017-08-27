@@ -19,7 +19,7 @@ class AuthController extends Controller
         // Apply the jwt.auth middleware to all methods in this controller
         // except for the authenticate method. We don't want to prevent
         // the user from retrieving their token if they don't already have it
-        $this->middleware('jwt.auth', ['except' => ['register', 'login']]);
+        $this->middleware('jwt.auth', ['except' => ['register', 'login', 'getUser']]);
     }
 
     public function index()
@@ -62,6 +62,16 @@ class AuthController extends Controller
         }
 
         // if no errors are encountered we can return a JWT
-        return response()->json(compact('token'));
+        return response()->json([$token, $credentials['email']]);
+    }
+
+    public function getUser(Request $request)
+    {
+        $email = $request->only('email');
+
+        $user= User::whereEmail($email['email'])->get();
+
+        // if no errors are encountered we can return a JWT
+        return response()->json($email);
     }
 }

@@ -2,7 +2,7 @@ import AppDispatcher from '../dispatchers/AppDispatcher';
 import { EventEmitter } from 'events';
 import AuthApi from '../api/Auth';
 
-let _user = [];
+let _user = {};
 let _loading = true;
 let _formErrors = [];
 
@@ -17,7 +17,7 @@ class BooksStore extends EventEmitter {
         this.emit('change');
     }
 
-    getAll() {
+    getUser() {
         return _user;
     }
 
@@ -34,7 +34,7 @@ class BooksStore extends EventEmitter {
     }
 
     unsetUser() {
-        _user = [];
+        _user = {};
     }
 
     enableLoading() {
@@ -47,6 +47,10 @@ class BooksStore extends EventEmitter {
 
     loginAttempt(data) {
         AuthApi.loginAttempt(data);
+    }
+
+    getUserAttempt(data) {
+        AuthApi.getUserAttempt(data);
     }
 
     addChangeListener(callback) {
@@ -78,10 +82,22 @@ class BooksStore extends EventEmitter {
                 break;
             case 'LOGIN_SUCCESS':
                 localStorage.setItem('jwt', action.value.token);
+                localStorage.setItem('email', action.value.email);
                 _formErrors = [];
                 _loading = false;
                 window.location.href = "/";
                 break;
+
+            case 'GET_USER_ATTEMPT':
+                this.getUserAttempt(action.value);
+                break;
+            case 'GET_USER_SUCCESS':
+                localStorage.setItem('jwt', action.value.token);
+                localStorage.setItem('email', action.value.email);
+                _formErrors = [];
+                _loading = false;
+                break;
+
             case 'LOGIN_FAILED':
                 _formErrors = action.value;
                 _loading = false;

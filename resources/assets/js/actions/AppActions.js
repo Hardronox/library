@@ -237,6 +237,27 @@ class AppActions {
             value: data
         });
     }
+
+    getUserAttempt(data) {
+        AppDispatcher.dispatch({
+            actionType: 'GET_USER_ATTEMPT',
+            value: data
+        });
+    }
+
+    getUserSuccess(data) {
+        AppDispatcher.dispatch({
+            actionType: 'GET_USER_SUCCESS',
+            value: data
+        });
+    }
+
+    getUserFailed(data) {
+        AppDispatcher.dispatch({
+            actionType: 'GET_USER_FAILED',
+            value: data
+        });
+    }
 }
 
 

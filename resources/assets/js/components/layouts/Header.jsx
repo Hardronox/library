@@ -1,16 +1,39 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
+import AuthStore from '../../stores/AuthStore';
+import AppActions from '../../actions/AppActions';
 
 class Header extends Component {
 
     constructor(props) {
         super(props);
-        this.jwt = localStorage.getItem('jwt')
+        this.jwt = localStorage.getItem('jwt');
+        this.email = localStorage.getItem('email');
     }
 
     _onLogOut(){
         localStorage.removeItem('jwt');
+        localStorage.removeItem('email');
         this.props.history.push('/');
+    }
+
+    componentWillMount() {
+        if (this.jwt && this.email)
+            AppActions.getUserAttempt(this.email);
+    }
+
+    _onChange = () => {
+        this.setState({
+            user: AuthStore.getUser()
+        });
+    };
+
+    componentDidMount() {
+        AuthStore.addChangeListener(this._onChange);
+    }
+
+    componentWillUnmount() {
+        AuthStore.removeChangeListener(this._onChange);
     }
 
     renderAuthNavbar() {

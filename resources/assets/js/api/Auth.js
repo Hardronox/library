@@ -56,7 +56,8 @@ class AuthApi {
                 AppActions.getUserSuccess(response);
             }.bind(this),
             error: function(response) {
-                AppActions.loginFailed(response.responseJSON);
+                // console.log(response);
+                AppActions.getUserFailed(response);
             }.bind(this)
         });
     }

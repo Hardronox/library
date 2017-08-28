@@ -92,10 +92,16 @@ class BooksStore extends EventEmitter {
                 this.getUserAttempt(action.value);
                 break;
             case 'GET_USER_SUCCESS':
-                _formErrors = [];
-                _loading = false;
                 _user=action.value;
                 break;
+            case 'GET_USER_FAILED':
+                if (action.value.status === 401) {
+                    localStorage.removeItem('jwt');
+                    localStorage.removeItem('email');
+                    window.location.href = "/login";
+                }
+                break;
+
 
             case 'LOGIN_FAILED':
                 _formErrors = action.value;

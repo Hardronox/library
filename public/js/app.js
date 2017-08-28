@@ -7322,9 +7322,14 @@ class BooksStore extends __WEBPACK_IMPORTED_MODULE_1_events__["EventEmitter"] {
                 this.getUserAttempt(action.value);
                 break;
             case 'GET_USER_SUCCESS':
-                _formErrors = [];
-                _loading = false;
                 _user = action.value;
+                break;
+            case 'GET_USER_FAILED':
+                if (action.value.status === 401) {
+                    localStorage.removeItem('jwt');
+                    localStorage.removeItem('email');
+                    window.location.href = "/login";
+                }
                 break;
 
             case 'LOGIN_FAILED':
@@ -15351,7 +15356,8 @@ class AuthApi {
                 __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].getUserSuccess(response);
             }.bind(this),
             error: function (response) {
-                __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].loginFailed(response.responseJSON);
+                // console.log(response);
+                __WEBPACK_IMPORTED_MODULE_0__actions_AppActions__["a" /* default */].getUserFailed(response);
             }.bind(this)
         });
     }

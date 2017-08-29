@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Book;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 
 class BookRepository
 {
@@ -35,9 +36,11 @@ class BookRepository
      * @param $request
      * @return Book
      */
-    public function createBook($request, $file)
+    public function createBook($request, $file, $auth)
     {
+        $user = $auth->parseToken()->authenticate();
         $book = new Book();
+        $book->writer_id = $user->id;
         $book->title = array_get($request->all(), 'title');
         $book->description = array_get($request->all(), 'description');
         $book->save();

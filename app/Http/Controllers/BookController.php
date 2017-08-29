@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateUpdateBookRequest;
 use App\Repositories\BookRepository;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\JWTAuth;
 
 
 class BookController extends Controller
@@ -50,10 +51,10 @@ class BookController extends Controller
      * @param CreateUpdateBookRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(CreateUpdateBookRequest $customRequest, FilesController $file)
+    public function store(CreateUpdateBookRequest $customRequest, FilesController $file,  JWTAuth $auth)
     {
         //тут и ниже в апдейте нужен весь реквест)
-        $book = $this->repository->createBook($customRequest, $file);
+        $book = $this->repository->createBook($customRequest, $file, $auth);
 
         return response()
                     ->json($book);

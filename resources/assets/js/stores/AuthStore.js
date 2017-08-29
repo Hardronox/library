@@ -82,7 +82,6 @@ class BooksStore extends EventEmitter {
                 break;
             case 'LOGIN_SUCCESS':
                 localStorage.setItem('jwt', action.value.token);
-                localStorage.setItem('email', action.value.email);
                 _formErrors = [];
                 _loading = false;
                 window.location.href = "/";
@@ -97,7 +96,6 @@ class BooksStore extends EventEmitter {
             case 'GET_USER_FAILED':
                 if (action.value.status === 401) {
                     localStorage.removeItem('jwt');
-                    localStorage.removeItem('email');
                     window.location.href = "/login";
                 }
                 break;

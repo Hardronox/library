@@ -8,19 +8,16 @@ class Header extends Component {
     constructor(props) {
         super(props);
         this.jwt = localStorage.getItem('jwt');
-        this.email = localStorage.getItem('email');
     }
 
     _onLogOut(){
         localStorage.removeItem('jwt');
-        localStorage.removeItem('email');
         this.props.history.push('/');
     }
 
     componentWillMount() {
-
-        if (this.email !== null) {
-            AppActions.getUserAttempt({'email': this.email, 'jwt': this.jwt});
+        if (this.jwt !== null) {
+            AppActions.getUserAttempt({'jwt': this.jwt});
         }
     }
 

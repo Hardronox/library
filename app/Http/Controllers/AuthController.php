@@ -65,12 +65,9 @@ class AuthController extends Controller
         return response()->json(['token' => $token, 'email' => $credentials['email']]);
     }
 
-    public function getUser(Request $request)
+    public function getUser(JWTAuth $auth)
     {
-        $email = $request->only(['email', 'token']);
-
-        var_dump($email['token']);
-        $user= User::whereEmail($email['email'])->get();
+        $user = $auth->parseToken()->authenticate();
 
         return response()->json($user);
     }

@@ -46,6 +46,9 @@ class BooksApi {
             contentType : false,
             enctype: 'multipart/form-data',
             processData:false,
+            headers: {
+                "Authorization": 'Bearer ' + localStorage.getItem('jwt')
+            },
             success: function() {
                 AppActions.singleBookCreated();
             }.bind(this),

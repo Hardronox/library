@@ -22,13 +22,6 @@ class AuthController extends Controller
         $this->middleware('jwt.auth', ['except' => ['register', 'login']]);
     }
 
-    public function index()
-    {
-        // Retrieve all the users in the database and return them
-        $users = User::all();
-        return $users;
-    }
-
     public function register(Request $request, JWTAuth $auth)
     {
         $credentials = $request->only('name', 'email', 'password');
@@ -42,7 +35,7 @@ class AuthController extends Controller
             return response()->json(['error' => 'User already exists.'], 422);
         }
 
-        $token = $auth->fromUser($user);
+//        $token = $auth->fromUser($user);
 
         return response()->json(['success' => 'User created'], 200);
     }

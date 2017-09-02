@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import AppActions from '../actions/AppActions';
 import BooksStore from '../stores/BooksStore'
+import CategoriesStore from '../stores/CategoriesStore'
 import Book from "./Book";
 import { Link } from 'react-router-dom'
 import Pagination from "react-js-pagination";
-
 
 class CategoryBooks extends Component {
 
@@ -14,39 +14,49 @@ class CategoryBooks extends Component {
     }
 
     componentWillMount() {
-        AppActions.getBooksByCategoryAttempt([this.props.match.params.id, this.props.match.params.page]);
+        if (this.props.match.params.id && this.props.match.params.page) {
+            AppActions.getSingleCategoryAttempt(this.props.match.params.id);
+            AppActions.getBooksByCategoryAttempt([this.props.match.params.id, this.props.match.params.page]);
+        }
     }
 
     componentWillUnmount() {
         BooksStore.enableLoading();
         BooksStore.unsetBooks();
         BooksStore.removeChangeListener(this._onChange);
+        CategoriesStore.removeChangeListener(this._onChange);
     }
 
     componentDidMount() {
         BooksStore.addChangeListener(this._onChange);
+        CategoriesStore.addChangeListener(this._onChange);
     }
 
     _onChange = () => {
         this.setState({
             books: BooksStore.getAll(),
             booksCount: BooksStore.getCount(),
+            category: CategoriesStore.getSingleCategory(),
+            loading: CategoriesStore.getStatus(),
+
         })
     };
 
     _getState () {
         return {
             books: BooksStore.getAll(),
+            category: CategoriesStore.getSingleCategory(),
             booksCount: BooksStore.getCount(),
-            activePage: this.props.match.params.page
+            activePage: this.props.match.params.page,
+            loading: CategoriesStore.getStatus()
         };
     }
 
     handlePageChange = (pageNumber) => {
         this.setState({activePage: pageNumber});
 
-        AppActions.getBooksByCategoryAttempt([this.props.match.params.name, pageNumber]);
-        this.props.history.push('/category/'+this.props.match.params.name+'/page/'+pageNumber);
+        AppActions.getBooksByCategoryAttempt([this.props.match.params.id, pageNumber]);
+        this.props.history.push('/category/'+this.props.match.params.id+'/page/'+pageNumber);
     };
 
     renderBooks = () => {
@@ -61,13 +71,17 @@ class CategoryBooks extends Component {
     };
 
     render() {
+
+        if (this.state.loading)
+            return null;
+
         const books= this.renderBooks();
 
         return (
             <div className="container">
                 <div className="row">
                     <div className="col-md-7">
-                        <h3>Books in "{this.props.match.params.name}" category:</h3>
+                        <h3>Books in "{this.state.category.name}" category:</h3>
                         {books}
                     </div>
 

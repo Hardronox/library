@@ -3,6 +3,7 @@ import { EventEmitter } from 'events';
 import CategoriesApi from '../api/Categories';
 
 
+let _category = {};
 let _categories = [];
 let _loading = true;
 let _formErrors = [];
@@ -16,6 +17,10 @@ class CategoriesStore extends EventEmitter {
 
     emitChange() {
         this.emit('change');
+    }
+
+    getSingleCategory() {
+        return _category;
     }
 
     getAll() {
@@ -73,7 +78,7 @@ class CategoriesStore extends EventEmitter {
                 this.getSingleCategoryAttempt(action.value);
                 break;
             case 'SINGLE_CATEGORY_LOADED':
-                _categories = action.value;
+                _category = action.value;
                 _loading = false;
                 break;
 

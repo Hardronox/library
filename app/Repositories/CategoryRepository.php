@@ -14,12 +14,10 @@ class CategoryRepository
         return Category::limit(30)->get();
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
-     */
+
     public function loadSingleCategory($id)
     {
-        return Category::find($id)->get();
+        return Category::find($id);
     }
 
     /**

@@ -26,10 +26,9 @@ class BookRepository
      */
     public function loadSingleBook($id)
     {
-        return Book::where('id', $id)
+        return Book::with('image')
                     ->with('categories')
-                    ->with('image')
-                    ->first();
+                    ->find($id);
     }
 
     /**
@@ -66,7 +65,7 @@ class BookRepository
      */
     public function updateBook($request, $id, $file)
     {
-        $book = Book::where('id', $id)->first();
+        $book = Book::find($id);
 
         $book->title = array_get($request->all(), 'title');
         $book->description = array_get($request->all(), 'description');
@@ -117,7 +116,7 @@ class BookRepository
     {
         $limit = 5;
         $offset = array_get($request, 'page') * $limit;
-        $category = Category::where('id', array_get($request, 'id'))->first();
+        $category = Category::find(array_get($request, 'id'));
 
         $books = $category->books()->offset($offset)->limit($limit)->with('image')->get();
         $count = $category->books()->count();

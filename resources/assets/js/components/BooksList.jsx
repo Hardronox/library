@@ -76,11 +76,11 @@ class Books extends Component {
 
     render() {
 
-        const books= this.renderBooks();
-        const categories= this.renderCategories();
-
         if (this.state.loading)
             return null;
+
+        const books= this.renderBooks();
+        const categories= this.renderCategories();
 
         return (
                 <div className="container">

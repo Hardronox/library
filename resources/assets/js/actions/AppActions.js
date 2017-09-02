@@ -180,6 +180,22 @@ class AppActions {
         });
     }
 
+    // --------------------------------------------------------
+
+    getSingleCategoryAttempt(data) {
+        AppDispatcher.dispatch({
+            actionType: 'GET_SINGLE_CATEGORY_ATTEMPT',
+            value: data
+        });
+    }
+
+    singleCategoryLoaded(data) {
+        AppDispatcher.dispatch({
+            actionType: 'SINGLE_CATEGORY_LOADED',
+            value: data
+        });
+    }
+
     unsetFormErrors(data) {
         AppDispatcher.dispatch({
             actionType: 'UNSET_FORM_ERRORS',

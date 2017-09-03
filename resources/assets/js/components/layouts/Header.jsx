@@ -39,12 +39,12 @@ class Header extends Component {
         return (this.jwt ?
                 <ul className="nav navbar-nav navbar-right">
                     <li>
-                        <Link style={{fontSize:"16px"}} to={{ pathname: '/create-category'}} >
+                        <Link style={{fontSize:"16px"}} to={{ pathname: '/category/create'}} >
                             Add Category
                         </Link>
                     </li>
                     <li>
-                        <Link className="navbar-brand" to={{ pathname: '/add-book' }}>
+                        <Link className="navbar-brand" to={{ pathname: '/book/create' }}>
                             Add Book
                         </Link>
                     </li>

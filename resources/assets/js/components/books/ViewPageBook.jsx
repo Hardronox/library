@@ -8,7 +8,8 @@ class Book extends Component {
     }
 
     render() {
-        let categories=_.uniqBy(this.props.props.book.categories, 'id');
+        let {book}=this.props.props;
+
         return (
             <div className="media">
                 <div className="media-left media-top">
@@ -16,15 +17,15 @@ class Book extends Component {
                         width={"100px"}
                         height={"100px"}
                         className="media-object"
-                        src={this.props.props.book.image.url}
+                        src={book.image.url}
                     />
                 </div>
                 <div className="media-body">
-                    <h3 className="media-heading">{this.props.props.book.title}</h3>
-                    {this.props.props.book.description}
+                    <h3 className="media-heading">{book.title}</h3>
+                    {book.description}
                 </div>
-                {_.times(categories.length, i =>
-                    <span className="badge" key={i}>{categories[i].name}</span>
+                {_.times(book.categories.length, i =>
+                    <span className="badge" key={i}>{book.categories[i].name}</span>
                 )}
             </div>
         );

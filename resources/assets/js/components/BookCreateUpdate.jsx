@@ -21,8 +21,10 @@ class BookCreateUpdate extends Component {
             this.props.history.push('/login');
 
         AppActions.getCategoriesAttempt();
-        if (this.props.match.params.id)
+
+        if (this.props.match.params.id) {
             AppActions.getSingleBookAttempt(this.props.match.params.id);
+        }
     }
 
     componentWillUnmount() {
@@ -164,13 +166,6 @@ class BookCreateUpdate extends Component {
                                     }}
                                     onChange={this.handleEditorChange}
                                 />
-
-                                {/*<textarea id="description"*/}
-                                          {/*className="form-control"*/}
-                                          {/*rows="5"*/}
-                                          {/*value={this.state.books.description}*/}
-                                          {/*onChange={this.handleChange.bind(this, 'description')}*/}
-                                {/*/>*/}
 
                                 { this.state.formErrors.description ?
                                     <div className="alert alert-danger">

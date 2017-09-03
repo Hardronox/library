@@ -43,6 +43,7 @@ class CategoryCreateUpdate extends Component {
         )}
         this.setState({
             loading: CategoriesStore.getStatus(),
+            category: CategoriesStore.getSingleCategory(),
             parentCategories: categories,
             formErrors: CategoriesStore.getFormErrors(),
         })
@@ -50,17 +51,21 @@ class CategoryCreateUpdate extends Component {
 
     _getState () {
         return {
-            category: this.props.match.params.name,
+            category: {},
             formErrors: [],
             parentCategories: CategoriesStore.getAll(),
+            loading: CategoriesStore.getStatus(),
             selectedParentCategory: ''
         };
     }
 
     handleChange = (event) => {
         let newState = {
-            ...this.state,
-            category: event.target.value};
+            category: {
+                ...this.state.category,
+                name: event.target.value
+            }
+        };
 
         this.setState(newState);
     };
@@ -68,7 +73,7 @@ class CategoryCreateUpdate extends Component {
     _onSubmit = () => {
         let formData = new FormData();
 
-        formData.append('name', this.state.category);
+        formData.append('name', this.state.category.name);
         formData.append('parentCategory', this.state.selectedParentCategory.value);
 
         if (this.props.match.params.id){
@@ -85,9 +90,10 @@ class CategoryCreateUpdate extends Component {
     };
 
     render() {
+
         if (this.state.loading)
             return null;
-
+        console.log(this.state.category);
         return (
             <div className="container">
                 <div className="row">
@@ -98,7 +104,7 @@ class CategoryCreateUpdate extends Component {
                             <input id="name"
                                    type="text"
                                    className="form-control"
-                                   defaultValue={this.props.match.params.name}
+                                   value={this.state.category.name}
                                    onChange={this.handleChange.bind(this)}
                                    name="name"
                             />
@@ -124,7 +130,7 @@ class CategoryCreateUpdate extends Component {
                         <div className="form-group">
                             <button onClick={this._onSubmit}
                                     className="btn btn-success"
-                                    disabled={!this.state.category}
+                                    disabled={!this.state.category.name}
                             >
                                 Submit
                             </button>

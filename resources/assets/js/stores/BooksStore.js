@@ -92,6 +92,7 @@ class BooksStore extends EventEmitter {
                 break;
             case 'ALL_BOOKS_LOADED':
                 _books = action.value;
+                _loading = false;
                 break;
 
 
@@ -101,6 +102,7 @@ class BooksStore extends EventEmitter {
             case 'BOOKS_BY_CATEGORY_LOADED':
                 _books = action.value[0];
                 _booksCount = action.value[1];
+                _loading = false;
                 break;
 
 
@@ -150,6 +152,7 @@ class BooksStore extends EventEmitter {
                 break;
             case 'BOOKS_BY_SEARCH_LOADED':
                 _books = action.value;
+                _loading = false;
                 break;
 
 

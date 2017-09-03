@@ -9,11 +9,11 @@ class Book extends Component {
     }
 
     renderCategories = () => {
-        let categories=_.uniqBy(this.props.props.book.categories, 'id');
+        let {book}=this.props.props;
 
         return (
-            _.times(categories.length, i =>
-                <span className="badge" key={i}>{categories[i].name}</span>
+            _.times(book.categories.length, i =>
+                <span className="badge" key={i}>{book.categories[i].name}</span>
             ));
     };
 

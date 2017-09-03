@@ -34,11 +34,11 @@ const AppRoutes = (
         {/* Book Routes*/}
         <Route path="/" exact name="books" component={Books}/>
 
-        <Route path="/add-book" component={BookCreateUpdate}/>
+        <Route path="/book/create" component={BookCreateUpdate}/>
 
-        <Route path="/update-book/:id"  render={(props)=><BookCreateUpdate {...props}/>}  />
+        <Route path="/book/:id/update"  render={(props)=><BookCreateUpdate {...props}/>}  />
 
-        <Route path="/delete-book/:id"  render={(props)=><DeleteBook {...props}/>}  />
+        <Route path="/book/:id/delete"  render={(props)=><DeleteBook {...props}/>}  />
 
         <Route path="/search/:query"  render={(props)=><Search {...props}/>}  />
 
@@ -47,9 +47,9 @@ const AppRoutes = (
         {/* Category Routes*/}
         <Route path="/category/:id/page/:page"  render={(props)=><CategoryBooks {...props}/>}  />
 
-        <Route path="/create-category" component={CategoryCreateUpdate}/>
+        <Route path="/category/create" component={CategoryCreateUpdate}/>
 
-        <Route path="/update-category/:name"  render={(props)=><CategoryCreateUpdate {...props}/>}  />
+        <Route path="/category/:id/update"  render={(props)=><CategoryCreateUpdate {...props}/>}  />
 
     </div>
 );

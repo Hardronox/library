@@ -52,11 +52,11 @@ class View extends Component {
                         />
                     </div>
                     <div className="col-md-3">
-                        <Link  to={{ pathname: '/update-book/'+this.state.books.id}} >
+                        <Link  to={{ pathname: '/book/'+this.state.books.id+'/update'}} >
                             <button className="btn btn-warning">Update</button>
                         </Link>
 
-                        <Link to={{ pathname: '/delete-book/'+this.state.books.id }}>
+                        <Link to={{ pathname: '/book/'+this.state.books.id+'/delete' }}>
                             <button className="btn btn-danger">Delete</button>
                         </Link>
                     </div>

@@ -44,7 +44,7 @@ class Header extends Component {
                         </Link>
                     </li>
                     <li>
-                        <Link className="navbar-brand" to={{ pathname: '/book/create' }}>
+                        <Link className="navbar-brand" to={{ pathname: '/add-book' }}>
                             Add Book
                         </Link>
                     </li>

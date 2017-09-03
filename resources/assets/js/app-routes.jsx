@@ -34,9 +34,9 @@ const AppRoutes = (
         {/* Book Routes*/}
         <Route path="/" exact name="books" component={Books}/>
 
-        <Route path="/book/create" component={BookCreateUpdate}/>
-
-        <Route path="/book/:id/update"  render={(props)=><BookCreateUpdate {...props}/>}  />
+        {/* 2 bad route names, smth wrong if its different*/}
+        <Route path="/add-book" component={BookCreateUpdate}/>
+        <Route path="/update-book/:id"  render={(props)=><BookCreateUpdate {...props}/>}  />
 
         <Route path="/book/:id/delete"  render={(props)=><DeleteBook {...props}/>}  />
 

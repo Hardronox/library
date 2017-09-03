@@ -15662,12 +15662,12 @@ const AppRoutes = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/', exact: true, name: 'books', component: __WEBPACK_IMPORTED_MODULE_6__components_BooksList__["a" /* default */] }),
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/add-book', component: __WEBPACK_IMPORTED_MODULE_5__components_BookCreateUpdate__["a" /* default */] }),
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/update-book/:id', render: props => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_BookCreateUpdate__["a" /* default */], props) }),
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/delete-book/:id', render: props => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11__components_DeleteBook__["a" /* default */], props) }),
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/book/:id/delete', render: props => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11__components_DeleteBook__["a" /* default */], props) }),
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/search/:query', render: props => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__components_Search__["a" /* default */], props) }),
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/book/:id', render: props => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_10__components_View__["a" /* default */], props) }),
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/category/:id/page/:page', render: props => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__components_CategoryBooks__["a" /* default */], props) }),
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/create-category', component: __WEBPACK_IMPORTED_MODULE_7__components_CategoryCreateUpdate__["a" /* default */] }),
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/update-category/:name', render: props => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__components_CategoryCreateUpdate__["a" /* default */], props) })
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/category/create', component: __WEBPACK_IMPORTED_MODULE_7__components_CategoryCreateUpdate__["a" /* default */] }),
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/category/:id/update', render: props => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__components_CategoryCreateUpdate__["a" /* default */], props) })
 );
 
 /* harmony default export */ __webpack_exports__["a"] = (AppRoutes);
@@ -15777,8 +15777,7 @@ class BookCreateUpdate extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] 
             {
                 _.times(options.length, i => categories.push({ label: options[i].name, value: options[i].name }));
             }
-            console.log(__WEBPACK_IMPORTED_MODULE_3__stores_BooksStore__["a" /* default */].getAll());
-            console.log('setting state');
+
             this.setState({
                 books: __WEBPACK_IMPORTED_MODULE_3__stores_BooksStore__["a" /* default */].getAll(),
                 loading: __WEBPACK_IMPORTED_MODULE_4__stores_CategoriesStore__["a" /* default */].getStatus(),
@@ -16076,9 +16075,6 @@ class Books extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
     }
 
     render() {
-
-        console.log(this.state.books);
-
         if (this.state.loading) return null;
 
         const books = this.renderBooks();
@@ -16245,7 +16241,6 @@ class CategoryBooks extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
     }
 
     componentWillUnmount() {
-        console.log('unm');
         __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__["a" /* default */].enableLoading();
         __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__["a" /* default */].unsetBooks();
         __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__["a" /* default */].removeChangeListener(this._onChange);
@@ -16296,7 +16291,7 @@ class CategoryBooks extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
                     { className: 'col-md-4' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         __WEBPACK_IMPORTED_MODULE_5_react_router_dom__["c" /* Link */],
-                        { to: { pathname: '/update-category/' + this.props.match.params.name } },
+                        { to: { pathname: '/category/' + this.props.match.params.id + '/update' } },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'button',
                             { className: 'btn btn-warning' },
@@ -16349,18 +16344,22 @@ class CategoryCreateUpdate extends __WEBPACK_IMPORTED_MODULE_0_react__["Componen
             let options = __WEBPACK_IMPORTED_MODULE_3__stores_CategoriesStore__["a" /* default */].getAll();
 
             {
-                _.times(options.length, i => categories.push({ label: options[i].name, value: options[i].name }));
+                _.times(options.length, i => categories.push({ label: options[i].name, value: options[i].id }));
             }
             this.setState({
                 loading: __WEBPACK_IMPORTED_MODULE_3__stores_CategoriesStore__["a" /* default */].getStatus(),
+                category: __WEBPACK_IMPORTED_MODULE_3__stores_CategoriesStore__["a" /* default */].getSingleCategory(),
                 parentCategories: categories,
                 formErrors: __WEBPACK_IMPORTED_MODULE_3__stores_CategoriesStore__["a" /* default */].getFormErrors()
             });
         };
 
         this.handleChange = event => {
-            let newState = _extends({}, this.state, {
-                category: event.target.value });
+            let newState = {
+                category: _extends({}, this.state.category, {
+                    name: event.target.value
+                })
+            };
 
             this.setState(newState);
         };
@@ -16368,7 +16367,7 @@ class CategoryCreateUpdate extends __WEBPACK_IMPORTED_MODULE_0_react__["Componen
         this._onSubmit = () => {
             let formData = new FormData();
 
-            formData.append('name', this.state.category);
+            formData.append('name', this.state.category.name);
             formData.append('parentCategory', this.state.selectedParentCategory.value);
 
             if (this.props.match.params.id) {
@@ -16408,16 +16407,18 @@ class CategoryCreateUpdate extends __WEBPACK_IMPORTED_MODULE_0_react__["Componen
 
     _getState() {
         return {
-            category: this.props.match.params.name,
             formErrors: [],
+            category: {},
             parentCategories: __WEBPACK_IMPORTED_MODULE_3__stores_CategoriesStore__["a" /* default */].getAll(),
-            selectedParentCategory: ''
+            loading: __WEBPACK_IMPORTED_MODULE_3__stores_CategoriesStore__["a" /* default */].getStatus(),
+            selectedParentCategory: null
         };
     }
 
     render() {
-        if (this.state.loading) return null;
 
+        if (this.state.loading) return null;
+        console.log(this.state.selectedParentCategory);
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
             { className: 'container' },
@@ -16438,7 +16439,7 @@ class CategoryCreateUpdate extends __WEBPACK_IMPORTED_MODULE_0_react__["Componen
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'name',
                             type: 'text',
                             className: 'form-control',
-                            defaultValue: this.props.match.params.name,
+                            value: this.state.category.name,
                             onChange: this.handleChange.bind(this),
                             name: 'name'
                         })
@@ -16477,7 +16478,7 @@ class CategoryCreateUpdate extends __WEBPACK_IMPORTED_MODULE_0_react__["Componen
                             'button',
                             { onClick: this._onSubmit,
                                 className: 'btn btn-success',
-                                disabled: !this.state.category
+                                disabled: !this.state.category.name
                             },
                             'Submit'
                         )
@@ -16747,7 +16748,7 @@ class View extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         __WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Link */],
-                        { to: { pathname: '/delete-book/' + this.state.books.id } },
+                        { to: { pathname: '/book/' + this.state.books.id + '/delete' } },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'button',
                             { className: 'btn btn-danger' },
@@ -17417,7 +17418,7 @@ class Header extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
                 null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Link */],
-                    { style: { fontSize: "16px" }, to: { pathname: '/create-category' } },
+                    { style: { fontSize: "16px" }, to: { pathname: '/category/create' } },
                     'Add Category'
                 )
             ),

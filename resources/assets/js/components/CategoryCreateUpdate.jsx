@@ -39,7 +39,7 @@ class CategoryCreateUpdate extends Component {
         let options=CategoriesStore.getAll();
 
         {_.times(options.length, i =>
-            categories.push({label: options[i].name, value: options[i].name})
+            categories.push({label: options[i].name, value: options[i].id})
         )}
         this.setState({
             loading: CategoriesStore.getStatus(),
@@ -51,11 +51,11 @@ class CategoryCreateUpdate extends Component {
 
     _getState () {
         return {
-            category: {},
             formErrors: [],
+            category: {},
             parentCategories: CategoriesStore.getAll(),
             loading: CategoriesStore.getStatus(),
-            selectedParentCategory: ''
+            selectedParentCategory: null
         };
     }
 
@@ -93,7 +93,7 @@ class CategoryCreateUpdate extends Component {
 
         if (this.state.loading)
             return null;
-        console.log(this.state.category);
+        console.log(this.state.selectedParentCategory);
         return (
             <div className="container">
                 <div className="row">

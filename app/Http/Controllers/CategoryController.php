@@ -50,6 +50,8 @@ class CategoryController extends Controller
      */
     public function store(CreateUpdateCategoryRequest $customRequest)
     {
+
+
         $category = $this->repository->createCategory($customRequest->only(['name', 'parentCategory']));
 
         return response()
@@ -64,6 +66,8 @@ class CategoryController extends Controller
      */
     public function update(CreateUpdateCategoryRequest $customRequest, $id)
     {
+		var_dump($customRequest->all());
+
         $category = $this->repository->updateCategory($customRequest, $id);
 
         return response()

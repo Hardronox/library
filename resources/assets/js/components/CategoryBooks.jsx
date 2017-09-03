@@ -21,7 +21,6 @@ class CategoryBooks extends Component {
     }
 
     componentWillUnmount() {
-        console.log('unm');
         BooksStore.enableLoading();
         BooksStore.unsetBooks();
         BooksStore.removeChangeListener(this._onChange);

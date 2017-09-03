@@ -20,6 +20,8 @@ class Book extends Component {
     render() {
         const categories= this.renderCategories();
 
+        let {book}=this.props.props;
+
         return (
             <div className="media">
                 <div className="media-left media-top">
@@ -27,14 +29,14 @@ class Book extends Component {
                         width={"100px"}
                         height={"100px"}
                         className="media-object"
-                        src={this.props.props.book.image.url}
+                        src={book.image.url}
                     />
                 </div>
                 <div className="media-body">
-                    <Link to={{ pathname: '/book/'+this.props.props.book.id }}>
-                        <h4 className="media-heading">{this.props.props.book.title}</h4>
+                    <Link to={{ pathname: '/book/'+book.id }}>
+                        <h4 className="media-heading">{book.title}</h4>
                     </Link>
-                    {this.props.props.book.description}
+                    {book.description}
                 </div>
                 {categories}
                 <hr/>

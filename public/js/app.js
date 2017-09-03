@@ -15660,14 +15660,14 @@ const AppRoutes = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/register', component: __WEBPACK_IMPORTED_MODULE_3__components_auth_Register__["a" /* default */] }),
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/login', component: __WEBPACK_IMPORTED_MODULE_4__components_auth_Login__["a" /* default */] }),
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/', exact: true, name: 'books', component: __WEBPACK_IMPORTED_MODULE_6__components_BooksList__["a" /* default */] }),
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/book/create', component: __WEBPACK_IMPORTED_MODULE_5__components_BookCreateUpdate__["a" /* default */] }),
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/book/:id/update', render: props => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_BookCreateUpdate__["a" /* default */], props) }),
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/book/:id/delete', render: props => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11__components_DeleteBook__["a" /* default */], props) }),
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/add-book', component: __WEBPACK_IMPORTED_MODULE_5__components_BookCreateUpdate__["a" /* default */] }),
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/update-book/:id', render: props => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_BookCreateUpdate__["a" /* default */], props) }),
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/delete-book/:id', render: props => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11__components_DeleteBook__["a" /* default */], props) }),
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/search/:query', render: props => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__components_Search__["a" /* default */], props) }),
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/book/:id', render: props => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_10__components_View__["a" /* default */], props) }),
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/category/:id/page/:page', render: props => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__components_CategoryBooks__["a" /* default */], props) }),
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/category/create', component: __WEBPACK_IMPORTED_MODULE_7__components_CategoryCreateUpdate__["a" /* default */] }),
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/category/:id/update', render: props => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__components_CategoryCreateUpdate__["a" /* default */], props) })
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/create-category', component: __WEBPACK_IMPORTED_MODULE_7__components_CategoryCreateUpdate__["a" /* default */] }),
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/update-category/:name', render: props => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__components_CategoryCreateUpdate__["a" /* default */], props) })
 );
 
 /* harmony default export */ __webpack_exports__["a"] = (AppRoutes);
@@ -15777,17 +15777,17 @@ class BookCreateUpdate extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] 
             {
                 _.times(options.length, i => categories.push({ label: options[i].name, value: options[i].name }));
             }
-
+            console.log(__WEBPACK_IMPORTED_MODULE_3__stores_BooksStore__["a" /* default */].getAll());
+            console.log('setting state');
             this.setState({
                 books: __WEBPACK_IMPORTED_MODULE_3__stores_BooksStore__["a" /* default */].getAll(),
-                loading: false,
+                loading: __WEBPACK_IMPORTED_MODULE_4__stores_CategoriesStore__["a" /* default */].getStatus(),
                 formErrors: __WEBPACK_IMPORTED_MODULE_3__stores_BooksStore__["a" /* default */].getFormErrors(),
                 categories: categories
             });
         };
 
         this._onSubmit = () => {
-            console.log(this.state.books);
             let formData = new FormData();
 
             formData.append('title', this.state.books.title);
@@ -15838,7 +15838,9 @@ class BookCreateUpdate extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] 
 
     componentWillUnmount() {
         __WEBPACK_IMPORTED_MODULE_3__stores_BooksStore__["a" /* default */].removeChangeListener(this._onChange);
+        __WEBPACK_IMPORTED_MODULE_4__stores_CategoriesStore__["a" /* default */].removeChangeListener(this._onChange);
         __WEBPACK_IMPORTED_MODULE_3__stores_BooksStore__["a" /* default */].unsetFormErrors();
+        __WEBPACK_IMPORTED_MODULE_3__stores_BooksStore__["a" /* default */].unsetBooks();
     }
 
     componentDidMount() {
@@ -15849,7 +15851,7 @@ class BookCreateUpdate extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] 
     _getState() {
         return {
             books: __WEBPACK_IMPORTED_MODULE_3__stores_BooksStore__["a" /* default */].getAll(),
-            loading: __WEBPACK_IMPORTED_MODULE_3__stores_BooksStore__["a" /* default */].getStatus(),
+            loading: __WEBPACK_IMPORTED_MODULE_4__stores_CategoriesStore__["a" /* default */].getStatus(),
             categories: __WEBPACK_IMPORTED_MODULE_4__stores_CategoriesStore__["a" /* default */].getAll(),
             formErrors: [],
             selectedCategories: []
@@ -15866,8 +15868,12 @@ class BookCreateUpdate extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] 
     }
 
     render() {
-
+        // пришлось добавить второе условие т.к. контент в редактор не попадал
         if (this.state.loading) return null;
+
+        if (this.props.match.path === '/update-book/:id' && this.state.books.length === 0) {
+            return null;
+        }
 
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
@@ -15889,7 +15895,7 @@ class BookCreateUpdate extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] 
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'title',
                             type: 'text',
                             className: 'form-control',
-                            defaultValue: this.state.books.title,
+                            value: this.state.books.title,
                             onChange: this.handleChange.bind(this, 'title'),
                             name: 'title'
                         }),
@@ -16070,6 +16076,9 @@ class Books extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
     }
 
     render() {
+
+        console.log(this.state.books);
+
         if (this.state.loading) return null;
 
         const books = this.renderBooks();
@@ -16103,7 +16112,7 @@ class Books extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'label',
                                 { htmlFor: 'search' },
-                                'Search:'
+                                'Search: '
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text',
                                 className: 'form-control',
@@ -16236,6 +16245,7 @@ class CategoryBooks extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
     }
 
     componentWillUnmount() {
+        console.log('unm');
         __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__["a" /* default */].enableLoading();
         __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__["a" /* default */].unsetBooks();
         __WEBPACK_IMPORTED_MODULE_2__stores_BooksStore__["a" /* default */].removeChangeListener(this._onChange);
@@ -16286,7 +16296,7 @@ class CategoryBooks extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
                     { className: 'col-md-4' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         __WEBPACK_IMPORTED_MODULE_5_react_router_dom__["c" /* Link */],
-                        { to: { pathname: '/category/' + this.props.match.params.id + '/update' } },
+                        { to: { pathname: '/update-category/' + this.props.match.params.name } },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'button',
                             { className: 'btn btn-warning' },
@@ -16343,18 +16353,14 @@ class CategoryCreateUpdate extends __WEBPACK_IMPORTED_MODULE_0_react__["Componen
             }
             this.setState({
                 loading: __WEBPACK_IMPORTED_MODULE_3__stores_CategoriesStore__["a" /* default */].getStatus(),
-                category: __WEBPACK_IMPORTED_MODULE_3__stores_CategoriesStore__["a" /* default */].getSingleCategory(),
                 parentCategories: categories,
                 formErrors: __WEBPACK_IMPORTED_MODULE_3__stores_CategoriesStore__["a" /* default */].getFormErrors()
             });
         };
 
         this.handleChange = event => {
-            let newState = {
-                category: _extends({}, this.state.category, {
-                    name: event.target.value
-                })
-            };
+            let newState = _extends({}, this.state, {
+                category: event.target.value });
 
             this.setState(newState);
         };
@@ -16362,7 +16368,7 @@ class CategoryCreateUpdate extends __WEBPACK_IMPORTED_MODULE_0_react__["Componen
         this._onSubmit = () => {
             let formData = new FormData();
 
-            formData.append('name', this.state.category.name);
+            formData.append('name', this.state.category);
             formData.append('parentCategory', this.state.selectedParentCategory.value);
 
             if (this.props.match.params.id) {
@@ -16402,18 +16408,16 @@ class CategoryCreateUpdate extends __WEBPACK_IMPORTED_MODULE_0_react__["Componen
 
     _getState() {
         return {
-            category: {},
+            category: this.props.match.params.name,
             formErrors: [],
             parentCategories: __WEBPACK_IMPORTED_MODULE_3__stores_CategoriesStore__["a" /* default */].getAll(),
-            loading: __WEBPACK_IMPORTED_MODULE_3__stores_CategoriesStore__["a" /* default */].getStatus(),
             selectedParentCategory: ''
         };
     }
 
     render() {
-
         if (this.state.loading) return null;
-        console.log(this.state.category);
+
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
             { className: 'container' },
@@ -16434,7 +16438,7 @@ class CategoryCreateUpdate extends __WEBPACK_IMPORTED_MODULE_0_react__["Componen
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'name',
                             type: 'text',
                             className: 'form-control',
-                            value: this.state.category.name,
+                            defaultValue: this.props.match.params.name,
                             onChange: this.handleChange.bind(this),
                             name: 'name'
                         })
@@ -16473,7 +16477,7 @@ class CategoryCreateUpdate extends __WEBPACK_IMPORTED_MODULE_0_react__["Componen
                             'button',
                             { onClick: this._onSubmit,
                                 className: 'btn btn-success',
-                                disabled: !this.state.category.name
+                                disabled: !this.state.category
                             },
                             'Submit'
                         )
@@ -16734,7 +16738,7 @@ class View extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
                     { className: 'col-md-3' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         __WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Link */],
-                        { to: { pathname: '/book/' + this.state.books.id + '/update' } },
+                        { to: { pathname: '/update-book/' + this.state.books.id } },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'button',
                             { className: 'btn btn-warning' },
@@ -16743,7 +16747,7 @@ class View extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         __WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Link */],
-                        { to: { pathname: '/book/' + this.state.books.id + '/delete' } },
+                        { to: { pathname: '/delete-book/' + this.state.books.id } },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'button',
                             { className: 'btn btn-danger' },
@@ -17266,6 +17270,8 @@ class Book extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
     render() {
         const categories = this.renderCategories();
 
+        let { book } = this.props.props;
+
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
             { className: 'media' },
@@ -17276,7 +17282,7 @@ class Book extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
                     width: "100px",
                     height: "100px",
                     className: 'media-object',
-                    src: this.props.props.book.image.url
+                    src: book.image.url
                 })
             ),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -17284,14 +17290,14 @@ class Book extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
                 { className: 'media-body' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Link */],
-                    { to: { pathname: '/book/' + this.props.props.book.id } },
+                    { to: { pathname: '/book/' + book.id } },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'h4',
                         { className: 'media-heading' },
-                        this.props.props.book.title
+                        book.title
                     )
                 ),
-                this.props.props.book.description
+                book.description
             ),
             categories,
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null)
@@ -17411,7 +17417,7 @@ class Header extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
                 null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Link */],
-                    { style: { fontSize: "16px" }, to: { pathname: '/category/create' } },
+                    { style: { fontSize: "16px" }, to: { pathname: '/create-category' } },
                     'Add Category'
                 )
             ),
@@ -17420,7 +17426,7 @@ class Header extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
                 null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Link */],
-                    { className: 'navbar-brand', to: { pathname: '/book/create' } },
+                    { className: 'navbar-brand', to: { pathname: '/add-book' } },
                     'Add Book'
                 )
             ),

@@ -29,7 +29,9 @@ class BookCreateUpdate extends Component {
 
     componentWillUnmount() {
         BooksStore.removeChangeListener(this._onChange);
+        CategoriesStore.removeChangeListener(this._onChange);
         BooksStore.unsetFormErrors();
+        BooksStore.unsetBooks();
     }
 
     componentDidMount() {
@@ -47,7 +49,7 @@ class BookCreateUpdate extends Component {
 
         this.setState({
             books: BooksStore.getAll(),
-            loading: false,
+            loading: CategoriesStore.getStatus(),
             formErrors: BooksStore.getFormErrors(),
             categories: categories
         });
@@ -56,7 +58,7 @@ class BookCreateUpdate extends Component {
     _getState () {
         return {
             books: BooksStore.getAll(),
-            loading: BooksStore.getStatus(),
+            loading: CategoriesStore.getStatus(),
             categories: CategoriesStore.getAll(),
             formErrors: [],
             selectedCategories: []
@@ -74,7 +76,6 @@ class BookCreateUpdate extends Component {
     }
 
     _onSubmit = () => {
-        console.log(this.state.books);
         let formData = new FormData();
 
         formData.append('title', this.state.books.title);
@@ -111,9 +112,13 @@ class BookCreateUpdate extends Component {
     };
 
     render() {
-
+        // пришлось добавить второе условие т.к. контент в редактор не попадал
         if (this.state.loading)
             return null;
+
+        if (this.props.match.path === '/update-book/:id' && this.state.books.length === 0) {
+            return null;
+        }
 
         return (
                 <div className="container">
@@ -125,7 +130,7 @@ class BookCreateUpdate extends Component {
                                 <input id="title"
                                        type="text"
                                        className="form-control"
-                                       defaultValue={this.state.books.title}
+                                       value={this.state.books.title}
                                        onChange={this.handleChange.bind(this, 'title')}
                                        name="title"
                                 />
@@ -166,6 +171,7 @@ class BookCreateUpdate extends Component {
                                     }}
                                     onChange={this.handleEditorChange}
                                 />
+
 
                                 { this.state.formErrors.description ?
                                     <div className="alert alert-danger">

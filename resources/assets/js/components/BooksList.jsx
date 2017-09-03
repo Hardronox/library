@@ -91,7 +91,7 @@ class Books extends Component {
                     <div className="col-md-4">
                         <form className="form-inline">
                             <div className="form-group">
-                                <label htmlFor="search">Search:</label>
+                                <label htmlFor="search">Search: </label>
 
                                 <input type="text"
                                        className="form-control"

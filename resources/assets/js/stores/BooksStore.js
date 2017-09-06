@@ -4,6 +4,7 @@ import AppActions from '../actions/AppActions';
 import BooksApi from '../api/Books';
 
 let _books = [];
+let _singleBook = [];
 let _booksCount = 0;
 let _loading = true;
 let _formErrors = [];
@@ -21,6 +22,10 @@ class BooksStore extends EventEmitter {
 
     getAll() {
         return _books;
+    }
+
+    getSingleBook() {
+      return _singleBook;
     }
 
     getCount() {
@@ -41,6 +46,10 @@ class BooksStore extends EventEmitter {
 
     unsetBooks() {
         _books = [];
+    }
+
+    unsetSingleBook() {
+      _singleBook = [];
     }
 
     enableLoading() {
@@ -110,7 +119,7 @@ class BooksStore extends EventEmitter {
                 this.getSingleBookAttempt(action.value);
                 break;
             case 'SINGLE_BOOK_LOADED':
-                _books = action.value;
+                _singleBook = action.value;
                 _loading = false;
                 break;
 

@@ -31,7 +31,7 @@ class BookCreateUpdate extends Component {
         BooksStore.removeChangeListener(this._onChange);
         CategoriesStore.removeChangeListener(this._onChange);
         BooksStore.unsetFormErrors();
-        BooksStore.unsetBooks();
+        BooksStore.unsetSingleBook();
     }
 
     componentDidMount() {
@@ -48,7 +48,7 @@ class BookCreateUpdate extends Component {
         )}
 
         this.setState({
-            books: BooksStore.getAll(),
+            book: BooksStore.getSingleBook(),
             loading: CategoriesStore.getStatus(),
             formErrors: BooksStore.getFormErrors(),
             categories: categories
@@ -57,7 +57,7 @@ class BookCreateUpdate extends Component {
 
     _getState () {
         return {
-            books: BooksStore.getAll(),
+            book: BooksStore.getSingleBook(),
             loading: CategoriesStore.getStatus(),
             categories: CategoriesStore.getAll(),
             formErrors: [],
@@ -68,8 +68,8 @@ class BookCreateUpdate extends Component {
     handleChange(name, event) {
 
         let newState = {
-        books: {
-          ...this.state.books,
+        book: {
+          ...this.state.book,
           [name]: (name === 'image') ? event.target.files[0] : event.target.value
         }};
         this.setState(newState);
@@ -78,9 +78,9 @@ class BookCreateUpdate extends Component {
     _onSubmit = () => {
         let formData = new FormData();
 
-        formData.append('title', this.state.books.title);
-        formData.append('description', this.state.books.description);
-        formData.append('image', this.state.books.image);
+        formData.append('title', this.state.book.title);
+        formData.append('description', this.state.book.description);
+        formData.append('image', this.state.book.image);
 
         this.state.selectedCategories.forEach(function(item) {
             formData.append('categories[]', item.value);
@@ -88,7 +88,7 @@ class BookCreateUpdate extends Component {
         
         // if for update book, else for create
         if (this.props.match.params.id) {
-            formData.append('id', this.state.books.id);
+            formData.append('id', this.state.book.id);
             formData.append('_method', 'PUT');
             AppActions.updateSingleBookAttempt(formData);
         } else
@@ -102,10 +102,10 @@ class BookCreateUpdate extends Component {
     };
 
     handleEditorChange = (e) => {
-        console.log(this.state.books);
+        console.log(this.state.book);
         let newState = {
-            books: {
-                ...this.state.books,
+            book: {
+                ...this.state.book,
                 description: e.target.getContent()
             }};
         this.setState(newState);
@@ -116,7 +116,7 @@ class BookCreateUpdate extends Component {
         if (this.state.loading)
             return null;
 
-        if (this.props.match.path === '/update-book/:id' && this.state.books.length === 0) {
+        if (this.props.match.path === '/update-book/:id' && this.state.book.length === 0) {
             return null;
         }
 
@@ -130,7 +130,7 @@ class BookCreateUpdate extends Component {
                                 <input id="title"
                                        type="text"
                                        className="form-control"
-                                       value={this.state.books.title}
+                                       value={this.state.book.title}
                                        onChange={this.handleChange.bind(this, 'title')}
                                        name="title"
                                 />
@@ -147,7 +147,7 @@ class BookCreateUpdate extends Component {
                                 <label htmlFor="description"  className="control-label">Description:</label>
 
                                 <TinyMCE
-                                    content={this.state.books.description}
+                                    content={this.state.book.description}
                                     config={{
                                         height: 500,
                                         theme: 'modern',

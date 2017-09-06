@@ -19,6 +19,7 @@ class View extends Component {
 
     componentWillUnmount() {
         BooksStore.removeChangeListener(this._onChange);
+        BooksStore.unsetSingleBook();
     }
 
     componentDidMount() {
@@ -27,14 +28,14 @@ class View extends Component {
 
     _onChange = () => {
         this.setState({
-            books: BooksStore.getAll(),
+            book: BooksStore.getSingleBook(),
             loading: BooksStore.getStatus()
         })
     };
 
     _getState () {
         return {
-            books: BooksStore.getAll(),
+            book: BooksStore.getSingleBook(),
             loading: BooksStore.getStatus()
         };
     }
@@ -43,20 +44,22 @@ class View extends Component {
         if (this.state.loading)
             return null;
 
+        console.log(this.state.book);
+
         return (
             <div className="container">
                 <div className="row">
                     <div className="col-md-8">
-                        <Book book={this.state.books}
+                        <Book book={this.state.book}
                               type="viewPage"
                         />
                     </div>
                     <div className="col-md-3">
-                        <Link  to={{ pathname: '/update-book/'+this.state.books.id }} >
+                        <Link  to={{ pathname: '/update-book/'+this.state.book.id }} >
                             <button className="btn btn-warning">Update</button>
                         </Link>
 
-                        <Link to={{ pathname: '/book/'+this.state.books.id+'/delete' }}>
+                        <Link to={{ pathname: '/book/'+this.state.book.id+'/delete' }}>
                             <button className="btn btn-danger">Delete</button>
                         </Link>
                     </div>

@@ -66,7 +66,7 @@ class CategoryController extends Controller
      */
     public function update(CreateUpdateCategoryRequest $customRequest, $id)
     {
-		var_dump($customRequest->all());
+//		var_dump($customRequest->all());
 
         $category = $this->repository->updateCategory($customRequest, $id);
 

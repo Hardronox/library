@@ -10,6 +10,8 @@ class Book extends Component {
     render() {
         let {book}=this.props.props;
 
+        console.log(book);
+
         return (
             <div className="media">
                 <div className="media-left media-top">
